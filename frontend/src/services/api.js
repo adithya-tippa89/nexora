@@ -124,10 +124,11 @@ export const api = {
 
   // Groq LLaMA 3 AI Intelligence
   getAiStatus: () => fetchJson(`${API_BASE_URL}/ai/status`),
+  configureAi: (data) => fetchJson(`${API_BASE_URL}/ai/configure`, { method: 'POST', body: JSON.stringify(data) }),
   testAiConnection: () => fetchJson(`${API_BASE_URL}/ai/test`, { method: 'POST' }),
   chatWithAiCopilot: (data) => fetchJson(`${API_BASE_URL}/ai/chat`, { method: 'POST', body: JSON.stringify(data) }),
   getAiSkillGapInsights: (data) => fetchJson(`${API_BASE_URL}/ai/skill-gap-insights`, { method: 'POST', body: JSON.stringify(data) }),
   getAiCareerAdvice: (data) => fetchJson(`${API_BASE_URL}/ai/career-advice`, { method: 'POST', body: JSON.stringify(data) }),
-  generateAiSyllabus: (data) => fetchJson(`${API_BASE_URL}/ai/generate-syllabus`, { method: 'POST', body: JSON.stringify(data) })
-  ,getSkillRecommendations: (data) => fetchJson(`${API_BASE_URL}/ai/skill-recommendations`, { method: 'POST', body: JSON.stringify(data) })
+  generateAiSyllabus: (data) => fetchJson(`${API_BASE_URL}/ai/generate-syllabus`, { method: 'POST', body: JSON.stringify(data) }),
+  getSkillRecommendations: (data) => fetchJson(`${API_BASE_URL}/ai/skill-recommendations`, { method: 'POST', body: JSON.stringify(data) })
 };

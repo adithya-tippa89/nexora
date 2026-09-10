@@ -19,20 +19,28 @@ const SUPPORTED_MODELS = [
     description: 'Ultra-fast low-latency LLaMA 3.1 model. Ideal for instant chat and quick recommendations.'
   },
   {
-    id: 'llama3-70b-8192',
-    name: 'LLaMA 3 70B (8k)',
+    id: 'llama-3.2-3b-preview',
+    name: 'LLaMA 3.2 3B Preview',
     provider: 'Meta / Groq',
-    contextWindow: 8192,
+    contextWindow: 131072,
     recommended: false,
-    description: 'Standard LLaMA 3 70B model with 8k context.'
+    description: 'Lightweight edge-optimized model for rapid summarization.'
   },
   {
-    id: 'llama3-8b-8192',
-    name: 'LLaMA 3 8B (8k)',
+    id: 'llama-3.2-1b-preview',
+    name: 'LLaMA 3.2 1B Preview',
     provider: 'Meta / Groq',
-    contextWindow: 8192,
+    contextWindow: 131072,
     recommended: false,
-    description: 'Lightweight LLaMA 3 8B model with 8k context.'
+    description: 'Extremely compact model with ultra-low latency.'
+  },
+  {
+    id: 'mixtral-8x7b-32768',
+    name: 'Mixtral 8x7B 32k',
+    provider: 'Mistral / Groq',
+    contextWindow: 32768,
+    recommended: false,
+    description: 'High performance Mixture-of-Experts architecture with 32k context.'
   }
 ];
 
@@ -43,8 +51,11 @@ class GroqService {
   }
 
   initClient() {
-    const apiKey = process.env.GROQ_API_KEY;
-    if (apiKey && apiKey.trim() !== '' && apiKey !== 'your_groq_api_key_here') {
+    let apiKey = process.env.GROQ_API_KEY;
+    if (apiKey) {
+      apiKey = apiKey.trim().replace(/^["']|["']$/g, '');
+    }
+    if (apiKey && apiKey !== '' && apiKey !== 'your_groq_api_key_here') {
       try {
         this.client = new Groq({ apiKey, timeout: 8000 });
       } catch (err) {
@@ -54,6 +65,27 @@ class GroqService {
     } else {
       this.client = null;
     }
+  }
+
+  setApiKey(newKey, newModel = null) {
+    if (newKey !== undefined) {
+      process.env.GROQ_API_KEY = newKey ? newKey.trim().replace(/^["']|["']$/g, '') : '';
+    }
+    if (newModel) {
+      process.env.GROQ_MODEL = newModel.trim();
+    }
+    this.initClient();
+    return this.isConfigured();
+  }
+
+  getMaskedApiKey() {
+    const key = process.env.GROQ_API_KEY;
+    if (!key || key.trim() === '' || key === 'your_groq_api_key_here') {
+      return null;
+    }
+    const clean = key.trim().replace(/^["']|["']$/g, '');
+    if (clean.length <= 8) return '••••••••';
+    return clean.slice(0, 4) + '••••••••' + clean.slice(-4);
   }
 
   isConfigured() {
@@ -70,6 +102,12 @@ class GroqService {
 
   getAvailableModels() {
     return SUPPORTED_MODELS;
+  }
+
+  getModelsToTry(preferredModel = null) {
+    const primary = preferredModel || this.getActiveModel();
+    const fallback = 'llama-3.1-8b-instant';
+    return primary === fallback ? [fallback] : [primary, fallback];
   }
 
   /**
@@ -123,7 +161,7 @@ class GroqService {
       // If the specific model has an access/decommission notice, test fallback to available high-speed model
       if (err.message && (err.message.includes('decommissioned') || err.message.includes('not exist') || err.message.includes('model_not_found'))) {
         try {
-          const fallbackModel = 'openai/gpt-oss-120b';
+          const fallbackModel = 'llama-3.1-8b-instant';
           const startTime = Date.now();
           const fallbackRes = await this.client.chat.completions.create({
             model: fallbackModel,
@@ -185,7 +223,7 @@ class GroqService {
         
         // 2. Try active model on Groq if model_not_found / decommissioned
         try {
-          const fallbackModel = 'openai/gpt-oss-120b';
+          const fallbackModel = 'llama-3.1-8b-instant';
           const fallbackRes = await this.client.chat.completions.create({
             model: fallbackModel,
             messages,
@@ -242,7 +280,7 @@ Location: ${districtName} District, Maharashtra
 Provide an actionable, authoritative curriculum upgrade plan.`;
 
     if (this.isConfigured()) {
-      const modelsToTry = [this.getActiveModel(), 'openai/gpt-oss-120b', 'qwen/qwen3.8-27b'];
+      const modelsToTry = this.getModelsToTry();
       for (const model of modelsToTry) {
         try {
           const res = await this.client.chat.completions.create({
@@ -314,7 +352,7 @@ Return clean JSON with these exact keys:
 Generate tailored guidance.`;
 
     if (this.isConfigured()) {
-      const modelsToTry = [this.getActiveModel(), 'openai/gpt-oss-120b', 'qwen/qwen3.8-27b'];
+      const modelsToTry = this.getModelsToTry();
       for (const model of modelsToTry) {
         try {
           const res = await this.client.chat.completions.create({
@@ -387,7 +425,7 @@ Mention the speed and analytical depth provided by Groq LLaMA 3 when relevant.`;
     ];
 
     if (this.isConfigured()) {
-      const modelsToTry = [this.getActiveModel(), 'openai/gpt-oss-120b', 'qwen/qwen3.8-27b'];
+      const modelsToTry = this.getModelsToTry();
       for (const model of modelsToTry) {
         try {
           const startTime = Date.now();

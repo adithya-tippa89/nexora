@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+const fs = require('fs');
 const groqService = require('../services/groqService');
 const store = require('../database/dataStore');
 const { buildFallbackRecommendations, validateRecommendations } = require('../services/recommendationEngine');
@@ -9,12 +11,14 @@ router.get('/status', async (req, res) => {
   const isConfigured = groqService.isConfigured();
   const activeModel = groqService.getActiveModel();
   const supportedModels = groqService.getAvailableModels();
+  const maskedKey = groqService.getMaskedApiKey();
 
   res.json({
     engine: 'Groq Cloud AI',
     status: isConfigured ? 'CONNECTED' : 'FALLBACK_MODE',
     isConfigured,
     activeModel,
+    maskedKey,
     supportedModels,
     features: [
       'Skill Gap Deep Pedagogical Analysis',
@@ -25,6 +29,48 @@ router.get('/status', async (req, res) => {
     info: isConfigured 
       ? `Groq LLaMA 3 engine (${activeModel}) is active with ultra-low latency.`
       : 'GROQ_API_KEY is not configured in backend/.env. Using local deterministic fallback model.'
+  });
+});
+
+// Configure Groq API Key and Model at runtime and persist to .env
+router.post('/configure', async (req, res) => {
+  const { apiKey, model } = req.body;
+  
+  if (apiKey !== undefined) {
+    groqService.setApiKey(apiKey, model);
+    
+    try {
+      const envPath = path.resolve(__dirname, '../.env');
+      if (fs.existsSync(envPath)) {
+        let envContent = fs.readFileSync(envPath, 'utf8');
+        const cleanKey = apiKey ? apiKey.trim().replace(/^["']|["']$/g, '') : '';
+        if (envContent.includes('GROQ_API_KEY=')) {
+          envContent = envContent.replace(/GROQ_API_KEY=.*/, `GROQ_API_KEY=${cleanKey}`);
+        } else {
+          envContent += `\nGROQ_API_KEY=${cleanKey}\n`;
+        }
+        if (model) {
+          const cleanModel = model.trim();
+          if (envContent.includes('GROQ_MODEL=')) {
+            envContent = envContent.replace(/GROQ_MODEL=.*/, `GROQ_MODEL=${cleanModel}`);
+          } else {
+            envContent += `\nGROQ_MODEL=${cleanModel}\n`;
+          }
+        }
+        fs.writeFileSync(envPath, envContent, 'utf8');
+      }
+    } catch (err) {
+      console.warn('[aiRoutes] Could not write to .env:', err.message);
+    }
+  }
+
+  const testResult = await groqService.testConnection();
+  res.json({
+    success: true,
+    isConfigured: groqService.isConfigured(),
+    activeModel: groqService.getActiveModel(),
+    maskedKey: groqService.getMaskedApiKey(),
+    testResult
   });
 });
 

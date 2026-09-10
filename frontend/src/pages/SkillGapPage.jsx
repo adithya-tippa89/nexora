@@ -79,6 +79,29 @@ export const SkillGapPage = () => {
         console.error(err);
         setRecommendationPlan(null);
       });
+
+      // Fetch deep Groq LLaMA 3 curriculum modernization insights
+      api.getAiSkillGapInsights({
+        role_name: res.analysis.job_role,
+        course_name: res.analysis.course_name,
+        district: selectedDistrict,
+        missing_skills: res.analysis.missing_skills,
+        match_percentage: res.analysis.skill_match_percentage
+      }).then(aiRes => {
+        if (aiRes?.insights) {
+          setAnalysis(prev => prev ? ({
+            ...prev,
+            ai_insights: aiRes.insights,
+            ai_recommendation: aiRes.insights.strategic_overview,
+            ai_engine: {
+              provider: 'Groq Cloud',
+              model: aiRes.insights.model || 'llama-3.3-70b-versatile',
+              source: aiRes.insights.source || 'local:fallback'
+            }
+          }) : prev);
+        }
+      }).catch(err => console.warn('[SkillGapPage] Groq insights fetch warning:', err.message));
+
       setLoading(false);
     }).catch(err => {
       showToast(err.message, 'error');
@@ -471,7 +494,7 @@ export const SkillGapPage = () => {
             {/* Strategic Overview */}
             <div className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 text-sm leading-relaxed text-slate-100 shadow-inner">
               <p className="font-medium text-slate-100">
-                “{analysis.ai_insights?.strategic_overview || analysis.ai_recommendation}”
+                “{analysis.ai_insights?.strategic_overview || analysis.ai_recommendation || (analysis.missing_skills?.length > 0 ? `Modernize institutional curriculum by adding ${analysis.missing_skills.join(', ')} to bridge industry competency deficits in ${selectedDistrict}.` : "Curriculum is optimally aligned with industry expectations.")}”
               </p>
             </div>
 

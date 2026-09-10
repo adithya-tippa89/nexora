@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const router = express.Router();
 const store = require('../database/dataStore');
 
@@ -66,7 +66,7 @@ router.get('/demo-accounts', (req, res) => {
   res.json({
     roles: [
       { role: 'admin', title: 'Government / Admin', description: 'DVET State Administrator', email: 'admin@maharashtra.gov.in' },
-      { role: 'institution', title: 'Training Institution', description: 'Polytechnic & ITI Director', email: 'institute@coep.ac.in' },
+      { role: 'trainer', title: 'Training Institution / Trainer', description: 'Polytechnic & ITI Director', email: 'institute@coep.ac.in' },
       { role: 'employer', title: 'Employer', description: 'Industry Talent Head', email: 'recruitment@tatamotors.com' },
       { role: 'student', title: 'Candidate / Student', description: 'Aspiring Technical Candidate', email: 'rohan.shinde@student.ac.in' }
     ]

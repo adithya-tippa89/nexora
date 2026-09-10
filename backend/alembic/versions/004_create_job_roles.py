@@ -24,7 +24,7 @@ def upgrade() -> None:
         sa.Column("normalized_name", sa.String(length=255), nullable=False),
         sa.Column("sector", sa.String(length=100), nullable=False),
         sa.Column("description", sa.Text()),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("CURRENT_TIMESTAMP"), nullable=False),
         sa.UniqueConstraint("normalized_name", name="uq_job_roles_normalized_name"),
     )
     op.create_index("ix_job_roles_normalized_name", "job_roles", ["normalized_name"])
@@ -37,7 +37,7 @@ def upgrade() -> None:
         sa.Column("job_role_id", sa.Integer(), sa.ForeignKey("job_roles.id", ondelete="CASCADE"), nullable=False),
         sa.Column("skill_id", sa.Integer(), sa.ForeignKey("skills.id", ondelete="CASCADE"), nullable=False),
         sa.Column("importance", sa.String(length=20), nullable=False, server_default="mentioned"),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("CURRENT_TIMESTAMP"), nullable=False),
         sa.UniqueConstraint("job_role_id", "skill_id", name="uq_role_skills_role_skill"),
     )
     op.create_index("ix_role_skills_role_id", "role_skills", ["job_role_id"])

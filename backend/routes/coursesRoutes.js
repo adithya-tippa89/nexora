@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const router = express.Router();
 const store = require('../database/dataStore');
 
@@ -88,20 +88,21 @@ router.patch('/:id/update-curriculum', (req, res) => {
     return res.status(404).json({ error: "Course not found" });
   }
 
+  const added = Array.isArray(added_skills) ? added_skills : (added_skills ? [added_skills] : []);
   const existingSkills = new Set(course.skills_covered || []);
-  (added_skills || []).forEach(s => existingSkills.add(s));
+  added.forEach(s => existingSkills.add(s));
 
   // Recalculate match and update status
   const updatedSkills = Array.from(existingSkills);
-  const remainingMissing = (course.missing_skills || []).filter(s => !added_skills.includes(s));
-  const newMatchScore = Math.min(95.0, (course.industry_match_score || 60) + (added_skills.length * 15));
+  const remainingMissing = (course.missing_skills || []).filter(s => !added.includes(s));
+  const newMatchScore = Math.min(95.0, (course.industry_match_score || 60) + (added.length * 15));
 
   const updatedCourse = store.update('courses', req.params.id, {
     skills_covered: updatedSkills,
     missing_skills: remainingMissing,
     industry_match_score: newMatchScore,
     status: newMatchScore >= 80 ? 'High Demand' : 'Needs Update',
-    recommendation: `Curriculum updated on ${new Date().toLocaleDateString()}. Added: ${added_skills.join(', ')}.`
+    recommendation: `Curriculum updated on ${new Date().toLocaleDateString()}.${added.length > 0 ? ` Added: ${added.join(', ')}.` : ''}`
   });
 
   res.json({

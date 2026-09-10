@@ -38,18 +38,7 @@ def run_migrations_offline() -> None:
 
 def run_migrations_online() -> None:
     """Run migrations in 'online' mode."""
-    database_url = settings.DATABASE_URL
-    connectable = create_engine(database_url, poolclass=pool.NullPool)
-    try:
-        with connectable.connect():
-            pass
-    except Exception as exc:
-        if not database_url.startswith("sqlite"):
-            database_url = "sqlite:///./skillsync.db"
-            print(f"PostgreSQL is unavailable ({exc}); running migrations against {database_url}.")
-            connectable = create_engine(database_url, poolclass=pool.NullPool)
-        else:
-            raise
+    from app.database import engine as connectable
 
     with connectable.connect() as connection:
         context.configure(

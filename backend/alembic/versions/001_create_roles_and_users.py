@@ -37,8 +37,8 @@ def upgrade() -> None:
         sa.Column('district', sa.String(length=100), nullable=True),
         sa.Column('organization', sa.String(length=255), nullable=True),
         sa.Column('is_active', sa.Boolean(), server_default=sa.text('true'), nullable=False),
-        sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
-        sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+        sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
+        sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
         sa.ForeignKeyConstraint(['role_id'], ['roles.id'], ondelete='RESTRICT'),
         sa.PrimaryKeyConstraint('id')
     )

@@ -12,7 +12,11 @@ import {
   Bot,
   Zap,
   Sparkles,
-  Cpu
+  Cpu,
+  Key,
+  Eye,
+  EyeOff,
+  ExternalLink
 } from 'lucide-react';
 
 export const AdminSettingsPage = () => {
@@ -31,6 +35,10 @@ export const AdminSettingsPage = () => {
   const [aiStatus, setAiStatus] = useState(null);
   const [isTestingAi, setIsTestingAi] = useState(false);
   const [aiTestResult, setAiTestResult] = useState(null);
+  const [apiKeyInput, setApiKeyInput] = useState('');
+  const [selectedModel, setSelectedModel] = useState('llama-3.3-70b-versatile');
+  const [showApiKey, setShowApiKey] = useState(false);
+  const [isSavingKey, setIsSavingKey] = useState(false);
 
   const loadDiagnostics = () => {
     api.getDiagnostics().then(res => {
@@ -39,6 +47,7 @@ export const AdminSettingsPage = () => {
 
     api.getAiStatus().then(res => {
       setAiStatus(res);
+      if (res.activeModel) setSelectedModel(res.activeModel);
     }).catch(err => console.error(err));
 
     api.getJobStats().then(res => setJobStats(res)).catch(err => console.error(err));
@@ -63,6 +72,31 @@ export const AdminSettingsPage = () => {
       showToast(err.message, 'error');
     } finally {
       setIsTestingAi(false);
+    }
+  };
+
+  const handleSaveApiKey = async (e) => {
+    e.preventDefault();
+    if (!apiKeyInput.trim()) {
+      showToast("Please enter a valid Groq API key", 'error');
+      return;
+    }
+    setIsSavingKey(true);
+    try {
+      const res = await api.configureAi({ apiKey: apiKeyInput.trim(), model: selectedModel });
+      setAiStatus(res);
+      setAiTestResult(res.testResult);
+      if (res.isConfigured && (res.testResult?.status === 'CONNECTED' || res.testResult?.status === 'CONNECTED_FALLBACK')) {
+        showToast("Groq API Key successfully configured and validated!", 'success');
+      } else {
+        showToast(res.testResult?.message || "Key saved. Check connection test results below.", 'info');
+      }
+      setApiKeyInput('');
+      loadDiagnostics();
+    } catch (err) {
+      showToast(err.message, 'error');
+    } finally {
+      setIsSavingKey(false);
     }
   };
 
@@ -242,6 +276,93 @@ export const AdminSettingsPage = () => {
           </div>
         )}
 
+        {/* Interactive Groq Cloud API Key & Model Configuration Panel */}
+        <div className="bg-slate-900/90 rounded-2xl p-5 border border-amber-400/30 space-y-4 text-xs">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+            <div className="flex items-center gap-2">
+              <Key className="w-4 h-4 text-amber-400" />
+              <span className="font-bold text-white text-sm">Configure Groq Cloud API Credentials</span>
+            </div>
+            <a
+              href="https://console.groq.com/keys"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-[11px] text-amber-300 hover:text-amber-200 underline font-semibold"
+            >
+              Get Free Groq API Key <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+
+          <form onSubmit={handleSaveApiKey} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="md:col-span-2 space-y-1">
+                <label className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider">
+                  Groq API Key (starts with gsk_)
+                </label>
+                <div className="relative">
+                  <input
+                    type={showApiKey ? "text" : "password"}
+                    value={apiKeyInput}
+                    onChange={(e) => setApiKeyInput(e.target.value)}
+                    placeholder={aiStatus?.maskedKey ? `Current Key: ${aiStatus.maskedKey}` : "Paste your gsk_... key here"}
+                    className="w-full text-xs font-mono px-3.5 py-2.5 bg-slate-950/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/50 pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowApiKey(!showApiKey)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                  >
+                    {showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+                <p className="text-[10px] text-slate-400">
+                  {aiStatus?.isConfigured 
+                    ? `Active Key: ${aiStatus.maskedKey || 'Configured'}` 
+                    : 'Currently empty. Running in resilient Local Heuristic Mode (no external calls).'}
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <label className="block text-[11px] font-bold text-slate-300 uppercase tracking-wider">
+                  Target LLaMA 3 Model
+                </label>
+                <select
+                  value={selectedModel}
+                  onChange={(e) => setSelectedModel(e.target.value)}
+                  className="w-full text-xs font-semibold px-3 py-2.5 bg-slate-950/80 border border-slate-700 rounded-xl text-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                >
+                  <option value="llama-3.3-70b-versatile">LLaMA 3.3 70B Versatile (Flagship - 128k)</option>
+                  <option value="llama-3.1-8b-instant">LLaMA 3.1 8B Instant (Ultra-Fast - 128k)</option>
+                  <option value="llama-3.2-3b-preview">LLaMA 3.2 3B Preview (Lightweight)</option>
+                  <option value="llama-3.2-1b-preview">LLaMA 3.2 1B Preview (Ultra-Compact)</option>
+                  <option value="mixtral-8x7b-32768">Mixtral 8x7B 32k (MoE Architecture)</option>
+                </select>
+                <p className="text-[10px] text-slate-400">
+                  Selected model will be used across Copilot, Gap & Syllabus engines.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between pt-1">
+              <div className="flex items-center gap-2 text-[11px] text-slate-300">
+                <span className={`w-2 h-2 rounded-full ${aiStatus?.isConfigured ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
+                <span>
+                  Status: <strong>{aiStatus?.isConfigured ? 'Live Cloud Inference Ready' : 'Local Heuristic Fallback'}</strong>
+                </span>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSavingKey || !apiKeyInput.trim()}
+                className="px-4 py-2 bg-amber-500 hover:bg-amber-400 disabled:bg-slate-700 disabled:text-slate-500 text-slate-950 font-black text-xs rounded-xl shadow-md transition flex items-center gap-1.5"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${isSavingKey ? 'animate-spin' : ''}`} />
+                {isSavingKey ? "Saving & Testing..." : "Save & Test Key"}
+              </button>
+            </div>
+          </form>
+        </div>
+
         {/* Configuration Details Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
           <div className="bg-slate-900/60 p-4 rounded-2xl border border-white/10 space-y-1">
@@ -249,16 +370,16 @@ export const AdminSettingsPage = () => {
             <span className="font-mono font-black text-amber-300 text-sm block">
               {aiStatus?.activeModel || 'llama-3.3-70b-versatile'}
             </span>
-            <span className="text-[11px] text-slate-400">Configurable via GROQ_MODEL in backend/.env</span>
+            <span className="text-[11px] text-slate-400">Configured in backend/.env</span>
           </div>
 
           <div className="bg-slate-900/60 p-4 rounded-2xl border border-white/10 space-y-1">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">API Authentication</span>
             <span className="font-bold text-slate-200 text-sm block">
-              {aiStatus?.isConfigured ? "API Key Configured" : "Placeholder / Empty"}
+              {aiStatus?.isConfigured ? (aiStatus.maskedKey || "API Key Configured") : "Local Fallback Mode"}
             </span>
             <span className="text-[11px] text-slate-400">
-              {aiStatus?.isConfigured ? "Live cloud inference enabled" : "Set GROQ_API_KEY in backend/.env"}
+              {aiStatus?.isConfigured ? "Live cloud inference enabled" : "Configure key above to activate live Groq"}
             </span>
           </div>
 
@@ -272,22 +393,24 @@ export const AdminSettingsPage = () => {
         {/* Supported Groq LLaMA 3 Models */}
         <div className="space-y-2 pt-1">
           <span className="text-[11px] font-bold text-amber-300 uppercase tracking-wider block">
-            Supported Meta LLaMA 3 Models on Groq
+            Active Meta LLaMA 3 & Vision Models on Groq
           </span>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2">
             {[
               { id: 'llama-3.3-70b-versatile', name: 'LLaMA 3.3 70B', ctx: '128k', tag: 'Flagship' },
               { id: 'llama-3.1-8b-instant', name: 'LLaMA 3.1 8B', ctx: '128k', tag: 'Ultra-Fast' },
-              { id: 'llama3-70b-8192', name: 'LLaMA 3 70B', ctx: '8k', tag: 'High-Capacity' },
-              { id: 'llama3-8b-8192', name: 'LLaMA 3 8B', ctx: '8k', tag: 'Standard' }
+              { id: 'llama-3.2-3b-preview', name: 'LLaMA 3.2 3B', ctx: '128k', tag: 'Lightweight' },
+              { id: 'llama-3.2-1b-preview', name: 'LLaMA 3.2 1B', ctx: '128k', tag: 'Compact' },
+              { id: 'mixtral-8x7b-32768', name: 'Mixtral 8x7B', ctx: '32k', tag: 'MoE' }
             ].map((m) => (
               <div 
                 key={m.id}
-                className={`p-3 rounded-xl border text-xs ${
-                  aiStatus?.activeModel === m.id
-                    ? 'bg-amber-400/10 border-amber-400/40 text-amber-200'
-                    : 'bg-white/5 border-white/10 text-slate-300'
+                className={`p-3 rounded-xl border text-xs cursor-pointer transition ${
+                  selectedModel === m.id
+                    ? 'bg-amber-400/15 border-amber-400/60 text-amber-200'
+                    : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10'
                 }`}
+                onClick={() => setSelectedModel(m.id)}
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="font-bold">{m.name}</span>
