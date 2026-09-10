@@ -68,6 +68,9 @@ export const api = {
     return fetchJson(`${AUTH_API_BASE_URL}/api/job-roles${query ? `?${query}` : ''}`);
   },
   getJobRoleById: (id) => fetchJson(`${AUTH_API_BASE_URL}/api/job-roles/${id}`),
+  getGapCourses: () => fetchJson(`${AUTH_API_BASE_URL}/api/courses`),
+  updateGapCourseCurriculum: (id, data) => fetchJson(`${AUTH_API_BASE_URL}/api/courses/${encodeURIComponent(id)}/skills`, { method: 'PATCH', body: JSON.stringify(data) }),
+  analyzeSkillGapLive: (roleId, courseId) => fetchJson(`${AUTH_API_BASE_URL}/api/skill-gap/analyze?role_id=${encodeURIComponent(roleId)}&course_id=${encodeURIComponent(courseId)}`),
 
   // Courses
   getCourses: (params = {}) => {

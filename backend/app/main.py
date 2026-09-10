@@ -10,6 +10,8 @@ from app.routes.users import router as users_router
 from app.routes.jobs import router as jobs_router
 from app.routes.skills import router as skills_router
 from app.routes.job_roles import router as job_roles_router
+from app.routes.courses import router as courses_router
+from app.routes.skill_gap import router as skill_gap_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -56,6 +58,8 @@ app.include_router(jobs_router)
 app.include_router(jobs_router, prefix="/api")
 app.include_router(skills_router, prefix="/api")
 app.include_router(job_roles_router, prefix="/api")
+app.include_router(courses_router, prefix="/api")
+app.include_router(skill_gap_router, prefix="/api")
 
 @app.get("/health", tags=["System"])
 def health_check():

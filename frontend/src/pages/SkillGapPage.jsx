@@ -30,9 +30,9 @@ export const SkillGapPage = () => {
 
   // Selected State
   const [selectedDistrict, setSelectedDistrict] = useState('Pune');
-  const [selectedSector, setSelectedSector] = useState('Information Technology');
-  const [selectedJobRoleId, setSelectedJobRoleId] = useState('role-data-analyst');
-  const [selectedCourseId, setSelectedCourseId] = useState('course-data-analytics');
+  const [selectedSector, setSelectedSector] = useState('All');
+  const [selectedJobRoleId, setSelectedJobRoleId] = useState('');
+  const [selectedCourseId, setSelectedCourseId] = useState('');
 
   // Analysis Result
   const [analysis, setAnalysis] = useState(null);
@@ -44,11 +44,16 @@ export const SkillGapPage = () => {
     Promise.all([
       api.getDistricts(),
       api.getJobRoles(),
-      api.getCourses()
+      api.getGapCourses()
     ]).then(([distRes, roleRes, courseRes]) => {
       setDistricts(distRes.districts || []);
       setJobRoles(roleRes.job_roles || []);
       setCourses(courseRes.courses || []);
+      if (roleRes.job_roles?.length) {
+        setSelectedJobRoleId(current => current || String(roleRes.job_roles[0].id));
+        setSelectedSector(current => current === 'All' ? roleRes.job_roles[0].sector : current);
+      }
+      if (courseRes.courses?.length) setSelectedCourseId(current => current || courseRes.courses[0].id);
 
       // Check URL search params for deep linking
       const params = new URLSearchParams(location.search);
@@ -61,13 +66,9 @@ export const SkillGapPage = () => {
 
   // Run Gap Engine
   const runAnalysis = () => {
+    if (!selectedJobRoleId || !selectedCourseId) return;
     setLoading(true);
-    api.analyzeSkillGap({
-      district: selectedDistrict,
-      sector: selectedSector,
-      job_role_id: selectedJobRoleId,
-      course_id: selectedCourseId
-    }).then(res => {
+    api.analyzeSkillGapLive(selectedJobRoleId, selectedCourseId).then(res => {
       setAnalysis(res.analysis);
       setLoading(false);
     }).catch(err => {
@@ -78,7 +79,7 @@ export const SkillGapPage = () => {
 
   // Trigger analysis when selections change
   useEffect(() => {
-    if (districts.length > 0 && jobRoles.length > 0 && courses.length > 0) {
+    if (jobRoles.length > 0 && courses.length > 0 && selectedJobRoleId && selectedCourseId) {
       runAnalysis();
     }
   }, [selectedDistrict, selectedSector, selectedJobRoleId, selectedCourseId, districts, jobRoles, courses]);
@@ -91,13 +92,13 @@ export const SkillGapPage = () => {
     }
 
     setUpdatingCurriculum(true);
-    api.updateCourseCurriculum(analysis.course_id, {
+    api.updateGapCourseCurriculum(analysis.course_id, {
       added_skills: analysis.missing_skills
     }).then(_res => {
       showToast(`Successfully added ${analysis.missing_skills.join(', ')} to course curriculum!`, 'success');
       setUpdatingCurriculum(false);
       // Refresh course list and re-run analysis
-      api.getCourses().then(cRes => setCourses(cRes.courses || []));
+      api.getGapCourses().then(cRes => setCourses(cRes.courses || []));
       runAnalysis();
     }).catch(err => {
       showToast(err.message, 'error');
@@ -187,9 +188,10 @@ export const SkillGapPage = () => {
               }}
               className="w-full text-xs font-semibold border border-slate-300 rounded-xl px-3 py-2 bg-slate-50 text-slate-900 focus:ring-2 focus:ring-blue-500"
             >
-              <option value="Information Technology">Information Technology</option>
-              <option value="Automotive & EV">Automotive & EV</option>
-              <option value="Manufacturing & Automation">Manufacturing & Automation</option>
+              <option value="All">All Sectors</option>
+              {Array.from(new Set(jobRoles.map(role => role.sector))).sort().map(sector => (
+                <option key={sector} value={sector}>{sector}</option>
+              ))}
             </select>
           </div>
 
@@ -205,7 +207,7 @@ export const SkillGapPage = () => {
               className="w-full text-xs font-semibold border border-slate-300 rounded-xl px-3 py-2 bg-slate-50 text-slate-900 focus:ring-2 focus:ring-blue-500"
             >
               {jobRoles
-                .filter(r => r.sector === selectedSector)
+                .filter(r => selectedSector === 'All' || r.sector === selectedSector)
                 .map(r => (
                   <option key={r.id} value={r.id}>{r.role_name}</option>
                 ))}
@@ -224,7 +226,7 @@ export const SkillGapPage = () => {
               className="w-full text-xs font-semibold border border-slate-300 rounded-xl px-3 py-2 bg-slate-50 text-slate-900 focus:ring-2 focus:ring-blue-500"
             >
               {filteredCourses.map(c => (
-                <option key={c.id} value={c.id}>{c.course_name} ({c.district})</option>
+                <option key={c.id} value={c.id}>{c.course_name} ({c.district || 'Statewide'})</option>
               ))}
             </select>
           </div>
@@ -294,7 +296,7 @@ export const SkillGapPage = () => {
                     {analysis.missing_skills.map((s, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-xs font-bold text-rose-900 bg-white/80 px-2.5 py-1.5 rounded-lg border border-rose-200">
                         <XCircle className="w-4 h-4 text-rose-600 shrink-0" />
-                        <span>{s}</span>
+                        <span>{s} <span className="font-normal text-rose-700">(required by industry, absent from curriculum)</span></span>
                       </div>
                     ))}
                   </div>
@@ -323,7 +325,7 @@ export const SkillGapPage = () => {
                 </p>
               </div>
               <span className="text-xs font-semibold px-2.5 py-1 bg-white rounded border text-slate-600">
-                Formula: Gap % = (Missing / Total) × 100
+                Weighted coverage: covered weight / required weight
               </span>
             </div>
 

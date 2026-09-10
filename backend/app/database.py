@@ -66,6 +66,7 @@ def init_db():
     from app.models.role import Role
     from app.models.user import User
     from app.models.job import Job, JobCollectionRun
+    from app.services.course_service import seed_courses
 
     try:
         Base.metadata.create_all(bind=engine)
@@ -131,6 +132,7 @@ def init_db():
                     )
                     db.add(new_u)
             db.commit()
+            seed_courses(db)
             logger.info("Default roles and demo accounts successfully checked/seeded.")
         finally:
             db.close()

@@ -42,6 +42,23 @@
 11. [Verification, Testing & Performance Benchmarks](#-verification-testing--performance-benchmarks)
 12. [Future Roadmap & State Rollout Strategy](#-future-roadmap--state-rollout-strategy)
 
+## Module 5 — Dynamic Skill Gap Analysis
+
+The Skill Gap page now compares persisted industry role requirements against persisted course curricula. Course records are seeded from the existing `backend/data/courses.json` dataset into `courses` and `course_skills`; role requirements come from `job_roles` and `role_skills`, and both sides resolve through the normalized `skills` table.
+
+The engine returns required, covered, missing, and high-priority missing skills, plus a matrix explaining that each gap is required by the selected industry role but absent from the selected curriculum. Coverage is calculated as covered role-skill weight divided by total role-skill weight. `required` and `preferred` importance values use weights `1.0` and `0.75`; `mentioned` falls back to `1.0` because no stronger signal is available. Gap percentage is `100 - coverage`.
+
+### Module 5 API
+
+- `GET /api/courses`
+- `GET /api/courses/{course_id}`
+- `GET /api/skill-gap/role/{role_id}?course_id={course_id}`
+- `GET /api/skill-gap/course/{course_id}?role_id={role_id}`
+- `GET /api/skill-gap/analyze?role_id={role_id}&course_id={course_id}`
+- `POST /api/skill-gap/analyze` with `{ "role_id": 1, "course_id": "course-data-analytics" }`
+
+Run the backend migration from `backend` with `python -m alembic upgrade head`; then start FastAPI on port `8000` and the Vite frontend on port `5173`.
+
 ---
 
 ## 🏛 Executive Summary
