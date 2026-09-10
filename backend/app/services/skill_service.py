@@ -79,12 +79,12 @@ def process_job_skills(db: Session, job: Job) -> int:
         normalized_name = normalize_skill(name).lower()
         skill = db.query(Skill).filter(Skill.normalized_name == normalized_name).first()
         if not skill:
-            skill = Skill(name=name, normalized_name=normalized_name, category=category)
+            skill = Skill(name=name, normalized_name=normalized_name, category=category, created_at=datetime.now(timezone.utc))
             db.add(skill)
             db.flush()
         exists = db.query(JobSkill).filter(JobSkill.job_id == job.id, JobSkill.skill_id == skill.id).first()
         if not exists:
-            db.add(JobSkill(job_id=job.id, skill_id=skill.id, importance="mentioned", source="rule_based"))
+            db.add(JobSkill(job_id=job.id, skill_id=skill.id, importance="mentioned", source="rule_based", created_at=datetime.now(timezone.utc)))
     job.skills_processed_at = datetime.now(timezone.utc)
     logger.info("Processed job %s: extracted %s skills", job.id, len(skills))
     return len(skills)

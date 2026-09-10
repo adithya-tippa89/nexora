@@ -55,10 +55,10 @@ export const api = {
   // Skills
   getSkills: (params = {}) => {
     const query = new URLSearchParams(params).toString();
-    return fetchJson(`${API_BASE_URL}/skills${query ? `?${query}` : ''}`);
+    return fetchJson(`${AUTH_API_BASE_URL}/api/skills${query ? `?${query}` : ''}`);
   },
-  addSkill: (data) => fetchJson(`${API_BASE_URL}/skills`, { method: 'POST', body: JSON.stringify(data) }),
-  getSkillDemand: () => fetchJson(`${API_BASE_URL}/skills/demand`),
+  addSkill: (data) => fetchJson(`${AUTH_API_BASE_URL}/api/skills`, { method: 'POST', body: JSON.stringify(data) }),
+  getSkillDemand: () => fetchJson(`${AUTH_API_BASE_URL}/api/skills/demand`),
   getJobSkills: (id) => fetchJson(`${JOBS_API_BASE_URL}/jobs/${id}/skills`),
   processExistingSkills: () => fetchJson(`${API_BASE_URL}/skills/process-existing`, { method: 'POST' }),
 

@@ -48,14 +48,15 @@ def process_job_role(db: Session, job: Job) -> bool:
     normalized_name = normalize_role(role_name).lower()
     role = db.query(JobRole).filter(JobRole.normalized_name == normalized_name).first()
     if not role:
-        role = JobRole(name=role_name, normalized_name=normalized_name, sector=sector, description=f"{role_name} roles in {sector}.")
+        role = JobRole(name=role_name, normalized_name=normalized_name, sector=sector, description=f"{role_name} roles in {sector}.", created_at=datetime.now(timezone.utc))
         db.add(role)
         db.flush()
     job.job_role_id = role.id
     for job_skill in db.query(JobSkill).filter(JobSkill.job_id == job.id).all():
         exists = db.query(RoleSkill).filter(RoleSkill.job_role_id == role.id, RoleSkill.skill_id == job_skill.skill_id).first()
         if not exists:
-            db.add(RoleSkill(job_role_id=role.id, skill_id=job_skill.skill_id, importance=job_skill.importance))
+            db.add(RoleSkill(job_role_id=role.id, skill_id=job_skill.skill_id, importance=job_skill.importance, created_at=datetime.now(timezone.utc)))
+    db.flush()
     job.role_processed_at = datetime.now(timezone.utc)
     return True
 

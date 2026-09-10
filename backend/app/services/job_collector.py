@@ -43,15 +43,17 @@ def collect_jobs(db: Session, source_name: str | None = None) -> dict:
                 result["jobs_updated"] += int(changed)
                 result["duplicates_skipped"] += int(not changed)
             else:
-                db.add(Job(**cleaned, last_seen_at=now, is_active=True))
+                db.add(Job(**cleaned, created_at=now, updated_at=now, last_seen_at=now, is_active=True))
                 result["jobs_inserted"] += 1
         db.flush()
         for job in db.query(Job).filter(Job.skills_processed_at.is_(None)).all():
             process_job_skills(db, job)
         for job in db.query(Job).filter(Job.role_processed_at.is_(None)).all():
             process_job_role(db, job)
+        result["status"] = "success"
         run.status = "success"
     except Exception as exc:
+        db.rollback()
         logger.exception("Job collection failed for source %s", source_name)
         result["errors"].append(str(exc))
         run.error_message = str(exc)

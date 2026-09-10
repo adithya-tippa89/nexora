@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint, func
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint, text
 from sqlalchemy.orm import relationship
 from app.database import Base
 
@@ -12,7 +12,7 @@ class JobRole(Base):
     normalized_name = Column(String(255), nullable=False, index=True)
     sector = Column(String(100), nullable=False, index=True)
     description = Column(Text, nullable=True)
-    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=text("CURRENT_TIMESTAMP"), nullable=False)
     jobs = relationship("Job", backref="job_role")
     role_skills = relationship("RoleSkill", back_populates="job_role", cascade="all, delete-orphan")
 
@@ -25,6 +25,6 @@ class RoleSkill(Base):
     job_role_id = Column(Integer, ForeignKey("job_roles.id", ondelete="CASCADE"), nullable=False, index=True)
     skill_id = Column(Integer, ForeignKey("skills.id", ondelete="CASCADE"), nullable=False, index=True)
     importance = Column(String(20), nullable=False, default="mentioned")
-    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=text("CURRENT_TIMESTAMP"), nullable=False)
     job_role = relationship("JobRole", back_populates="role_skills")
     skill = relationship("Skill")
