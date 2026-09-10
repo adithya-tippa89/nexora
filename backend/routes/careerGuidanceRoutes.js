@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const store = require('../database/dataStore');
 const groqService = require('../services/groqService');
+const { COURSE_CURRICULA, getSyllabusForCourses, generateRoadmapFromCourses } = require('../services/courseCurriculum');
 
 // Dynamic roadmap curriculum catalog by role
 function getStructuredRoadmapForRole(roleId, roleName, userSkills = []) {
@@ -520,58 +521,120 @@ function getStructuredRoadmapForRole(roleId, roleName, userSkills = []) {
   ];
 }
 
+// Get all detailed course curricula
+router.get('/curricula', (req, res) => {
+  res.json({
+    curricula: COURSE_CURRICULA,
+    total: Object.keys(COURSE_CURRICULA).length
+  });
+});
+
 // Student Career Guidance Assessment Endpoint
 router.post('/assess', async (req, res) => {
-  const { current_skills, target_role_id, district, education_level } = req.body;
+  const { current_skills, target_role_id, district, education_level, selected_course_ids } = req.body;
   const userSkills = (current_skills || []).map(s => s.toLowerCase());
 
   const jobRoles = store.get('job_roles') || [];
+  const allCourses = store.get('courses') || [];
+
   const targetRole = jobRoles.find(r => r.id === target_role_id) || jobRoles[0] || {
-    id: "role-data-analyst",
-    role_name: "Data Analyst",
+    id: "role-ai-engineer",
+    role_name: "AI & Machine Learning Engineer",
     sector: "Information Technology",
-    avg_salary_lpa: 6.8,
-    open_vacancies: 6800,
+    avg_salary_lpa: 10.5,
+    open_vacancies: 5400,
     skills: []
   };
 
-  const requiredRoleSkills = targetRole.skills || [];
+  // Determine active course IDs: from selected_course_ids or default from role/sector
+  let activeCourseIds = Array.isArray(selected_course_ids) && selected_course_ids.length > 0
+    ? selected_course_ids
+    : [];
+
+  if (activeCourseIds.length === 0) {
+    // Map target role to recommended primary course
+    const normalizedRoleId = (targetRole.id || '').toLowerCase();
+    const normalizedRoleName = (targetRole.role_name || '').toLowerCase();
+
+    if (normalizedRoleId.includes('ai') || normalizedRoleName.includes('ai') || normalizedRoleName.includes('machine learning')) {
+      activeCourseIds = ['course-ai-foundations'];
+    } else if (normalizedRoleId.includes('cloud') || normalizedRoleId.includes('devops') || normalizedRoleId.includes('web') || normalizedRoleName.includes('full stack')) {
+      activeCourseIds = ['course-fullstack-cloud'];
+    } else if (normalizedRoleId.includes('data') || normalizedRoleName.includes('data') || normalizedRoleName.includes('analyst')) {
+      activeCourseIds = ['course-data-analytics'];
+    } else if (normalizedRoleId.includes('ev') || normalizedRoleName.includes('ev') || normalizedRoleName.includes('battery')) {
+      activeCourseIds = ['course-ev-powertrain'];
+    } else if (normalizedRoleId.includes('robot') || normalizedRoleName.includes('robot') || normalizedRoleName.includes('automation')) {
+      activeCourseIds = ['course-industrial-robotics'];
+    } else if (normalizedRoleId.includes('cyber') || normalizedRoleName.includes('cyber') || normalizedRoleName.includes('security')) {
+      activeCourseIds = ['course-cybersecurity'];
+    } else {
+      activeCourseIds = ['course-ai-foundations'];
+    }
+  }
+
+  // 1. Generate dynamic course-based learning progression roadmap
+  const roadmapSteps = generateRoadmapFromCourses(activeCourseIds, current_skills || [], targetRole);
+
+  // 2. Fetch complete unit-by-unit syllabi with topics, labs & tools for selected courses
+  const courseSyllabi = getSyllabusForCourses(activeCourseIds);
+
+  // 3. Assemble detailed course objects
+  const selectedCoursesDetail = activeCourseIds.map(id => {
+    const fromStore = allCourses.find(c => c.id === id);
+    const fromCurricula = COURSE_CURRICULA[id];
+    if (fromStore && fromCurricula) return { ...fromStore, ...fromCurricula };
+    if (fromCurricula) return fromCurricula;
+    if (fromStore) return fromStore;
+    return { id, course_name: id, sector: targetRole.sector, duration: "6 Months" };
+  });
+
+  // 4. Calculate diagnostic skill coverage based on selected courses and target role
+  const targetRoleSkills = targetRole.skills || [];
   const skillsUserHas = [];
   const skillsUserNeeds = [];
 
-  requiredRoleSkills.forEach(reqSkill => {
+  // Skills required by role and covered by courses
+  const skillsSetToAssess = new Set();
+  targetRoleSkills.forEach(s => skillsSetToAssess.add(s.skill_name));
+  selectedCoursesDetail.forEach(c => {
+    (c.skills_covered || []).forEach(sk => skillsSetToAssess.add(sk));
+  });
+
+  skillsSetToAssess.forEach(skillName => {
     const hasSkill = userSkills.some(us => 
-      us.includes(reqSkill.skill_name.toLowerCase()) || 
-      reqSkill.skill_name.toLowerCase().includes(us)
+      us.includes(skillName.toLowerCase()) || 
+      skillName.toLowerCase().includes(us)
     );
     if (hasSkill) {
-      skillsUserHas.push(reqSkill.skill_name);
+      skillsUserHas.push(skillName);
     } else {
-      skillsUserNeeds.push(reqSkill.skill_name);
+      skillsUserNeeds.push(skillName);
     }
   });
 
-  const total = requiredRoleSkills.length || 1;
-  const careerMatch = Math.round((skillsUserHas.length / total) * 100);
+  const totalSkillsCount = skillsSetToAssess.size || 1;
+  const careerMatch = Math.round((skillsUserHas.length / totalSkillsCount) * 100);
 
-  // Generate dynamic, course-specific, role-specific learning roadmap
-  const allCourses = store.get('courses') || [];
-  const roadmapSteps = getStructuredRoadmapForRole(targetRole.id, targetRole.role_name, current_skills || []);
-
-  // Filter recommended courses
+  // 5. Filter all recommended verified courses across Maharashtra
   const recommendedCourses = allCourses.filter(c => 
-    c.sector === targetRole.sector || 
-    (targetRole.sector === 'Information Technology' && c.sector === 'Information Technology')
+    c.status !== 'Low Demand / Obsolete' && (
+      c.sector === targetRole.sector || 
+      activeCourseIds.includes(c.id) ||
+      (targetRole.sector === 'Information Technology' && c.sector === 'Information Technology')
+    )
   );
 
-  // Fetch Groq LLaMA 3 personalized mentor advice
+  // 6. Fetch Groq LLaMA 3 personalized mentor advice with selected courses context
   let mentorAdvice = null;
   try {
+    const courseNamesStr = selectedCoursesDetail.map(c => c.course_name).join(', ');
     mentorAdvice = await groqService.generateCareerAdvice({
       userSkills: current_skills || [],
       targetRole,
       district: district || "Pune",
-      educationLevel: education_level || "Diploma"
+      educationLevel: education_level || "Diploma",
+      selectedCourses: courseNamesStr
     });
   } catch (err) {
     console.warn('[CareerGuidanceRoutes] Groq mentor advice warning:', err.message);
@@ -588,6 +651,9 @@ router.post('/assess', async (req, res) => {
       skills_you_need: skillsUserNeeds,
       average_salary_lpa: targetRole.avg_salary_lpa,
       open_vacancies: targetRole.open_vacancies,
+      selected_course_ids: activeCourseIds,
+      selected_courses: selectedCoursesDetail,
+      course_syllabi: courseSyllabi,
       roadmap: roadmapSteps,
       recommended_courses: recommendedCourses,
       ai_mentor: mentorAdvice,

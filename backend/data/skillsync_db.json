@@ -572,6 +572,23 @@
   ],
   "courses": [
     {
+      "id": "course-1789079570896",
+      "course_name": "power BI",
+      "institution_name": "powerbi institution",
+      "sector": "Information Technology",
+      "district": "Pune",
+      "duration": "6 Months",
+      "placement_rate": 75,
+      "enrollment_count": 120,
+      "industry_match_score": 80,
+      "status": "High Demand",
+      "skills_covered": [
+        "powerbi"
+      ],
+      "missing_skills": [],
+      "recommendation": "Course created with aligned syllabus."
+    },
+    {
       "id": "course-data-analytics",
       "course_name": "Diploma in Data Analytics",
       "institution_name": "Maharashtra State Skill Institute (MSSI)",
@@ -1011,8 +1028,8 @@
         "PyTorch"
       ],
       "trainer_skill_gap": 55,
-      "upskilling_status": "Identified",
-      "assigned_fdp": "NASSCOM - State AI Master Trainer Certification"
+      "upskilling_status": "Enrolled in FDP",
+      "assigned_fdp": "AWS Certified Solutions Architect + Docker Bootcamp (State Cohort 4)"
     },
     {
       "id": "tr-3",

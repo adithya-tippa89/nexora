@@ -327,29 +327,32 @@ Provide an actionable, authoritative curriculum upgrade plan.`;
   /**
    * Personalized Student Career Guidance & Mentorship
    */
-  async generateCareerAdvice({ userSkills, targetRole, district, educationLevel }) {
+  async generateCareerAdvice({ userSkills, targetRole, district, educationLevel, selectedCourses }) {
     const current = userSkills && userSkills.length > 0 ? userSkills.join(', ') : 'Basic technical foundations';
     const roleName = targetRole?.role_name || 'Data Analyst';
     const districtName = district || 'Pune';
+    const coursesStr = selectedCourses || 'State Accredited Technical Programs';
 
     const systemPrompt = `You are the SkillSync Maharashtra AI Career Counselor powered by Groq LLaMA 3.
 Provide inspiring, highly practical, and localized career mentoring for an aspiring student in Maharashtra.
+Take into account the specific courses they have selected and link the advice directly to those course topics and industry demands.
 Return clean JSON with these exact keys:
 {
-  "counselor_summary": "Encouraging personalized summary of candidate standing",
+  "counselor_summary": "Encouraging personalized summary of candidate standing and chosen courses",
   "fast_track_milestones": ["Milestone 1 (Weeks 1-4)", "Milestone 2 (Weeks 5-8)", "Milestone 3 (Weeks 9-12)"],
-  "high_impact_portfolio_project": "A real-world project idea relevant to Maharashtra industries",
+  "high_impact_portfolio_project": "A real-world project idea directly combining the selected courses and relevant to Maharashtra industries",
   "interview_mastery_tips": ["Tip 1", "Tip 2"],
   "local_employer_targets": ["Company 1", "Company 2"]
 }`;
 
     const userPrompt = `Candidate Profile:
 - Education: ${educationLevel || 'Diploma / Graduate'}
+- Selected Course(s): ${coursesStr}
 - Current Skills: ${current}
 - Target Goal: ${roleName}
 - Target Region: ${districtName}, Maharashtra
 
-Generate tailored guidance.`;
+Generate tailored guidance directly addressing their selected course path.`;
 
     if (this.isConfigured()) {
       const modelsToTry = this.getModelsToTry();
