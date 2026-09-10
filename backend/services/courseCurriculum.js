@@ -598,6 +598,71 @@ function getSyllabusForCourses(courseIds = []) {
 }
 
 /**
+ * Generate rich, articulate, professional explanation for each roadmap stage
+ */
+function getStageDetailedExplanation(courseId, unitNumber, title, focus) {
+  const norm = ((title || '') + ' ' + (courseId || '')).toLowerCase();
+  if (norm.includes('math') || norm.includes('python')) {
+    return `Establishes computational and mathematical rigor. Candidates transition from abstract mathematical principles (linear algebra, vector spaces, dot products, and multivariable gradient calculus) into high-performance Python code using NumPy and Pandas. This foundation is essential for engineering scalable data transformations, understanding loss function optimization, and preparing production feature matrices required by state industries.`;
+  }
+  if (norm.includes('machine learning') || norm.includes('statistical')) {
+    return `Focuses on production-grade machine learning pipelines and statistical modeling. Candidates master the complete supervised and unsupervised modeling lifecycle, feature engineering, bias-variance tradeoffs, ensemble gradient boosting (XGBoost/LightGBM), and automated hyperparameter optimization using Optuna across complex industrial datasets.`;
+  }
+  if (norm.includes('deep learning') || norm.includes('vision') || norm.includes('pytorch')) {
+    return `Delivers deep technical proficiency in modern neural network architectures and GPU-accelerated computing with PyTorch. Students construct convolutional networks from scratch, fine-tune pretrained vision backbones (ResNet, YOLOv10), and deploy real-time object detection models to solve industrial automated defect inspection challenges.`;
+  }
+  if (norm.includes('generative') || norm.includes('language model') || norm.includes('prompt')) {
+    return `Covers cutting-edge generative AI, Transformer self-attention mechanisms, and agentic workflows. Candidates learn vector database indexing (ChromaDB), semantic re-ranking, and Retrieval-Augmented Generation (RAG) using LangChain and high-speed Groq LLaMA 3 inference, enabling the design of intelligent multi-lingual enterprise copilots.`;
+  }
+  if (norm.includes('mlops') || norm.includes('serving') || norm.includes('cloud deployment')) {
+    return `Bridges research models into high-availability cloud microservices. Focuses on asynchronous serving with FastAPI, model serialization with ONNX Runtime, multi-stage Docker containerization, and automated CI/CD deployment with data drift monitoring (Evidently AI) for enterprise reliability.`;
+  }
+  if (norm.includes('html') || norm.includes('web standards') || norm.includes('javascript')) {
+    return `Builds deep core foundations in modern web architecture, semantic HTML5, accessible UI systems, and asynchronous ES6+ JavaScript. Candidates master modern asynchronous control flow, DOM performance, and Git collaborative engineering workflows demanded by digital engineering firms across Mumbai and Pune.`;
+  }
+  if (norm.includes('react') || norm.includes('frontend')) {
+    return `Mastery of declarative component architecture using React 19. Students build responsive, accessible single-page applications with advanced hooks, client routing, server state caching via TanStack Query, and robust client-side schema validation using Zod and Tailwind CSS.`;
+  }
+  if (norm.includes('backend') || norm.includes('node') || norm.includes('api')) {
+    return `Engineers robust, enterprise-grade REST APIs and microservices. Focuses on event-driven Node.js/Express and asynchronous FastAPI Python frameworks, implementing secure JWT authentication, role-based access control (RBAC), and bulletproof rate limiting and security headers.`;
+  }
+  if (norm.includes('database') || norm.includes('sql') || norm.includes('postgresql')) {
+    return `Delivers comprehensive mastery of relational and NoSQL database architecture. Candidates design normalized schemas, write high-performance multi-table analytical SQL queries, optimize queries with B-Tree indexes, and integrate Prisma ORM with Redis in-memory caching.`;
+  }
+  if (norm.includes('devops') || norm.includes('docker') || norm.includes('ci/cd')) {
+    return `Productionizes web applications using modern cloud-native DevOps principles. Covers multi-stage Docker container packaging, Nginx reverse proxy configuration, SSL/TLS certificates, and automated continuous delivery pipelines with GitHub Actions and AWS cloud infrastructure.`;
+  }
+  if (norm.includes('high-voltage') || norm.includes('safety') || norm.includes('electrical')) {
+    return `Mandatory safety protocols and technical foundations for high-voltage electric vehicle propulsion circuits. Students master ISO 6469 and NFPA 70E standards, manual service disconnect procedures, CAT IV personal protective equipment, and precision insulation resistance diagnostics.`;
+  }
+  if (norm.includes('battery') || norm.includes('bms') || norm.includes('lithium')) {
+    return `In-depth engineering of Lithium-ion battery packs (LFP/NMC chemistries) and Battery Management Systems (BMS). Covers cell balancing algorithms, thermal runaway mitigation, and algorithmic estimation of State of Charge (SoC) and State of Health (SoH) to ensure maximum vehicle pack longevity.`;
+  }
+  if (norm.includes('motor') || norm.includes('inverter') || norm.includes('traction')) {
+    return `Focuses on electric traction motors (PMSM/Induction) and power electronics inverters. Students calibrate resolver position sensors, tune Silicon Carbide (SiC) MOSFET gate drivers, and program regenerative braking deceleration torque blending.`;
+  }
+  if (norm.includes('can-bus') || norm.includes('obd') || norm.includes('diagnostics')) {
+    return `Automotive network telematics and diagnostic troubleshooting. Candidates decode real-time CAN-Bus and CAN-FD message frames, perform OBD-II / UDS diagnostic trouble code (DTC) triage, and repair automotive wiring harnesses using environmental sealing.`;
+  }
+  if (norm.includes('charging') || norm.includes('arai') || norm.includes('ais-156')) {
+    return `Ensures vehicle regulatory compliance under ARAI AIS-156 and AIS-038 Indian automotive safety mandates. Covers Combined Charging System (CCS-2) communication sequencing and comprehensive pre-delivery road validation protocols.`;
+  }
+  if (norm.includes('plc') || norm.includes('ladder logic')) {
+    return `Industrial programmable logic controller (PLC) automation. Candidates master hardware memory mapping, IEC 61131-3 ladder logic programming, and hardware configuration in Siemens TIA Portal controlling multi-stage manufacturing conveyors and actuators.`;
+  }
+  if (norm.includes('scada') || norm.includes('hmi')) {
+    return `Supervisory control and human-machine interface (HMI) engineering. Focuses on designing operator touchscreens, industrial communication protocols (Modbus TCP, PROFINET, OPC-UA), and real-time alarm management according to ISA-18.2 standards.`;
+  }
+  if (norm.includes('robot') || norm.includes('arm')) {
+    return `Comprehensive kinematics and trajectory programming of 6-axis industrial articulated robot arms (ABB / KUKA / FANUC). Candidates master Tool Center Point (TCP) calibration, coordinate workobjects, and continuous path motion for robotic welding and palletizing.`;
+  }
+  if (norm.includes('cyber') || norm.includes('network defense') || norm.includes('security')) {
+    return `Defensive security architecture, packet analysis, and threat containment. Covers deep Wireshark protocol inspection, firewall configuration, vulnerability assessment with Nessus, OWASP Top 10 remediation, and mandatory 6-hour CERT-In incident disclosure protocols.`;
+  }
+  return `Delivers specialized industry competencies in ${title}. Focuses on ${focus || 'hands-on problem solving'}, providing candidates with the practical skills, analytical reasoning, and software toolchains required by leading employers across Maharashtra.`;
+}
+
+/**
  * Build a dynamic, chronological, step-by-step roadmap tailored specifically
  * to the courses the student has selected.
  */
@@ -640,6 +705,8 @@ function generateRoadmapFromCourses(selectedCourseIds = [], userSkills = [], tar
         if (hasSkill('plc') && curr.id.includes('robotics')) isCompleted = true;
       }
 
+      const explanation = getStageDetailedExplanation(curr.id, idx + 1, unit.title, unit.focus);
+
       return {
         step: idx + 1,
         title: unit.title,
@@ -647,6 +714,7 @@ function generateRoadmapFromCourses(selectedCourseIds = [], userSkills = [], tar
         course_name: curr.course_name,
         duration: unit.duration,
         focus: unit.focus,
+        detailed_explanation: explanation,
         topics: unit.topics,
         milestone_project: unit.practical_lab || curr.capstone_project,
         key_tools: unit.key_tools || [],
@@ -658,7 +726,6 @@ function generateRoadmapFromCourses(selectedCourseIds = [], userSkills = [], tar
   }
 
   // If multiple courses are selected, build an integrated, prioritized progression:
-  // We sequence units: Foundations -> Core Implementations -> Advanced Specializations -> Integration Capstone
   const combinedSteps = [];
   let stepIndex = 1;
 
@@ -674,6 +741,7 @@ function generateRoadmapFromCourses(selectedCourseIds = [], userSkills = [], tar
         course_name: c.course_name,
         duration: u.duration,
         focus: u.focus,
+        detailed_explanation: getStageDetailedExplanation(c.id, 1, u.title, u.focus),
         topics: u.topics,
         milestone_project: u.practical_lab,
         key_tools: u.key_tools,
@@ -697,6 +765,7 @@ function generateRoadmapFromCourses(selectedCourseIds = [], userSkills = [], tar
           course_name: c.course_name,
           duration: u.duration,
           focus: u.focus,
+          detailed_explanation: getStageDetailedExplanation(c.id, uIdx + 1, u.title, u.focus),
           topics: u.topics,
           milestone_project: u.practical_lab,
           key_tools: u.key_tools,
@@ -721,6 +790,7 @@ function generateRoadmapFromCourses(selectedCourseIds = [], userSkills = [], tar
           course_name: c.course_name,
           duration: u.duration,
           focus: u.focus,
+          detailed_explanation: getStageDetailedExplanation(c.id, uIdx + 1, u.title, u.focus),
           topics: u.topics,
           milestone_project: u.practical_lab,
           key_tools: u.key_tools,

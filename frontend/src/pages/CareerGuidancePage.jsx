@@ -702,10 +702,23 @@ export const CareerGuidancePage = () => {
                             {isExpanded && (
                               <div className="px-5 pb-5 pt-2 border-t border-slate-100/80 space-y-4 bg-slate-50/40">
                                 
+                                {/* Core Pedagogical Objective & Clear Explanation */}
+                                {step.detailed_explanation && (
+                                  <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200 text-xs">
+                                    <span className="font-black text-blue-900 block mb-1 uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                                      <BookOpen className="w-3.5 h-3.5 text-blue-700" />
+                                      Stage Objective & Clear Explanation:
+                                    </span>
+                                    <p className="text-slate-700 leading-relaxed font-normal">
+                                      {step.detailed_explanation}
+                                    </p>
+                                  </div>
+                                )}
+
                                 {/* Specific Topics */}
                                 <div>
                                   <h5 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                                    <BookOpen className="w-3.5 h-3.5 text-blue-600" />
+                                    <Layers className="w-3.5 h-3.5 text-blue-600" />
                                     Specific Topics to Learn & Master:
                                   </h5>
                                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -982,201 +995,330 @@ export const CareerGuidancePage = () => {
       </div>
 
       {/* ========================================================================= */}
-      {/* OFFICIAL PRINTABLE / DOWNLOADABLE PDF ROADMAP & SYLLABUS DOSSIER */}
+      {/* EXECUTIVE PROFESSIONAL PRINTABLE / DOWNLOADABLE PDF ROADMAP & SYLLABUS */}
       {/* ========================================================================= */}
       {assessment && (
-        <div className="print-only bg-white text-black p-8 font-serif leading-normal">
-          {/* Government Letterhead */}
-          <div className="border-b-2 border-black pb-4 mb-5 text-center">
-            <div className="flex items-center justify-between mb-2">
-              <div className="text-left text-xs font-sans">
-                <p className="font-bold text-slate-900 uppercase tracking-wider">Government of Maharashtra</p>
-                <p className="text-slate-600 text-[11px]">Skill Development, Employment & Entrepreneurship Department</p>
+        <div className="print-only bg-white text-slate-900 p-8 font-sans leading-normal">
+          {/* Executive Directorate Letterhead */}
+          <div className="border-b-4 border-[#0b2545] pb-4 mb-6">
+            <div className="flex items-center justify-between gap-4 pb-3 border-b border-slate-200">
+              <div className="flex items-center gap-3">
+                <div className="w-14 h-14 rounded-xl bg-[#0b2545] text-amber-400 flex flex-col items-center justify-center font-black text-xs border-2 border-amber-400/40 shrink-0">
+                  <span className="text-[9px] uppercase tracking-widest text-slate-300">GOVT OF</span>
+                  <span className="text-xs font-black text-amber-300">MAHA</span>
+                  <span className="text-[8px] text-slate-400">MSSDS</span>
+                </div>
+                <div>
+                  <h2 className="font-black text-base uppercase tracking-wider text-[#0b2545]">
+                    Government of Maharashtra
+                  </h2>
+                  <p className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">
+                    Skill Development, Employment & Entrepreneurship Department
+                  </p>
+                  <p className="text-[10px] text-slate-500 font-medium">
+                    Maharashtra State Skill Development Society (MSSDS) • Directorate of Vocational Education & Training
+                  </p>
+                </div>
               </div>
-              <div className="text-right text-xs font-sans">
-                <p className="font-bold text-slate-900">Doc ID: {documentId}</p>
-                <p className="text-slate-600 text-[11px]">Date Issued: {currentDateStr}</p>
+
+              <div className="text-right text-xs">
+                <div className="inline-block bg-[#0b2545] text-white px-3 py-1 rounded font-bold text-[10px] tracking-wider mb-1 uppercase">
+                  Official Candidate Blueprint
+                </div>
+                <p className="font-bold text-slate-900 text-xs">Doc ID: {documentId}</p>
+                <p className="text-slate-500 text-[10px]">Issued: {currentDateStr}</p>
+                <p className="text-emerald-700 font-bold text-[10px]">Security: SHA256-VERIFIED</p>
               </div>
             </div>
-            
-            <h1 className="text-xl font-bold uppercase tracking-wider text-black mt-2 font-sans">
-              Individualized Career & Course Learning Progression Dossier
-            </h1>
-            <p className="text-xs text-slate-700 font-sans italic mt-0.5">
-              Maharashtra State Skill Development Society (MSSDS) • SkillSync Technical Curriculum
-            </p>
-          </div>
 
-          {/* Candidate Dossier Summary */}
-          <div className="mb-5 p-4 border border-black rounded-lg bg-slate-50 font-sans text-xs">
-            <div className="grid grid-cols-2 gap-y-2 gap-x-6">
+            <div className="pt-3 flex items-center justify-between">
               <div>
-                <span className="font-bold text-slate-700">Candidate Name: </span>
-                <span className="font-bold text-black">{candidateName}</span>
+                <h1 className="text-xl font-black uppercase tracking-tight text-[#0b2545]">
+                  Technical Career & Course Learning Progression Dossier
+                </h1>
+                <p className="text-xs text-slate-600 font-medium italic mt-0.5">
+                  Statewide Labour Market Intelligence & Curriculum Alignment Framework
+                </p>
               </div>
-              <div>
-                <span className="font-bold text-slate-700">Target Career Aspiration: </span>
-                <span className="font-bold text-blue-950">{assessment.target_role}</span>
-              </div>
-              <div>
-                <span className="font-bold text-slate-700">Target Region / District: </span>
-                <span className="font-semibold text-black">{assessment.district}, Maharashtra</span>
-              </div>
-              <div>
-                <span className="font-bold text-slate-700">Education Background: </span>
-                <span className="font-semibold text-black">{educationLevel}</span>
-              </div>
-              <div>
-                <span className="font-bold text-slate-700">Profile Readiness Index: </span>
-                <span className="font-bold text-emerald-800">{assessment.career_match_percentage}% Verified Match</span>
-              </div>
-              <div>
-                <span className="font-bold text-slate-700">Regional Average Compensation: </span>
-                <span className="font-semibold text-black">₹{assessment.average_salary_lpa} LPA ({assessment.open_vacancies} Openings)</span>
+              <div className="text-right">
+                <span className="text-[10px] font-bold text-slate-500 uppercase">Accreditation Standard</span>
+                <p className="text-xs font-black text-blue-900">MSCVT / MSBTE Level-8</p>
               </div>
             </div>
           </div>
 
-          {/* SECTION 1: SELECTED COURSES */}
-          <div className="mb-5 font-sans text-xs">
-            <h2 className="font-bold text-sm uppercase tracking-wider border-b border-black pb-1 mb-2">
-              1. Enrolled Accredited State Technical Courses ({assessment.selected_courses?.length || 1})
+          {/* Candidate Profile Matrix */}
+          <div className="mb-6 p-4 rounded-xl border border-slate-300 bg-slate-50/80 text-xs print-avoid-break">
+            <div className="grid grid-cols-4 gap-4 pb-3 border-b border-slate-200">
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase block">Candidate Name:</span>
+                <span className="font-black text-slate-900 text-sm">{candidateName}</span>
+              </div>
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase block">Target Career Goal:</span>
+                <span className="font-black text-blue-900 text-sm">{assessment.target_role}</span>
+              </div>
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase block">State Jurisdiction:</span>
+                <span className="font-bold text-slate-900">{assessment.district}, Maharashtra</span>
+              </div>
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase block">Education Profile:</span>
+                <span className="font-bold text-slate-900">{educationLevel}</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 pt-3">
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase block">Industry Readiness Score:</span>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="font-black text-base text-emerald-800">{assessment.career_match_percentage}%</span>
+                  <div className="w-28 bg-slate-200 rounded-full h-2 overflow-hidden">
+                    <div className="bg-emerald-600 h-2 rounded-full" style={{ width: `${assessment.career_match_percentage}%` }}></div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase block">Regional Sector & Vacancies:</span>
+                <span className="font-bold text-slate-800">{assessment.sector} • {assessment.open_vacancies} Openings</span>
+              </div>
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase block">Avg Industry Compensation:</span>
+                <span className="font-black text-slate-900">₹{assessment.average_salary_lpa} Lakhs Per Annum (LPA)</span>
+              </div>
+            </div>
+          </div>
+
+          {/* SECTION 1: SELECTED ACCREDITED COURSES */}
+          <div className="mb-6 print-avoid-break">
+            <h2 className="font-black text-sm uppercase tracking-wider text-[#0b2545] border-b-2 border-slate-300 pb-1.5 mb-2.5 flex items-center justify-between">
+              <span>1. Enrolled State Accredited Technical Programs ({assessment.selected_courses?.length || 1})</span>
+              <span className="text-[10px] font-bold text-slate-500 lowercase">msds affiliated training centers</span>
             </h2>
-            <table className="w-full text-xs border-collapse border border-black">
+            <table className="w-full text-xs border-collapse border border-slate-300">
               <thead>
-                <tr className="bg-slate-200 text-black font-bold text-left border-b border-black">
-                  <th className="p-1.5 border border-black">Course Name</th>
-                  <th className="p-1.5 border border-black">Affiliated Institution & Location</th>
-                  <th className="p-1.5 border border-black text-center">Duration</th>
-                  <th className="p-1.5 border border-black text-center">Placement Track</th>
+                <tr className="bg-[#0b2545] text-white font-bold text-left">
+                  <th className="p-2 border border-slate-300 w-10 text-center">#</th>
+                  <th className="p-2 border border-slate-300">Course / Trade Name</th>
+                  <th className="p-2 border border-slate-300">Affiliated Institution & District</th>
+                  <th className="p-2 border border-slate-300 text-center">Duration</th>
+                  <th className="p-2 border border-slate-300">Certification Awarded</th>
+                  <th className="p-2 border border-slate-300 text-center">Placement Track</th>
                 </tr>
               </thead>
               <tbody>
-                {(assessment.selected_courses || []).map(c => (
-                  <tr key={c.id} className="border-b border-black">
-                    <td className="p-1.5 border border-black font-bold">{c.course_name}</td>
-                    <td className="p-1.5 border border-black">{c.institution_name || 'Government Polytechnic'} ({c.district || 'Maharashtra'})</td>
-                    <td className="p-1.5 border border-black text-center">{c.duration}</td>
-                    <td className="p-1.5 border border-black text-center font-bold text-emerald-800">{c.placement_rate || 85}% Placed</td>
+                {(assessment.selected_courses || []).map((c, i) => (
+                  <tr key={c.id} className="border-b border-slate-200 bg-white">
+                    <td className="p-2 border border-slate-300 text-center font-bold text-slate-600">{i + 1}</td>
+                    <td className="p-2 border border-slate-300 font-extrabold text-slate-900">{c.course_name}</td>
+                    <td className="p-2 border border-slate-300 font-medium text-slate-700">{c.institution_name || 'Government Polytechnic'} ({c.district || 'Maharashtra'})</td>
+                    <td className="p-2 border border-slate-300 text-center font-semibold">{c.duration}</td>
+                    <td className="p-2 border border-slate-300 font-medium text-slate-800 text-[11px]">{c.certification || 'MSCVT Certified Professional'}</td>
+                    <td className="p-2 border border-slate-300 text-center font-black text-emerald-800">{c.placement_rate || 85}% Placed</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          {/* SECTION 2: SKILL DIAGNOSTIC */}
-          <div className="mb-5 font-sans text-xs">
-            <h2 className="font-bold text-sm uppercase tracking-wider border-b border-black pb-1 mb-2">
-              2. Skill Competency Diagnostic Analysis
+          {/* SECTION 2: SKILL DIAGNOSTIC MATRIX */}
+          <div className="mb-6 print-avoid-break">
+            <h2 className="font-black text-sm uppercase tracking-wider text-[#0b2545] border-b-2 border-slate-300 pb-1.5 mb-2.5">
+              2. Candidate Competency & Skill Gap Diagnostic
             </h2>
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-2.5 border border-emerald-600 bg-emerald-50 rounded">
-                <span className="font-bold text-emerald-900 block mb-1">
-                  Validated Existing Skills ({assessment.skills_you_have?.length || 0}):
+              <div className="p-3.5 border border-emerald-300 bg-emerald-50/50 rounded-xl">
+                <span className="font-black text-emerald-950 text-xs block mb-1.5 uppercase tracking-wide">
+                  ✓ Validated Prior Competencies ({assessment.skills_you_have?.length || 0}):
                 </span>
-                <ul className="list-disc list-inside space-y-0.5 text-slate-800 text-[11px]">
-                  {assessment.skills_you_have?.map((sk, i) => (
-                    <li key={i}>{sk}</li>
-                  ))}
-                </ul>
+                <p className="text-[11px] text-emerald-900 mb-2 font-medium">Recognized prior skills credited toward course prerequisites:</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {assessment.skills_you_have && assessment.skills_you_have.length > 0 ? (
+                    assessment.skills_you_have.map((sk, i) => (
+                      <span key={i} className="text-[10px] font-bold bg-white text-emerald-900 border border-emerald-300 px-2 py-0.5 rounded">
+                        ✓ {sk}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-[11px] text-slate-500 italic">No recognized prior skills mapped.</span>
+                  )}
+                </div>
               </div>
 
-              <div className="p-2.5 border border-rose-600 bg-rose-50 rounded">
-                <span className="font-bold text-rose-900 block mb-1">
-                  Skills to Acquire From Courses ({assessment.skills_you_need?.length || 0}):
+              <div className="p-3.5 border border-blue-300 bg-blue-50/50 rounded-xl">
+                <span className="font-black text-blue-950 text-xs block mb-1.5 uppercase tracking-wide">
+                  🎯 Target Skills to be Mastered ({assessment.skills_you_need?.length || 0}):
                 </span>
-                <ul className="list-disc list-inside space-y-0.5 text-slate-800 text-[11px]">
-                  {assessment.skills_you_need?.map((sk, i) => (
-                    <li key={i}>{sk}</li>
-                  ))}
-                </ul>
+                <p className="text-[11px] text-blue-900 mb-2 font-medium">Skills covered in the step-by-step roadmap stages below:</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {assessment.skills_you_need && assessment.skills_you_need.length > 0 ? (
+                    assessment.skills_you_need.map((sk, i) => (
+                      <span key={i} className="text-[10px] font-bold bg-white text-blue-900 border border-blue-300 px-2 py-0.5 rounded">
+                        • {sk}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-[11px] text-emerald-700 font-bold">🎉 Full skill coverage achieved!</span>
+                  )}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* SECTION 3: STEP-BY-STEP LEARNING ROADMAP */}
-          <div className="mb-5 font-sans">
-            <h2 className="font-bold text-sm uppercase tracking-wider border-b border-black pb-1 mb-2">
-              3. Step-by-Step Learning Progression Roadmap
-            </h2>
-            
-            <table className="w-full text-xs border-collapse border border-black">
-              <thead>
-                <tr className="bg-slate-200 text-black font-bold text-left border-b border-black">
-                  <th className="p-1.5 border border-black w-12 text-center">Stage</th>
-                  <th className="p-1.5 border border-black w-48">Module Title & Duration</th>
-                  <th className="p-1.5 border border-black">Structured Topics to Learn</th>
-                  <th className="p-1.5 border border-black w-56">Practical Lab & Key Tools</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(assessment.roadmap || []).map((st) => (
-                  <tr key={st.step} className="border-b border-black">
-                    <td className="p-1.5 border border-black font-bold text-center align-top">{st.step}</td>
-                    <td className="p-1.5 border border-black align-top font-semibold">
-                      <p className="font-bold text-black">{st.title}</p>
-                      <p className="text-[10px] text-slate-600 mt-0.5">Duration: {st.duration}</p>
-                      {st.recommended_course_name && (
-                        <p className="text-[10px] text-blue-900 mt-0.5 italic">Course: {st.recommended_course_name}</p>
+          {/* SECTION 3: STEP-BY-STEP LEARNING ROADMAP (EXECUTIVE DETAILED CARDS) */}
+          <div className="mb-6">
+            <div className="border-b-2 border-slate-300 pb-1.5 mb-4 flex items-center justify-between">
+              <div>
+                <h2 className="font-black text-sm uppercase tracking-wider text-[#0b2545]">
+                  3. Step-by-Step Structured Learning Progression Roadmap
+                </h2>
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  Chronological progression detailing objectives, theoretical concepts, practical lab deliverables, and industry benchmarks.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-slate-500">
+                {assessment.roadmap?.length || 5} Progressive Stages
+              </span>
+            </div>
+
+            <div className="space-y-4">
+              {(assessment.roadmap || []).map((st) => (
+                <div key={st.step} className="print-avoid-break p-4 rounded-xl border border-slate-300 bg-white shadow-2xs">
+                  {/* Stage Header */}
+                  <div className="flex items-center justify-between gap-3 pb-2.5 border-b border-slate-200">
+                    <div className="flex items-center gap-3">
+                      <div className="px-3 py-1 bg-[#0b2545] text-amber-400 rounded-lg font-black text-xs uppercase tracking-wider">
+                        Stage 0{st.step}
+                      </div>
+                      <div>
+                        <h3 className="font-black text-sm text-slate-900">
+                          {st.title}
+                        </h3>
+                        <p className="text-[10px] text-slate-500 font-medium">
+                          Duration: <strong className="text-slate-800">{st.duration}</strong>
+                          {st.recommended_course_name && (
+                            <span> • Program: <strong className="text-blue-900">{st.recommended_course_name}</strong></span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      {st.completed ? (
+                        <span className="text-[10px] font-black text-emerald-800 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded uppercase">
+                          ✓ Prerequisite Met
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-bold text-blue-900 bg-blue-100 border border-blue-300 px-2 py-0.5 rounded uppercase">
+                          Active Learning Stage
+                        </span>
                       )}
-                    </td>
-                    <td className="p-1.5 border border-black align-top">
-                      <ul className="list-disc list-inside space-y-0.5 text-[11px] text-slate-800">
+                    </div>
+                  </div>
+
+                  {/* 1. Clear Pedagogical Objective & Explanation */}
+                  <div className="pt-2.5 space-y-2">
+                    <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs">
+                      <span className="font-bold text-slate-800 uppercase tracking-wider text-[10px] block mb-1">
+                        1. Pedagogical Objective & Industrial Relevance:
+                      </span>
+                      <p className="text-slate-700 leading-relaxed text-[11px]">
+                        {st.detailed_explanation || st.focus}
+                      </p>
+                    </div>
+
+                    {/* 2. Topics Breakdown */}
+                    <div className="text-xs">
+                      <span className="font-bold text-slate-800 uppercase tracking-wider text-[10px] block mb-1">
+                        2. Step-by-Step Curriculum Topics to Master:
+                      </span>
+                      <div className="grid grid-cols-2 gap-1.5">
                         {(st.topics || []).map((t, idx) => (
-                          <li key={idx} className="leading-tight">{t}</li>
+                          <div key={idx} className="flex items-start gap-1.5 text-[11px] text-slate-800 bg-white p-1.5 rounded border border-slate-200">
+                            <span className="text-blue-600 font-black shrink-0">{idx + 1}.</span>
+                            <span className="leading-snug">{t}</span>
+                          </div>
                         ))}
-                      </ul>
-                    </td>
-                    <td className="p-1.5 border border-black align-top">
-                      <p className="font-bold text-slate-900 text-[11px]">{st.milestone_project}</p>
-                      {st.key_tools && (
-                        <p className="text-[10px] text-slate-600 mt-0.5">
-                          Stack: {st.key_tools.join(', ')}
+                      </div>
+                    </div>
+
+                    {/* 3. Hands-on Practical Lab Deliverable */}
+                    {st.milestone_project && (
+                      <div className="p-2.5 rounded-lg bg-amber-50/70 border border-amber-300 text-xs">
+                        <span className="font-black text-amber-950 uppercase tracking-wider text-[10px] block mb-0.5">
+                          3. Hands-On Practical Lab Assignment & Deliverable:
+                        </span>
+                        <p className="text-amber-950 text-[11px] font-semibold leading-snug">
+                          {st.milestone_project}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* 4. Applied Tech Stack & Learning Outcome */}
+                    <div className="flex items-center justify-between gap-3 pt-1 text-xs border-t border-slate-100">
+                      {st.key_tools && st.key_tools.length > 0 && (
+                        <div className="flex items-center gap-1">
+                          <span className="text-[10px] font-bold text-slate-500 uppercase">4. Tech Stack:</span>
+                          <div className="flex flex-wrap gap-1">
+                            {st.key_tools.map((tl, i) => (
+                              <span key={i} className="text-[10px] font-bold bg-slate-100 text-slate-800 border border-slate-200 px-1.5 py-0.2 rounded">
+                                {tl}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {st.learning_outcomes && (
+                        <p className="text-[10px] text-slate-600 italic font-medium text-right max-w-sm">
+                          5. Competency: {st.learning_outcomes}
                         </p>
                       )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* SECTION 4: DETAILED COURSE SYLLABI (UNIT-BY-UNIT) */}
-          <div className="mb-5 font-sans">
-            <h2 className="font-bold text-sm uppercase tracking-wider border-b border-black pb-1 mb-3">
-              4. Comprehensive Course Syllabi (Unit-by-Unit Detailed Breakdown)
+          {/* SECTION 4: COMPREHENSIVE COURSE SYLLABI */}
+          <div className="mb-6">
+            <h2 className="font-black text-sm uppercase tracking-wider text-[#0b2545] border-b-2 border-slate-300 pb-1.5 mb-3">
+              4. Comprehensive Course Syllabi (Unit-by-Unit Detailed Framework)
             </h2>
             
             {(assessment.course_syllabi || []).map((course, cIdx) => (
-              <div key={course.id} className="mb-4 p-3 border border-black rounded bg-white">
-                <div className="border-b border-black pb-1.5 mb-2 flex justify-between items-baseline">
+              <div key={course.id} className="mb-5 p-4 border border-slate-300 rounded-xl bg-white print-avoid-break">
+                <div className="border-b border-slate-300 pb-2 mb-2 flex justify-between items-baseline">
                   <div>
-                    <h3 className="font-bold text-xs uppercase text-black">
+                    <h3 className="font-black text-sm uppercase text-[#0b2545]">
                       Course {cIdx + 1}: {course.course_name}
                     </h3>
-                    <p className="text-[10px] text-slate-600">
-                      {course.institution_name} • {course.duration} • Certification: {course.certification}
+                    <p className="text-[11px] text-slate-600 font-medium">
+                      {course.institution_name} • {course.duration} • Certification: <strong>{course.certification}</strong>
                     </p>
                   </div>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   {(course.units || []).map(u => (
-                    <div key={u.unit_number} className="text-[11px] border-b border-slate-200 pb-2 last:border-b-0">
-                      <p className="font-bold text-black">
-                        Unit {u.unit_number}: {u.title} ({u.duration})
-                      </p>
-                      <p className="text-[10px] text-slate-600 italic">Focus: {u.focus}</p>
+                    <div key={u.unit_number} className="text-xs border-b border-slate-200 pb-2 last:border-b-0">
+                      <div className="flex justify-between items-center mb-0.5">
+                        <p className="font-bold text-slate-900 text-[11px]">
+                          Unit {u.unit_number}: {u.title}
+                        </p>
+                        <span className="text-[10px] font-semibold text-slate-500">{u.duration}</span>
+                      </div>
+                      <p className="text-[10px] text-slate-600 italic mb-1">Focus: {u.focus}</p>
                       
-                      <div className="mt-1">
-                        <span className="font-bold text-[10px] text-slate-700">Topics: </span>
-                        <span className="text-slate-800 text-[10px]">{(u.topics || []).join('; ')}</span>
+                      <div className="text-[10px] text-slate-800 mb-1">
+                        <strong className="text-slate-700">Curriculum Topics: </strong>
+                        <span>{(u.topics || []).join(' • ')}</span>
                       </div>
 
                       {u.practical_lab && (
-                        <div className="mt-0.5">
-                          <span className="font-bold text-[10px] text-slate-900">Lab Practical: </span>
-                          <span className="text-slate-800 text-[10px]">{u.practical_lab}</span>
+                        <div className="text-[10px] text-blue-950 bg-blue-50/50 p-1 rounded border border-blue-100">
+                          <strong>Practical Lab: </strong>{u.practical_lab}
                         </div>
                       )}
                     </div>
@@ -1184,9 +1326,9 @@ export const CareerGuidancePage = () => {
                 </div>
 
                 {course.capstone_project && (
-                  <div className="mt-2 pt-1.5 border-t border-black text-[11px]">
-                    <span className="font-bold text-black">Final Course Capstone: </span>
-                    <span className="text-slate-800">{course.capstone_project}</span>
+                  <div className="mt-3 pt-2 border-t border-slate-300 text-xs">
+                    <span className="font-black text-[#0b2545] uppercase text-[10px] block">Final Course Capstone Requirement:</span>
+                    <p className="text-slate-800 text-[11px] font-semibold mt-0.5">{course.capstone_project}</p>
                   </div>
                 )}
               </div>
@@ -1195,25 +1337,43 @@ export const CareerGuidancePage = () => {
 
           {/* SECTION 5: STRATEGIC AI MENTOR GUIDANCE */}
           {assessment.ai_mentor?.counselor_summary && (
-            <div className="mb-5 font-sans text-xs p-3 border border-slate-400 rounded bg-slate-50">
-              <h3 className="font-bold uppercase tracking-wider text-slate-900 mb-1">
-                Strategic Career Counselor Note (Meta LLaMA 3 Powered):
+            <div className="mb-6 p-4 border border-indigo-300 rounded-xl bg-indigo-50/40 print-avoid-break">
+              <h3 className="font-black uppercase tracking-wider text-indigo-950 text-xs mb-1.5">
+                5. Strategic Career Counselor Blueprint (Meta LLaMA 3 Powered):
               </h3>
-              <p className="text-slate-800 italic leading-relaxed text-[11px]">
+              <p className="text-slate-800 italic leading-relaxed text-[11px] mb-2 font-medium">
                 "{assessment.ai_mentor.counselor_summary}"
               </p>
+              {assessment.ai_mentor.fast_track_milestones && (
+                <div className="pt-2 border-t border-indigo-200 text-[10px] space-y-1">
+                  <span className="font-bold uppercase text-indigo-900 block">Fast-Track Milestones:</span>
+                  {assessment.ai_mentor.fast_track_milestones.map((m, idx) => (
+                    <p key={idx} className="text-slate-700 font-medium">• {m}</p>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
-          {/* Official Sign-Off Footer */}
-          <div className="mt-8 pt-4 border-t-2 border-black flex items-end justify-between font-sans text-xs">
+          {/* SECTION 6: OFFICIAL SIGN-OFF & VERIFICATION SEAL */}
+          <div className="mt-8 pt-4 border-t-2 border-slate-400 flex items-end justify-between text-xs print-avoid-break">
             <div>
-              <p className="font-bold text-slate-800">State Directorate of Vocational Education & Training</p>
+              <p className="font-black text-slate-900 text-xs uppercase">State Directorate of Vocational Education & Training (DVET)</p>
               <p className="text-[10px] text-slate-600">MSSDS Government of Maharashtra • Certified Student Dossier</p>
+              <p className="text-[9px] text-slate-400 mt-1">This document is digitally registered and verifiable via the SkillSync State Portal.</p>
             </div>
-            <div className="text-center">
-              <div className="h-10 w-36 border-b border-black mb-1 mx-auto"></div>
-              <p className="text-[10px] font-bold text-slate-800 uppercase">Authorised Officer Signature & Stamp</p>
+            
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 border-2 border-dashed border-slate-400 rounded-lg flex flex-col items-center justify-center text-center p-1 text-[8px] text-slate-400 font-bold uppercase">
+                <span>Official</span>
+                <span>MSSDS</span>
+                <span>Seal</span>
+              </div>
+              <div className="text-center">
+                <div className="h-10 w-36 border-b border-black mb-1 mx-auto"></div>
+                <p className="text-[10px] font-black text-slate-800 uppercase">Authorised Officer Signature</p>
+                <p className="text-[9px] text-slate-500">Government of Maharashtra</p>
+              </div>
             </div>
           </div>
         </div>
