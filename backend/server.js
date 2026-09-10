@@ -1,6 +1,8 @@
-﻿const express = require('express');
+require('dotenv').config();
+const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const groqService = require('./services/groqService');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -22,6 +24,11 @@ app.get('/api/health', (req, res) => {
     platform: 'SkillSync Maharashtra',
     version: '1.0.0',
     tagline: 'Aligning Skills with Industry. Building Careers for Tomorrow.',
+    ai_engine: {
+      provider: 'Groq Cloud',
+      model: groqService.getActiveModel(),
+      configured: groqService.isConfigured()
+    },
     timestamp: new Date().toISOString()
   });
 });
@@ -42,6 +49,7 @@ app.use('/api/equipment-planning', require('./routes/equipmentPlanningRoutes'));
 app.use('/api/emerging-tech', require('./routes/emergingTechRoutes'));
 app.use('/api/district-plans', require('./routes/districtPlansRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/ai', require('./routes/aiRoutes'));
 
 // Root endpoint info
 app.get('/', (req, res) => {
@@ -58,4 +66,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`SkillSync Maharashtra API Server listening on port ${PORT}`);
   console.log(`Health Check: http://localhost:${PORT}/api/health`);
+  console.log(`AI Engine: Groq LLaMA 3 [Model: ${groqService.getActiveModel()}] [Configured: ${groqService.isConfigured() ? 'YES' : 'NO (Fallback Active)'}]`);
 });

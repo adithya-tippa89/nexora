@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
@@ -25,6 +25,7 @@ import { EmergingTechPage } from './pages/EmergingTechPage';
 import { RecommendationCenterPage } from './pages/RecommendationCenterPage';
 import { DistrictTrainingPlanPage } from './pages/DistrictTrainingPlanPage';
 import { AdminSettingsPage } from './pages/AdminSettingsPage';
+import { GroqAiAssistant } from './components/GroqAiAssistant';
 
 const AppLayout = () => {
   const location = useLocation();
@@ -68,6 +69,9 @@ const AppLayout = () => {
           </main>
         </div>
       )}
+
+      {/* Groq LLaMA 3 AI Advisor Floating Copilot */}
+      <GroqAiAssistant />
 
       <Footer />
     </div>

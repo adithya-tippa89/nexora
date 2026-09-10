@@ -1,9 +1,10 @@
-﻿const express = require('express');
+const express = require('express');
 const router = express.Router();
 const store = require('../database/dataStore');
+const groqService = require('../services/groqService');
 
 // Student Career Guidance Assessment
-router.post('/assess', (req, res) => {
+router.post('/assess', async (req, res) => {
   const { current_skills, target_role_id, district, education_level } = req.body;
   const userSkills = (current_skills || []).map(s => s.toLowerCase());
 
@@ -74,6 +75,19 @@ router.post('/assess', (req, res) => {
     c.sector === targetRole.sector && c.status === 'High Demand'
   );
 
+  // Fetch Groq LLaMA 3 personalized mentor advice
+  let mentorAdvice = null;
+  try {
+    mentorAdvice = await groqService.generateCareerAdvice({
+      userSkills: current_skills || [],
+      targetRole,
+      district: district || "Pune",
+      educationLevel: education_level || "Diploma"
+    });
+  } catch (err) {
+    console.warn('[CareerGuidanceRoutes] Groq mentor advice warning:', err.message);
+  }
+
   res.json({
     assessment: {
       target_role: targetRole.role_name,
@@ -85,7 +99,13 @@ router.post('/assess', (req, res) => {
       average_salary_lpa: targetRole.avg_salary_lpa,
       open_vacancies: targetRole.open_vacancies,
       roadmap: roadmapSteps,
-      recommended_courses: recommendedCourses
+      recommended_courses: recommendedCourses,
+      ai_mentor: mentorAdvice,
+      ai_engine: {
+        provider: 'Groq Cloud',
+        model: groqService.getActiveModel(),
+        source: mentorAdvice?.source || 'local:fallback'
+      }
     }
   });
 });

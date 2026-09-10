@@ -1,4 +1,4 @@
-﻿const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 async function fetchJson(url, options = {}) {
   try {
@@ -91,5 +91,13 @@ export const api = {
 
   // Admin
   resetPlatformData: () => fetchJson(`${API_BASE_URL}/admin/reset-data`, { method: 'POST' }),
-  getDiagnostics: () => fetchJson(`${API_BASE_URL}/admin/diagnostics`)
+  getDiagnostics: () => fetchJson(`${API_BASE_URL}/admin/diagnostics`),
+
+  // Groq LLaMA 3 AI Intelligence
+  getAiStatus: () => fetchJson(`${API_BASE_URL}/ai/status`),
+  testAiConnection: () => fetchJson(`${API_BASE_URL}/ai/test`, { method: 'POST' }),
+  chatWithAiCopilot: (data) => fetchJson(`${API_BASE_URL}/ai/chat`, { method: 'POST', body: JSON.stringify(data) }),
+  getAiSkillGapInsights: (data) => fetchJson(`${API_BASE_URL}/ai/skill-gap-insights`, { method: 'POST', body: JSON.stringify(data) }),
+  getAiCareerAdvice: (data) => fetchJson(`${API_BASE_URL}/ai/career-advice`, { method: 'POST', body: JSON.stringify(data) }),
+  generateAiSyllabus: (data) => fetchJson(`${API_BASE_URL}/ai/generate-syllabus`, { method: 'POST', body: JSON.stringify(data) })
 };

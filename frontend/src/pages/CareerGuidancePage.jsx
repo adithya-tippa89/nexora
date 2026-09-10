@@ -1,11 +1,19 @@
-﻿import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { Compass, CheckCircle2, XCircle, ArrowRight, BookOpen, Sparkles, MapPin, Award, ArrowDown } from 'lucide-react';
+import { 
+  Compass, 
+  CheckCircle2, 
+  XCircle, 
+  Sparkles, 
+  Bot, 
+  Zap, 
+  Trophy, 
+  Target 
+} from 'lucide-react';
 
 export const CareerGuidancePage = () => {
-  const { currentUser, showToast } = useAuth();
+  const { showToast } = useAuth();
 
   // Student inputs
   const [selectedSkills, setSelectedSkills] = useState(['SQL', 'Advanced Excel & Financial Modeling']);
@@ -245,7 +253,7 @@ export const CareerGuidancePage = () => {
 
             {/* Vertical/Horizontal Step Progression */}
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
-              {assessment.roadmap.map((step, idx) => (
+              {assessment.roadmap.map((step) => (
                 <div key={step.step} className="flex flex-col items-center text-center relative">
                   <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-sm mb-3 shadow-sm ${
                     step.completed
@@ -261,6 +269,91 @@ export const CareerGuidancePage = () => {
               ))}
             </div>
           </div>
+
+          {/* Groq LLaMA 3 AI Career Mentor Card */}
+          {assessment.ai_mentor && (
+            <div className="bg-gradient-to-br from-slate-950 via-indigo-950 to-blue-950 text-white p-6 rounded-3xl border border-indigo-500/30 shadow-xl space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="p-2 rounded-xl bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                    <Bot className="w-5 h-5 text-amber-400" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-black text-base tracking-tight text-white">
+                        Groq AI Career Mentor & Placement Blueprint
+                      </h3>
+                      <span className="inline-flex items-center gap-1 text-[9px] font-black uppercase bg-amber-400/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-400/30">
+                        <Zap className="w-2.5 h-2.5 text-amber-400 fill-amber-400" />
+                        Meta LLaMA 3
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-300">Personalized strategic career roadmap tailored for {assessment.district} industrial demand</p>
+                  </div>
+                </div>
+                <span className="text-[11px] text-slate-400 bg-white/5 px-2.5 py-1 rounded-lg border border-white/10">
+                  Model: {assessment.ai_engine?.model || 'llama-3.3-70b-versatile'}
+                </span>
+              </div>
+
+              {/* Counselor Summary */}
+              <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">
+                “{assessment.ai_mentor.counselor_summary}”
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                {/* Fast-Track Milestones */}
+                {assessment.ai_mentor.fast_track_milestones && (
+                  <div className="bg-slate-900/60 p-4 rounded-2xl border border-white/10 space-y-2">
+                    <span className="text-xs font-black uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                      <Target className="w-4 h-4 text-amber-400" />
+                      Candidate Action Milestones
+                    </span>
+                    <ul className="space-y-1.5 text-xs text-slate-300">
+                      {assessment.ai_mentor.fast_track_milestones.map((milestone, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="w-4 h-4 rounded-full bg-indigo-500/30 text-indigo-300 flex items-center justify-center font-bold text-[9px] shrink-0 mt-0.5">
+                            {idx + 1}
+                          </span>
+                          <span>{milestone}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* High Impact Portfolio Project */}
+                {assessment.ai_mentor.high_impact_portfolio_project && (
+                  <div className="bg-slate-900/60 p-4 rounded-2xl border border-white/10 space-y-2 flex flex-col justify-between">
+                    <div>
+                      <span className="text-xs font-black uppercase tracking-wider text-sky-300 flex items-center gap-1.5">
+                        <Trophy className="w-4 h-4 text-sky-400" />
+                        Maharashtra High-Impact Capstone Project
+                      </span>
+                      <p className="text-xs text-slate-200 mt-1 leading-relaxed">
+                        {assessment.ai_mentor.high_impact_portfolio_project}
+                      </p>
+                    </div>
+
+                    {assessment.ai_mentor.local_employer_targets && (
+                      <div className="pt-2 border-t border-white/10">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                          Key Regional Employers in {assessment.district}:
+                        </span>
+                        <div className="flex flex-wrap gap-1">
+                          {assessment.ai_mentor.local_employer_targets.map((emp, i) => (
+                            <span key={i} className="text-[10px] bg-white/10 text-slate-300 px-2 py-0.5 rounded-md border border-white/10 font-medium">
+                              {emp}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Recommended Verified Courses */}
           <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs">

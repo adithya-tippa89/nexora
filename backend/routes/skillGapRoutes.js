@@ -1,9 +1,10 @@
-﻿const express = require('express');
+const express = require('express');
 const router = express.Router();
 const store = require('../database/dataStore');
+const groqService = require('../services/groqService');
 
 // Core Skill Gap Analysis Engine
-router.post('/analyze', (req, res) => {
+router.post('/analyze', async (req, res) => {
   const { district, sector, job_role_id, course_id } = req.body;
 
   const jobRoles = store.get('job_roles');
@@ -105,6 +106,20 @@ router.post('/analyze', (req, res) => {
     });
   }
 
+  // Fetch deep Groq LLaMA 3 Insights
+  let deepInsights = null;
+  try {
+    deepInsights = await groqService.generateSkillGapInsights({
+      role,
+      course,
+      district: district || course.district || "Pune",
+      missingSkills: missingSkillsList,
+      matchPercentage: skillMatchPercentage
+    });
+  } catch (err) {
+    console.warn('[SkillGapRoutes] Groq insights fetch warning:', err.message);
+  }
+
   res.json({
     analysis: {
       district: district || course.district || "Pune",
@@ -120,7 +135,13 @@ router.post('/analyze', (req, res) => {
       skill_gap_percentage: skillGapPercentage,
       missing_skills: missingSkillsList,
       matrix: comparisonMatrix,
-      ai_recommendation: aiRecommendation,
+      ai_recommendation: deepInsights?.strategic_overview || aiRecommendation,
+      ai_insights: deepInsights,
+      ai_engine: {
+        provider: 'Groq Cloud',
+        model: groqService.getActiveModel(),
+        source: deepInsights?.source || 'local:fallback'
+      },
       interventions
     }
   });

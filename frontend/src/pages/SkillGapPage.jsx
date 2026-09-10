@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { api } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -8,14 +8,15 @@ import {
   AlertTriangle, 
   CheckCircle2, 
   XCircle, 
-  ArrowRight, 
   BookOpen, 
   MapPin, 
   Layers, 
   Download,
   RefreshCw,
   Cpu,
-  GraduationCap
+  GraduationCap,
+  Zap,
+  Bot
 } from 'lucide-react';
 
 export const SkillGapPage = () => {
@@ -92,7 +93,7 @@ export const SkillGapPage = () => {
     setUpdatingCurriculum(true);
     api.updateCourseCurriculum(analysis.course_id, {
       added_skills: analysis.missing_skills
-    }).then(res => {
+    }).then(_res => {
       showToast(`Successfully added ${analysis.missing_skills.join(', ')} to course curriculum!`, 'success');
       setUpdatingCurriculum(false);
       // Refresh course list and re-run analysis
@@ -102,6 +103,28 @@ export const SkillGapPage = () => {
       showToast(err.message, 'error');
       setUpdatingCurriculum(false);
     });
+  };
+
+  const [generatingSyllabus, setGeneratingSyllabus] = useState(false);
+  const [syllabusBlueprint, setSyllabusBlueprint] = useState(null);
+
+  const handleGenerateSyllabusAddendum = async () => {
+    if (!analysis) return;
+    setGeneratingSyllabus(true);
+    try {
+      const res = await api.generateAiSyllabus({
+        course_id: analysis.course_id,
+        missing_skills: analysis.missing_skills,
+        sector: selectedSector,
+        target_role: analysis.job_role
+      });
+      setSyllabusBlueprint(res);
+      showToast("Groq LLaMA 3 syllabus addendum generated successfully!", "success");
+    } catch (err) {
+      showToast(err.message, "error");
+    } finally {
+      setGeneratingSyllabus(false);
+    }
   };
 
   const filteredCourses = courses.filter(c => 
@@ -367,32 +390,101 @@ export const SkillGapPage = () => {
           </div>
 
           {/* AI-Powered Recommendation Box */}
-          <div className="bg-gradient-to-br from-indigo-900 to-blue-900 text-white p-6 rounded-2xl shadow-md border border-indigo-700/50 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-300">
-                  <Sparkles className="w-5 h-5 text-sky-300 animate-pulse" />
+          <div className="bg-gradient-to-br from-slate-950 via-indigo-950 to-blue-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl border border-indigo-500/30 space-y-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-2xl bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm">
+                  <Bot className="w-6 h-6 text-amber-400" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-base tracking-tight text-white">
-                    AI-Powered Curriculum Recommendation
-                  </h3>
-                  <p className="text-[11px] text-slate-300">Automated intervention synthesized from labour market analytics</p>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-black text-base sm:text-lg tracking-tight text-white">
+                      AI Curriculum Modernization Intelligence
+                    </h3>
+                    <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase bg-amber-400/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-400/30">
+                      <Zap className="w-3 h-3 text-amber-400 fill-amber-400" />
+                      Groq LLaMA 3
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Synthesized live by Groq AI Engine • Model: {analysis.ai_engine?.model || 'llama-3.3-70b-versatile'}
+                  </p>
                 </div>
               </div>
+
+              {analysis.ai_insights?.estimated_readiness_boost && (
+                <div className="bg-emerald-500/20 border border-emerald-500/30 px-3 py-1.5 rounded-xl text-right">
+                  <span className="text-[10px] font-bold text-emerald-300 block uppercase">Placement Impact</span>
+                  <span className="text-sm font-black text-emerald-400">{analysis.ai_insights.estimated_readiness_boost}</span>
+                </div>
+              )}
             </div>
 
-            <div className="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10 text-sm leading-relaxed text-slate-100">
-              <p className="font-medium italic">
-                “{analysis.ai_recommendation}”
+            {/* Strategic Overview */}
+            <div className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 text-sm leading-relaxed text-slate-100 shadow-inner">
+              <p className="font-medium text-slate-100">
+                “{analysis.ai_insights?.strategic_overview || analysis.ai_recommendation}”
               </p>
             </div>
 
+            {/* Deep Pedagogical Units (if provided by Groq) */}
+            {analysis.ai_insights?.curriculum_units_to_add && analysis.ai_insights.curriculum_units_to_add.length > 0 && (
+              <div className="space-y-2">
+                <h4 className="text-xs font-black text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
+                  <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+                  Recommended Curriculum Units to Add
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                  {analysis.ai_insights.curriculum_units_to_add.map((unit, idx) => (
+                    <div key={idx} className="bg-white/5 border border-white/10 p-3 rounded-xl flex items-start gap-2 text-xs">
+                      <div className="w-5 h-5 rounded-md bg-indigo-500/30 text-indigo-300 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">
+                        {idx + 1}
+                      </div>
+                      <span className="text-slate-200">{unit}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Lab Equipment & District Alignment */}
+            {analysis.ai_insights?.lab_equipment_requirements && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                <div className="bg-slate-900/60 p-4 rounded-xl border border-white/10 text-xs space-y-1.5">
+                  <div className="flex items-center gap-1.5 font-bold text-sky-300 uppercase tracking-wide">
+                    <Cpu className="w-4 h-4 text-sky-400" />
+                    <span>Lab Equipment & Specifications</span>
+                  </div>
+                  <ul className="list-disc list-inside space-y-1 text-slate-300">
+                    {analysis.ai_insights.lab_equipment_requirements.map((eq, i) => (
+                      <li key={i}>{eq}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-slate-900/60 p-4 rounded-xl border border-white/10 text-xs space-y-1.5">
+                  <div className="flex items-center gap-1.5 font-bold text-amber-300 uppercase tracking-wide">
+                    <MapPin className="w-4 h-4 text-amber-400" />
+                    <span>District Labour Market Alignment</span>
+                  </div>
+                  <p className="text-slate-300 leading-relaxed">
+                    {analysis.ai_insights.district_industry_alignment || `Aligned with industrial clusters in ${analysis.district}.`}
+                  </p>
+                  {analysis.ai_insights.faculty_fdp_action && (
+                    <div className="pt-2 border-t border-white/10 flex items-start gap-1.5 text-emerald-300">
+                      <GraduationCap className="w-4 h-4 shrink-0 mt-0.5" />
+                      <span><strong>FDP Directive:</strong> {analysis.ai_insights.faculty_fdp_action}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Interventions Hub */}
             {analysis.interventions && analysis.interventions.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                 {analysis.interventions.map((item, idx) => (
-                  <div key={idx} className="bg-slate-900/40 p-3 rounded-lg border border-white/10 flex items-start gap-2.5 text-xs">
+                  <div key={idx} className="bg-slate-900/40 p-3 rounded-xl border border-white/10 flex items-start gap-2.5 text-xs">
                     <div className="mt-0.5 text-sky-400">
                       {item.type.includes('Trainer') ? <GraduationCap className="w-4 h-4" /> : <Cpu className="w-4 h-4" />}
                     </div>
@@ -405,13 +497,38 @@ export const SkillGapPage = () => {
               </div>
             )}
 
-            {/* Actions */}
-            <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-white/10">
+            {/* Generated Syllabus Blueprint Preview */}
+            {syllabusBlueprint && (
+              <div className="bg-slate-900/90 border border-amber-400/40 rounded-2xl p-4 text-xs space-y-2">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <span className="font-bold text-amber-300 flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-amber-400" />
+                    Groq LLaMA 3 Syllabus Addendum Blueprint
+                  </span>
+                  <span className="text-[10px] text-slate-400">{syllabusBlueprint.model || 'Groq'}</span>
+                </div>
+                <div className="whitespace-pre-line text-slate-200 leading-relaxed max-h-60 overflow-y-auto pr-2">
+                  {syllabusBlueprint.syllabus}
+                </div>
+              </div>
+            )}
+
+            {/* Actions Toolbar */}
+            <div className="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-white/10">
               <div className="text-xs text-slate-300">
                 Action will update course state across DVET and polytechnic portal.
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  onClick={handleGenerateSyllabusAddendum}
+                  disabled={generatingSyllabus}
+                  className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md transition flex items-center gap-1.5 disabled:opacity-50"
+                >
+                  <Sparkles className={`w-4 h-4 ${generatingSyllabus ? 'animate-spin' : ''}`} />
+                  {generatingSyllabus ? "Generating Blueprint..." : "Generate LLaMA 3 Syllabus Addendum"}
+                </button>
+
                 <button
                   onClick={() => window.print()}
                   className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition flex items-center gap-1.5"
