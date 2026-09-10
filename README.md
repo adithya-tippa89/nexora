@@ -59,6 +59,14 @@ The engine returns required, covered, missing, and high-priority missing skills,
 
 Run the backend migration from `backend` with `python -m alembic upgrade head`; then start FastAPI on port `8000` and the Vite frontend on port `5173`.
 
+## Module 6 — AI-Powered Recommendation Engine
+
+The Skill Gap experience now sends its live role/course analysis to `POST /api/ai/skill-recommendations`. The server reuses the existing Groq/LLaMA integration; no API key is exposed to the browser. When `GROQ_API_KEY` is configured, the request asks for strict JSON output containing one recommendation for every actual missing skill, its priority, reason, learning order, and learning direction. Responses are validated against the missing-skill set before they can reach the frontend.
+
+When the AI provider is unavailable, times out, has quota/authentication problems, or returns malformed JSON, the server returns a deterministic `local:data-gap` fallback. That fallback ranks the real missing skills using their role importance weights, explains that each skill is absent from the selected curriculum, derives a learning direction from the normalized skill category, and includes matching courses/roles where the supplied data supports them. A no-gap analysis returns an empty recommendation list rather than invented advice.
+
+Run the recommendation tests with `cd backend` followed by `npm run test:ai`. The full Python regression suite remains available through `python -m pytest -q`, and the frontend is verified with `cd frontend` followed by `npm run build`.
+
 ---
 
 ## 🏛 Executive Summary

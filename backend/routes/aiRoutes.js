@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const groqService = require('../services/groqService');
 const store = require('../database/dataStore');
+const { buildFallbackRecommendations, validateRecommendations } = require('../services/recommendationEngine');
 
 // 1. AI Engine Status & Diagnostics
 router.get('/status', async (req, res) => {
@@ -140,6 +141,46 @@ Provide weekly learning topics, required software/lab tools, and hands-on capsto
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// 7. Structured, data-grounded learning recommendations
+router.post('/skill-recommendations', async (req, res) => {
+  const { analysis, courses, roles } = req.body;
+  if (!analysis || !analysis.job_role || !analysis.course_name || !Array.isArray(analysis.missing_skills)) {
+    return res.status(422).json({ error: 'analysis with job_role, course_name, and missing_skills is required.' });
+  }
+
+  const fallback = buildFallbackRecommendations({ analysis, courses: courses || [], roles: roles || [] });
+  if (fallback.recommendations.length === 0) {
+    return res.json({ success: true, source: 'local:data-gap', model: null, ...fallback, message: 'No missing skills were found. The selected curriculum covers the role requirements.' });
+  }
+
+  const missingSkills = fallback.recommendations.map((item) => item.skill);
+  const systemPrompt = `You are the SkillSync AI learning planner. Return only valid JSON with this shape: {"recommendations":[{"skill":"...","priority":"High|Medium|Low","reason":"...","learning_order":1,"learning_direction":"..."}],"related_courses":[],"related_roles":[],"emerging_skills":[]}. Cover every missing skill exactly once. Use only the supplied missing skills. Do not invent skills, courses, roles, percentages, or credentials.`;
+  const userPrompt = JSON.stringify({
+    job_role: analysis.job_role,
+    course_name: analysis.course_name,
+    missing_skills: missingSkills,
+    gap_matrix: analysis.matrix,
+    related_courses: courses || [],
+    related_roles: roles || []
+  });
+
+  try {
+    const completion = await groqService.createChatCompletion([
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userPrompt }
+    ], { temperature: 0.2, maxTokens: 1200, responseFormat: { type: 'json_object' } });
+    if (completion.success && completion.content) {
+      const parsed = JSON.parse(completion.content);
+      const validated = validateRecommendations(parsed, missingSkills);
+      if (validated) return res.json({ success: true, source: completion.source, model: completion.model, ...validated });
+      console.warn('[AIRecommendations] Invalid structured response; using data fallback.');
+    }
+  } catch (error) {
+    console.warn('[AIRecommendations] AI request failed; using data fallback:', error.message);
+  }
+  return res.json({ success: true, source: 'local:data-gap', model: null, ...fallback });
 });
 
 module.exports = router;

@@ -171,7 +171,8 @@ class GroqService {
           model: primaryModel,
           messages,
           temperature,
-          max_tokens: maxTokens
+          max_tokens: maxTokens,
+          ...(options.responseFormat ? { response_format: options.responseFormat } : {})
         });
         return {
           success: true,
@@ -189,7 +190,8 @@ class GroqService {
             model: fallbackModel,
             messages,
             temperature,
-            max_tokens: maxTokens
+            max_tokens: maxTokens,
+            ...(options.responseFormat ? { response_format: options.responseFormat } : {})
           });
           return {
             success: true,

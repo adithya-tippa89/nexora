@@ -36,6 +36,7 @@ export const SkillGapPage = () => {
 
   // Analysis Result
   const [analysis, setAnalysis] = useState(null);
+  const [recommendationPlan, setRecommendationPlan] = useState(null);
   const [loading, setLoading] = useState(false);
   const [updatingCurriculum, setUpdatingCurriculum] = useState(false);
 
@@ -70,6 +71,14 @@ export const SkillGapPage = () => {
     setLoading(true);
     api.analyzeSkillGapLive(selectedJobRoleId, selectedCourseId).then(res => {
       setAnalysis(res.analysis);
+      api.getSkillRecommendations({
+        analysis: res.analysis,
+        courses,
+        roles: jobRoles
+      }).then(setRecommendationPlan).catch(err => {
+        console.error(err);
+        setRecommendationPlan(null);
+      });
       setLoading(false);
     }).catch(err => {
       showToast(err.message, 'error');
@@ -311,6 +320,43 @@ export const SkillGapPage = () => {
                 Industry hiring managers expect these skills for job readiness.
               </p>
             </div>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between gap-3">
+              <div>
+                <h3 className="font-bold text-sm text-slate-900">Personalized Learning Recommendations</h3>
+                <p className="text-xs text-slate-500 mt-1">Priorities are derived from this role's missing skills and curriculum coverage.</p>
+              </div>
+              <span className="text-[10px] font-bold uppercase px-2 py-1 rounded-full bg-indigo-50 text-indigo-700">
+                {recommendationPlan?.source?.startsWith('local:') ? 'Verified data fallback' : 'AI structured plan'}
+              </span>
+            </div>
+            {recommendationPlan?.recommendations?.length ? (
+              <div className="p-5 space-y-3">
+                {recommendationPlan.recommendations.map(item => (
+                  <div key={item.skill} className="grid grid-cols-[auto_1fr] gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                    <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-black text-sm">{item.learning_order}</div>
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-bold text-sm text-slate-900">{item.skill}</span>
+                        <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${item.priority === 'High' ? 'bg-rose-100 text-rose-700' : item.priority === 'Medium' ? 'bg-amber-100 text-amber-700' : 'bg-slate-200 text-slate-700'}`}>{item.priority} priority</span>
+                      </div>
+                      <p className="text-xs text-slate-600 mt-1">{item.reason}</p>
+                      <p className="text-[11px] text-blue-700 font-medium mt-1">Next: {item.learning_direction}</p>
+                    </div>
+                  </div>
+                ))}
+                {(recommendationPlan.related_courses?.length > 0 || recommendationPlan.related_roles?.length > 0) && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                    {recommendationPlan.related_courses?.length > 0 && <div className="p-3 rounded-xl border border-slate-200"><span className="text-[10px] font-bold uppercase text-slate-500">Relevant courses</span>{recommendationPlan.related_courses.map(course => <p key={course.id} className="text-xs font-semibold text-slate-800 mt-1">{course.name}</p>)}</div>}
+                    {recommendationPlan.related_roles?.length > 0 && <div className="p-3 rounded-xl border border-slate-200"><span className="text-[10px] font-bold uppercase text-slate-500">Relevant job roles</span>{recommendationPlan.related_roles.map(role => <p key={role.id} className="text-xs font-semibold text-slate-800 mt-1">{role.name}</p>)}</div>}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="p-5 flex items-center gap-2 text-sm font-semibold text-emerald-700 bg-emerald-50"><CheckCircle2 className="w-5 h-5" />No missing skills. No additional learning recommendation is needed.</div>
+            )}
           </div>
 
           {/* Comparison Matrix Table - Section 6 Example */}

@@ -129,4 +129,5 @@ export const api = {
   getAiSkillGapInsights: (data) => fetchJson(`${API_BASE_URL}/ai/skill-gap-insights`, { method: 'POST', body: JSON.stringify(data) }),
   getAiCareerAdvice: (data) => fetchJson(`${API_BASE_URL}/ai/career-advice`, { method: 'POST', body: JSON.stringify(data) }),
   generateAiSyllabus: (data) => fetchJson(`${API_BASE_URL}/ai/generate-syllabus`, { method: 'POST', body: JSON.stringify(data) })
+  ,getSkillRecommendations: (data) => fetchJson(`${API_BASE_URL}/ai/skill-recommendations`, { method: 'POST', body: JSON.stringify(data) })
 };
