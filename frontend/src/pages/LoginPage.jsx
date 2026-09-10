@@ -1,15 +1,66 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth, demoProfiles } from '../context/AuthContext';
-import { ShieldCheck, GraduationCap, Building2, User, ArrowRight, Lock, Mail, AlertCircle, Key } from 'lucide-react';
+import { ShieldCheck, GraduationCap, Building2, User, ArrowRight, Lock, Mail, AlertCircle, Key, CheckCircle2, Sparkles } from 'lucide-react';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const { switchRole, loginWithCredentials, showToast } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { loginWithCredentials, showToast } = useAuth();
+  const [email, setEmail] = useState('rohan.shinde@student.ac.in');
+  const [password, setPassword] = useState('password123');
+  const [selectedRole, setSelectedRole] = useState('student');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const roleAccounts = [
+    {
+      key: 'student',
+      title: 'Candidate / Student',
+      name: 'Rohan Shinde',
+      email: 'rohan.shinde@student.ac.in',
+      org: 'B.Tech CS, Pune',
+      icon: <User className="w-4 h-4 text-amber-500" />,
+      color: 'hover:border-amber-400 hover:bg-amber-50/50',
+      activeBorder: 'border-amber-500 bg-amber-50/60'
+    },
+    {
+      key: 'admin',
+      title: 'Govt State Admin',
+      name: 'Dr. Rajeshwar Patil',
+      email: 'admin@maharashtra.gov.in',
+      org: 'DVET Maharashtra Lead',
+      icon: <ShieldCheck className="w-4 h-4 text-purple-600" />,
+      color: 'hover:border-purple-400 hover:bg-purple-50/50',
+      activeBorder: 'border-purple-500 bg-purple-50/60'
+    },
+    {
+      key: 'trainer',
+      title: 'Training Faculty / ITI',
+      name: 'Prof. Sunita Deshmukh',
+      email: 'institute@coep.ac.in',
+      org: 'Polytechnic & Skill Hub',
+      icon: <GraduationCap className="w-4 h-4 text-blue-600" />,
+      color: 'hover:border-blue-400 hover:bg-blue-50/50',
+      activeBorder: 'border-blue-500 bg-blue-50/60'
+    },
+    {
+      key: 'employer',
+      title: 'Industry Hiring Partner',
+      name: 'Anand Kulkarni',
+      email: 'recruitment@tatamotors.com',
+      org: 'Tata Motors Innovation Labs',
+      icon: <Building2 className="w-4 h-4 text-emerald-600" />,
+      color: 'hover:border-emerald-400 hover:bg-emerald-50/50',
+      activeBorder: 'border-emerald-500 bg-emerald-50/60'
+    }
+  ];
+
+  const handleSelectRole = (acc) => {
+    setSelectedRole(acc.key);
+    setEmail(acc.email);
+    setPassword('password123');
+    setErrorMessage('');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +68,7 @@ export const LoginPage = () => {
     setErrorMessage('');
     try {
       await loginWithCredentials(email, password);
+      showToast(`Welcome! Signed in successfully.`, "success");
       navigate('/dashboard');
     } catch (err) {
       setErrorMessage(err.message || "Failed to sign in. Please verify your credentials.");
@@ -26,37 +78,34 @@ export const LoginPage = () => {
     }
   };
 
-  const handleQuickRole = async (roleKey) => {
-    setIsLoading(true);
-    setErrorMessage('');
-    try {
-      await switchRole(roleKey);
-      navigate('/dashboard');
-    } catch (err) {
-      setErrorMessage("Could not sign in with demo profile.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleFillDemo = (demoEmail) => {
-    setEmail(demoEmail);
-    setPassword("password123");
-    setErrorMessage('');
-  };
-
   return (
     <div className="min-h-[85vh] flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-7 bg-white p-8 rounded-2xl border border-slate-200 shadow-xl">
+      <div className="max-w-md w-full space-y-6 bg-white p-8 rounded-3xl border border-slate-200/90 shadow-2xl">
+        
+        {/* Brand Header */}
         <div className="text-center">
-          <div className="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-2xl mx-auto shadow-md shadow-blue-500/30">
-            S
+          <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center text-white mx-auto shadow-md shadow-blue-500/25 ring-1 ring-white/30">
+            <svg 
+              className="w-6 h-6 text-white" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2.2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M12 2L2 7l10 5 10-5-10-5z" />
+              <path d="M2 17l10 5 10-5" />
+              <path d="M2 12l10 5 10-5" />
+            </svg>
+            <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-amber-400 border-2 border-white shadow-xs"></div>
           </div>
+          
           <h2 className="mt-4 text-2xl font-extrabold text-slate-900 tracking-tight">
-            Sign in to SkillSync Maharashtra
+            Sign In to SkillSync Maharashtra
           </h2>
           <p className="mt-1 text-xs text-slate-500">
-            Labour Market Intelligence & RBAC Authentication (FastAPI & JWT)
+            Role-Based Access Control & Secure JWT Authentication
           </p>
         </div>
 
@@ -70,85 +119,48 @@ export const LoginPage = () => {
           </div>
         )}
 
-        {/* Instant Evaluation Quick Switcher */}
-        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+        {/* Official Evaluation & Demo Role Selection */}
+        <div className="bg-slate-50/90 p-3.5 rounded-2xl border border-slate-200/90">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-              ⚡ One-Click Instant Evaluation Login
+            <p className="text-[10px] font-extrabold text-slate-500 uppercase tracking-wider flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-blue-600" />
+              Select Account to Authenticate
             </p>
-            <span className="text-[10px] text-blue-600 font-semibold flex items-center gap-1">
-              <Key className="w-3 h-3" /> Pwd: password123
+            <span className="text-[10px] text-blue-700 font-semibold bg-blue-100/70 px-2 py-0.5 rounded-full">
+              SIH 2026 Evaluation
             </span>
           </div>
+
           <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => handleQuickRole('admin')}
-              className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-purple-400 hover:bg-purple-50/50 text-left transition text-xs font-semibold text-slate-800"
-            >
-              <ShieldCheck className="w-4 h-4 text-purple-600 shrink-0" />
-              <div>
-                <div className="font-bold">Govt / Admin</div>
-                <div className="text-[10px] text-slate-500">DVET State Lead</div>
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickRole('trainer')}
-              className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-blue-400 hover:bg-blue-50/50 text-left transition text-xs font-semibold text-slate-800"
-            >
-              <GraduationCap className="w-4 h-4 text-blue-600 shrink-0" />
-              <div>
-                <div className="font-bold">Trainer / Faculty</div>
-                <div className="text-[10px] text-slate-500">Polytechnic Dean</div>
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickRole('employer')}
-              className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50/50 text-left transition text-xs font-semibold text-slate-800"
-            >
-              <Building2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <div>
-                <div className="font-bold">Employer</div>
-                <div className="text-[10px] text-slate-500">Tata Motors VP</div>
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickRole('student')}
-              className="flex items-center gap-2 p-2 rounded-lg bg-white border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 text-left transition text-xs font-semibold text-slate-800"
-            >
-              <User className="w-4 h-4 text-amber-600 shrink-0" />
-              <div>
-                <div className="font-bold">Candidate</div>
-                <div className="text-[10px] text-slate-500">Technical Student</div>
-              </div>
-            </button>
+            {roleAccounts.map((acc) => {
+              const isSelected = selectedRole === acc.key;
+              return (
+                <button
+                  key={acc.key}
+                  type="button"
+                  onClick={() => handleSelectRole(acc)}
+                  className={`p-2.5 rounded-xl border text-left transition-all duration-150 cursor-pointer ${
+                    isSelected ? acc.activeBorder + ' shadow-xs ring-1 ring-blue-400/40' : 'bg-white border-slate-200 ' + acc.color
+                  }`}
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    {acc.icon}
+                    <span className="text-xs font-bold text-slate-900 truncate block">
+                      {acc.title}
+                    </span>
+                  </div>
+                  <p className="text-[11px] font-semibold text-slate-700 truncate">{acc.name}</p>
+                  <p className="text-[10px] text-slate-400 truncate">{acc.org}</p>
+                </button>
+              );
+            })}
           </div>
-        </div>
-
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-200"></div></div>
-          <div className="relative flex justify-center text-xs uppercase"><span className="bg-white px-2 text-slate-400 font-medium">Or enter credentials</span></div>
         </div>
 
         {/* Credentials Form */}
-        <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <div className="flex justify-between items-center mb-1">
-              <label className="block text-xs font-bold text-slate-700">Email Address</label>
-              <button
-                type="button"
-                onClick={() => handleFillDemo('admin@maharashtra.gov.in')}
-                className="text-[10px] text-blue-600 hover:underline font-semibold"
-              >
-                Autofill Admin
-              </button>
-            </div>
+            <label className="block text-xs font-bold text-slate-700 mb-1">Registered Email</label>
             <div className="relative">
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
@@ -156,14 +168,17 @@ export const LoginPage = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="officer@maharashtra.gov.in"
-                className="w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-hidden"
+                placeholder="user@maharashtra.gov.in"
+                className="w-full pl-9 pr-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-hidden transition bg-slate-50/50 focus:bg-white"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1">Password</label>
+            <div className="flex justify-between items-center mb-1">
+              <label className="block text-xs font-bold text-slate-700">Account Password</label>
+              <span className="text-[10px] text-slate-400">Default: password123</span>
+            </div>
             <div className="relative">
               <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
               <input
@@ -172,7 +187,7 @@ export const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-hidden"
+                className="w-full pl-9 pr-3 py-2.5 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-hidden transition bg-slate-50/50 focus:bg-white"
               />
             </div>
           </div>
@@ -180,18 +195,25 @@ export const LoginPage = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg shadow-sm transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
+            className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-700 hover:to-indigo-800 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
           >
-            {isLoading ? "Authenticating via FastAPI..." : "Sign In with Credentials"}
-            <ArrowRight className="w-4 h-4" />
+            {isLoading ? (
+              <span className="flex items-center gap-2">
+                <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                Verifying Credentials & Issuing JWT...
+              </span>
+            ) : (
+              <>
+                <span>Sign In Securely as {roleAccounts.find(r => r.key === selectedRole)?.title || 'User'}</span>
+                <ArrowRight className="w-4 h-4" />
+              </>
+            )}
           </button>
         </form>
 
-        <div className="text-center text-xs text-slate-500">
-          Don't have an account?{' '}
-          <Link to="/register" className="font-bold text-blue-600 hover:underline">
-            Register for Maharashtra Skill Portal
-          </Link>
+        <div className="pt-2 text-center text-xs text-slate-500 border-t border-slate-100">
+          Secure Authentication powered by{' '}
+          <span className="font-bold text-slate-700">FastAPI & HS256 JWT RBAC</span>
         </div>
       </div>
     </div>

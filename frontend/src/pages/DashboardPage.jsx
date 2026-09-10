@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Briefcase, 
@@ -42,6 +42,214 @@ export const DashboardPage = () => {
 
   const COLORS = ['#2563EB', '#6366F1', '#06B6D4', '#10B981', '#F59E0B', '#EC4899'];
 
+  const role = currentUser?.role || 'student';
+
+  const renderRoleActions = () => {
+    switch (role) {
+      case 'student':
+        return (
+          <>
+            <Link
+              to="/career-guidance"
+              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5"
+            >
+              <Compass className="w-4 h-4" />
+              AI Career Roadmap
+            </Link>
+            <Link
+              to="/skills"
+              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition flex items-center gap-1.5"
+            >
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              In-Demand Skills
+            </Link>
+            <Link
+              to="/jobs"
+              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition flex items-center gap-1.5"
+            >
+              <Briefcase className="w-4 h-4 text-sky-400" />
+              View Jobs
+            </Link>
+          </>
+        );
+      case 'trainer':
+      case 'institution':
+        return (
+          <>
+            <Link
+              to="/skill-gap"
+              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5"
+            >
+              <Target className="w-4 h-4" />
+              Skill Gap Engine
+            </Link>
+            <Link
+              to="/obsolete-courses"
+              className="px-4 py-2.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 text-rose-200 font-bold text-xs border border-rose-800/80 transition flex items-center gap-1.5"
+            >
+              <AlertTriangle className="w-4 h-4 text-rose-400" />
+              Obsolete Alerts (2)
+            </Link>
+            <Link
+              to="/equipment-planning"
+              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition flex items-center gap-1.5"
+            >
+              <Cpu className="w-4 h-4 text-sky-400" />
+              Lab Equipment
+            </Link>
+          </>
+        );
+      case 'employer':
+        return (
+          <>
+            <Link
+              to="/jobs"
+              className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5"
+            >
+              <Briefcase className="w-4 h-4" />
+              Post Job Opening
+            </Link>
+            <Link
+              to="/employer-validation"
+              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition flex items-center gap-1.5"
+            >
+              <Award className="w-4 h-4 text-emerald-400" />
+              Validate Curriculum
+            </Link>
+            <Link
+              to="/skills"
+              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition flex items-center gap-1.5"
+            >
+              <TrendingUp className="w-4 h-4 text-blue-400" />
+              Skill Demand Insights
+            </Link>
+          </>
+        );
+      case 'admin':
+      default:
+        return (
+          <>
+            <Link
+              to="/district-plans"
+              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5"
+            >
+              <FileText className="w-4 h-4" />
+              District Plans (DSDP)
+            </Link>
+            <Link
+              to="/skill-gap"
+              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition flex items-center gap-1.5"
+            >
+              <Target className="w-4 h-4 text-sky-400" />
+              Skill Gap Engine
+            </Link>
+            <Link
+              to="/admin"
+              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition flex items-center gap-1.5"
+            >
+              <Cpu className="w-4 h-4 text-purple-400" />
+              Groq AI Settings
+            </Link>
+          </>
+        );
+    }
+  };
+
+  const renderRoleFocusCard = () => {
+    switch (role) {
+      case 'student':
+        return (
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50/50 border border-amber-200/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold shrink-0 shadow-sm shadow-amber-500/30">
+                <Compass className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-amber-950 uppercase tracking-wider">Candidate Career Hub</h4>
+                <p className="text-xs text-amber-900 mt-0.5">
+                  Explore personalized AI career pathways, identify skill gaps against real jobs, and prepare for industry hiring.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/career-guidance"
+              className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-xs transition shrink-0 flex items-center gap-1"
+            >
+              Take Assessment <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        );
+      case 'trainer':
+      case 'institution':
+        return (
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50/50 border border-blue-200/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shrink-0 shadow-sm shadow-blue-500/30">
+                <BookOpen className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-blue-950 uppercase tracking-wider">Faculty & Curriculum Modernization</h4>
+                <p className="text-xs text-blue-900 mt-0.5">
+                  2 programs flagged with syllabus deficits in Western Maharashtra. Modernize EV and industrial IoT coursework.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/skill-gap"
+              className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition shrink-0 flex items-center gap-1"
+            >
+              Run Gap Audit <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        );
+      case 'employer':
+        return (
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50/50 border border-emerald-200/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold shrink-0 shadow-sm shadow-emerald-500/30">
+                <Building2 className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-emerald-950 uppercase tracking-wider">Industry Talent Partnership</h4>
+                <p className="text-xs text-emerald-900 mt-0.5">
+                  Over 420 polytechnic candidates in Pune district match your target competencies. Review curriculum standards.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/employer-validation"
+              className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition shrink-0 flex items-center gap-1"
+            >
+              Validate Skills <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        );
+      case 'admin':
+      default:
+        return (
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-50 via-indigo-50 to-purple-50/50 border border-purple-200/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold shrink-0 shadow-sm shadow-purple-500/30">
+                <FileText className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-purple-950 uppercase tracking-wider">Statewide Skill Governance (DVET)</h4>
+                <p className="text-xs text-purple-900 mt-0.5">
+                  36 District Skill Development Plans (DSDP) coordinated. 24 high-priority curriculum actions pending across 6 zones.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/district-plans"
+              className="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-xs transition shrink-0 flex items-center gap-1"
+            >
+              Inspect DSDP Allocations <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        );
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Top Banner with Active Persona Context */}
@@ -56,29 +264,18 @@ export const DashboardPage = () => {
               Welcome back, {currentUser?.name}
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
-              Currently viewing as <span className="font-bold text-white underline decoration-blue-400">{currentUser?.roleTitle}</span> for {currentUser?.district || 'Maharashtra'}.
-              Real-time matching of employer demands, courses, and district workforce readiness.
+              Currently authenticated as <span className="font-bold text-white underline decoration-blue-400">{currentUser?.roleTitle || role}</span> {currentUser?.organization ? `at ${currentUser.organization}` : ''} ({currentUser?.district || 'Maharashtra'}).
             </p>
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <Link
-              to="/skill-gap"
-              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5"
-            >
-              <Target className="w-4 h-4" />
-              Launch Gap Engine
-            </Link>
-            <Link
-              to="/district-plans"
-              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition flex items-center gap-1.5"
-            >
-              <FileText className="w-4 h-4 text-sky-400" />
-              District Plan (DSDP)
-            </Link>
+            {renderRoleActions()}
           </div>
         </div>
       </div>
+
+      {/* Role-Specific Focus Action Card */}
+      {renderRoleFocusCard()}
 
       {/* Top Statistics Cards - Section 5 Feature 1 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
