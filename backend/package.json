@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "test:ai": "node --test tests/recommendationEngine.test.js"
+    "start:fastapi": "venv\\Scripts\\python -m uvicorn app.main:app --host 127.0.0.1 --port 8000",
+    "test:ai": "node --test tests/recommendationEngine.test.js",
+    "test:python": "venv\\Scripts\\pytest tests/"
   },
   "dependencies": {
     "cors": "^2.8.5",

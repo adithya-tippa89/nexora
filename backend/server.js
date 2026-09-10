@@ -2,10 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const net = require('net');
+const fs = require('fs');
+const { spawn } = require('child_process');
 const groqService = require('./services/groqService');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const FASTAPI_PORT = parseInt(process.env.FASTAPI_PORT || '8000', 10);
 
 // Middleware
 app.use(cors());
@@ -62,9 +66,91 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error', message: err.message });
 });
 
+// FastAPI auto-launcher supervisor
+function checkPortListening(port, host = '127.0.0.1') {
+  return new Promise((resolve) => {
+    const s = new net.Socket();
+    s.setTimeout(500);
+    s.on('connect', () => {
+      s.destroy();
+      resolve(true);
+    });
+    s.on('timeout', () => {
+      s.destroy();
+      resolve(false);
+    });
+    s.on('error', () => {
+      resolve(false);
+    });
+    s.connect(port, host);
+  });
+}
+
+function getPythonExecutable() {
+  const venvWin = path.join(__dirname, 'venv', 'Scripts', 'python.exe');
+  const venvUnix = path.join(__dirname, 'venv', 'bin', 'python');
+  if (fs.existsSync(venvWin)) return venvWin;
+  if (fs.existsSync(venvUnix)) return venvUnix;
+  return 'python';
+}
+
+let fastApiChild = null;
+
+async function ensureFastApiRunning() {
+  const isRunning = await checkPortListening(FASTAPI_PORT);
+  if (isRunning) {
+    console.log(`[FastAPI] Service detected active on port ${FASTAPI_PORT}`);
+    return;
+  }
+
+  const pythonExe = getPythonExecutable();
+  console.log(`[FastAPI] Port ${FASTAPI_PORT} inactive. Auto-launching FastAPI via ${pythonExe}...`);
+
+  try {
+    fastApiChild = spawn(
+      pythonExe,
+      ['-m', 'uvicorn', 'app.main:app', '--host', '127.0.0.1', '--port', String(FASTAPI_PORT)],
+      { cwd: __dirname, stdio: ['ignore', 'pipe', 'pipe'] }
+    );
+
+    fastApiChild.stdout.on('data', (d) => {
+      const msg = d.toString().trim();
+      if (msg) console.log(`[FastAPI] ${msg}`);
+    });
+
+    fastApiChild.stderr.on('data', (d) => {
+      const msg = d.toString().trim();
+      if (msg) console.warn(`[FastAPI] ${msg}`);
+    });
+
+    fastApiChild.on('error', (err) => {
+      console.error('[FastAPI] Failed to spawn FastAPI child process:', err.message);
+    });
+
+    fastApiChild.on('exit', (code, sig) => {
+      if (code !== 0 && code !== null) {
+        console.warn(`[FastAPI] Process exited with code ${code} signal ${sig}`);
+      }
+    });
+
+    const cleanup = () => {
+      if (fastApiChild && !fastApiChild.killed) {
+        try { fastApiChild.kill(); } catch (e) {}
+      }
+    };
+    process.on('SIGINT', cleanup);
+    process.on('SIGTERM', cleanup);
+    process.on('exit', cleanup);
+  } catch (err) {
+    console.error('[FastAPI] Error starting FastAPI:', err.message);
+  }
+}
+
 // Start listening
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`SkillSync Maharashtra API Server listening on port ${PORT}`);
   console.log(`Health Check: http://localhost:${PORT}/api/health`);
   console.log(`AI Engine: Groq LLaMA 3 [Model: ${groqService.getActiveModel()}] [Configured: ${groqService.isConfigured() ? 'YES' : 'NO (Fallback Active)'}]`);
+  await ensureFastApiRunning();
 });
+
