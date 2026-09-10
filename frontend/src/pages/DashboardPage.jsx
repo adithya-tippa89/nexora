@@ -12,7 +12,8 @@ import {
   Target,
   FileText,
   Users,
-  Cpu
+  Cpu,
+  Compass
 } from 'lucide-react';
 import { StatCard } from '../components/StatCard';
 import { StatusBadge } from '../components/StatusBadge';

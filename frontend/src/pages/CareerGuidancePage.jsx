@@ -38,7 +38,8 @@ export const CareerGuidancePage = () => {
     ]).then(([rolesRes, distRes, skillRes]) => {
       setJobRoles(rolesRes.job_roles || []);
       setDistricts(distRes.districts || []);
-      setAvailableSkills((skillRes.skills || []).map(s => s.skill_name));
+      const rawSkills = Array.isArray(skillRes) ? skillRes : (skillRes?.skills || []);
+      setAvailableSkills(rawSkills.map(s => s.name || s.skill_name || s).filter(Boolean));
     }).catch(err => console.error(err));
   }, []);
 
