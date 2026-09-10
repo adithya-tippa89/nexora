@@ -1,11 +1,11 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { UserPlus, ArrowRight, ShieldCheck, GraduationCap, Building2, User } from 'lucide-react';
+import { ArrowRight, GraduationCap, Building2, User, AlertCircle, Info } from 'lucide-react';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
-  const { loginUser, showToast } = useAuth();
+  const { registerUser, showToast } = useAuth();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -15,6 +15,8 @@ export const RegisterPage = () => {
     organization: '',
     password: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const districtsList = [
     "Pune", "Mumbai Suburban", "Mumbai City", "Nagpur", "Nashik", 
@@ -22,28 +24,33 @@ export const RegisterPage = () => {
     "Amravati", "Nanded", "Satara", "Sangli", "Jalgaon", "Ahmednagar"
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const roleTitles = {
-      admin: "Government / Admin",
-      institution: "Training Institution",
-      employer: "Employer",
-      student: "Candidate / Student"
-    };
+    setIsLoading(true);
+    setErrorMessage('');
 
-    const newUser = {
-      id: "usr-" + Date.now(),
-      name: formData.name,
-      email: formData.email,
-      role: formData.role,
-      roleTitle: roleTitles[formData.role] || "User",
-      district: formData.district,
-      organization: formData.organization || (formData.role === 'student' ? 'Technical Student' : 'Maharashtra Organization')
-    };
+    if (formData.password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long.");
+      setIsLoading(false);
+      return;
+    }
 
-    loginUser(newUser);
-    showToast(`Registration completed as ${newUser.roleTitle}!`);
-    navigate('/dashboard');
+    try {
+      await registerUser({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        role: formData.role,
+        district: formData.district,
+        organization: formData.organization.trim() || (formData.role === 'student' ? 'Technical Student' : 'Maharashtra Organization'),
+        password: formData.password
+      });
+      navigate('/dashboard');
+    } catch (err) {
+      setErrorMessage(err.message || "Registration failed. Please check your inputs.");
+      showToast(err.message || "Registration failed", "error");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -61,16 +68,30 @@ export const RegisterPage = () => {
           </p>
         </div>
 
+        {errorMessage && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2 text-xs text-red-700 animate-in fade-in">
+            <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+            <div>
+              <p className="font-bold">Registration Error</p>
+              <p>{errorMessage}</p>
+            </div>
+          </div>
+        )}
+
         <form className="space-y-4" onSubmit={handleSubmit}>
-          {/* Role selector buttons */}
+          {/* Role selector buttons - 3 Public Roles, Admin prohibited */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-2">Select Your Role</label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-xs font-bold text-slate-700">Select Your Role</label>
+              <span className="text-[10px] text-slate-400 font-medium flex items-center gap-1">
+                <Info className="w-3 h-3 text-blue-500" /> Admin accounts provisioned internally
+              </span>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
               {[
-                { id: 'student', title: 'Student', icon: User },
-                { id: 'institution', title: 'Institute', icon: GraduationCap },
-                { id: 'employer', title: 'Employer', icon: Building2 },
-                { id: 'admin', title: 'Govt Admin', icon: ShieldCheck }
+                { id: 'student', title: 'Student', subtitle: 'Candidate', icon: User },
+                { id: 'trainer', title: 'Trainer', subtitle: 'Faculty / Institute', icon: GraduationCap },
+                { id: 'employer', title: 'Employer', subtitle: 'Industry Partner', icon: Building2 }
               ].map(r => {
                 const Icon = r.icon;
                 const isSelected = formData.role === r.id;
@@ -79,14 +100,15 @@ export const RegisterPage = () => {
                     key={r.id}
                     type="button"
                     onClick={() => setFormData({ ...formData, role: r.id })}
-                    className={`p-2.5 rounded-xl border text-center transition flex flex-col items-center gap-1 text-xs font-bold ${
+                    className={`p-2.5 rounded-xl border text-center transition flex flex-col items-center gap-1 text-xs font-bold cursor-pointer ${
                       isSelected
-                        ? 'border-blue-600 bg-blue-50 text-blue-800'
+                        ? 'border-blue-600 bg-blue-50 text-blue-800 ring-2 ring-blue-500/20 shadow-xs'
                         : 'border-slate-200 hover:bg-slate-50 text-slate-600'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
                     <span>{r.title}</span>
+                    <span className="text-[10px] font-normal text-slate-400">{r.subtitle}</span>
                   </button>
                 );
               })}
@@ -133,13 +155,13 @@ export const RegisterPage = () => {
 
           <div>
             <label className="block text-xs font-bold text-slate-700 mb-1">
-              {formData.role === 'student' ? 'College / University' : formData.role === 'institution' ? 'Institution / Polytechnic Name' : formData.role === 'employer' ? 'Company Name' : 'Government Department'}
+              {formData.role === 'student' ? 'College / University' : formData.role === 'trainer' ? 'Institution / Polytechnic Name' : 'Company Name'}
             </label>
             <input
               type="text"
               value={formData.organization}
               onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-              placeholder={formData.role === 'student' ? 'e.g. Pune Institute of Computer Technology' : 'e.g. Tata Motors / Govt Polytechnic'}
+              placeholder={formData.role === 'student' ? 'e.g. Pune Institute of Computer Technology' : formData.role === 'trainer' ? 'e.g. Government Polytechnic Pune' : 'e.g. Tata Motors / Mahindra'}
               className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-hidden"
             />
           </div>
@@ -149,18 +171,20 @@ export const RegisterPage = () => {
             <input
               type="password"
               required
+              minLength={6}
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              placeholder="Create strong password"
+              placeholder="Create strong password (min 6 characters)"
               className="w-full px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-hidden"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg shadow-sm transition flex items-center justify-center gap-2"
+            disabled={isLoading}
+            className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg shadow-sm transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
           >
-            Complete Registration
+            {isLoading ? "Registering via FastAPI..." : "Complete Registration"}
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>

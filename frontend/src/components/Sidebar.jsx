@@ -36,6 +36,7 @@ export const Sidebar = () => {
       items: [
         { name: "Skill Demand Analytics", path: "/skills", icon: BarChart3 },
         { name: "Job Role Analysis", path: "/job-roles", icon: Briefcase },
+        { name: "Collected Job Postings", path: "/jobs", icon: Briefcase },
         { name: "Emerging Tech Tracker", path: "/emerging-tech", icon: Flame }
       ]
     },

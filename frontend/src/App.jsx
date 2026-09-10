@@ -13,6 +13,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { SkillDemandPage } from './pages/SkillDemandPage';
 import { JobRoleAnalysisPage } from './pages/JobRoleAnalysisPage';
+import { JobsPage } from './pages/JobsPage';
 import { SkillGapPage } from './pages/SkillGapPage';
 import { CourseIntelligencePage } from './pages/CourseIntelligencePage';
 import { ObsoleteCoursesPage } from './pages/ObsoleteCoursesPage';
@@ -53,6 +54,7 @@ const AppLayout = () => {
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/skills" element={<SkillDemandPage />} />
               <Route path="/job-roles" element={<JobRoleAnalysisPage />} />
+              <Route path="/jobs" element={<JobsPage />} />
               <Route path="/skill-gap" element={<SkillGapPage />} />
               <Route path="/courses" element={<CourseIntelligencePage />} />
               <Route path="/obsolete-courses" element={<ObsoleteCoursesPage />} />

@@ -26,6 +26,7 @@ import {
 export const DashboardPage = () => {
   const { currentUser } = useAuth();
   const [data, setData] = useState(null);
+  const [skillDemand, setSkillDemand] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -36,6 +37,7 @@ export const DashboardPage = () => {
       console.error(err);
       setLoading(false);
     });
+    api.getSkillDemand().then(setSkillDemand).catch(err => console.error(err));
   }, []);
 
   const COLORS = ['#2563EB', '#6366F1', '#06B6D4', '#10B981', '#F59E0B', '#EC4899'];
@@ -210,6 +212,29 @@ export const DashboardPage = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+        <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+          <div>
+            <h3 className="font-bold text-sm text-slate-900">Industry Skill Demand</h3>
+            <p className="text-xs text-slate-500">Skills extracted from collected employer job descriptions</p>
+          </div>
+          <TrendingUp className="w-5 h-5 text-emerald-500" />
+        </div>
+        {skillDemand.length ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            {skillDemand.slice(0, 10).map((item, index) => (
+              <div key={item.skill} className="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-bold text-slate-900 truncate">{index + 1}. {item.skill}</span>
+                  <span className="text-xs font-black text-blue-700">{item.demand_percentage}%</span>
+                </div>
+                <p className="text-[11px] text-slate-500 mt-1">{item.job_count} jobs · {item.category}</p>
+              </div>
+            ))}
+          </div>
+        ) : <p className="text-xs text-slate-500">No processed job descriptions yet.</p>}
       </div>
 
       {/* Role-Aware Quick Workflows */}

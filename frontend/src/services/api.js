@@ -1,17 +1,28 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const AUTH_API_BASE_URL = import.meta.env.VITE_AUTH_API_URL || 'http://localhost:8000';
+const JOBS_API_BASE_URL = import.meta.env.VITE_AUTH_API_URL || 'http://localhost:8000';
 
 async function fetchJson(url, options = {}) {
   try {
+    const token = localStorage.getItem('skillsync_token');
+    const authHeaders = token ? { 'Authorization': `Bearer ${token}` } : {};
+
     const res = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
+        ...authHeaders,
         ...(options.headers || {})
       },
       ...options
     });
     if (!res.ok) {
       const errData = await res.json().catch(() => ({}));
-      throw new Error(errData.error || errData.message || `Request failed with status ${res.status}`);
+      const errorMsg = 
+        (typeof errData.detail === 'string' ? errData.detail : (Array.isArray(errData.detail) ? errData.detail[0]?.msg : null)) ||
+        errData.error || 
+        errData.message || 
+        `Request failed with status ${res.status}`;
+      throw new Error(errorMsg);
     }
     return await res.json();
   } catch (err) {
@@ -21,10 +32,22 @@ async function fetchJson(url, options = {}) {
 }
 
 export const api = {
-  // Auth
-  login: (data) => fetchJson(`${API_BASE_URL}/auth/login`, { method: 'POST', body: JSON.stringify(data) }),
-  register: (data) => fetchJson(`${API_BASE_URL}/auth/register`, { method: 'POST', body: JSON.stringify(data) }),
+  // Module 1: FastAPI Authentication & User Management
+  login: (data) => fetchJson(`${AUTH_API_BASE_URL}/auth/login`, { method: 'POST', body: JSON.stringify(data) }),
+  register: (data) => fetchJson(`${AUTH_API_BASE_URL}/auth/register`, { method: 'POST', body: JSON.stringify(data) }),
+  getCurrentUser: () => fetchJson(`${AUTH_API_BASE_URL}/users/me`),
+  updateCurrentUser: (data) => fetchJson(`${AUTH_API_BASE_URL}/users/me`, { method: 'PUT', body: JSON.stringify(data) }),
   getDemoAccounts: () => fetchJson(`${API_BASE_URL}/auth/demo-accounts`),
+
+  // Module 2: PostgreSQL-backed collected jobs
+  getJobs: (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return fetchJson(`${JOBS_API_BASE_URL}/jobs${query ? `?${query}` : ''}`);
+  },
+  getJobById: (id) => fetchJson(`${JOBS_API_BASE_URL}/jobs/${id}`),
+  getJobStats: () => fetchJson(`${JOBS_API_BASE_URL}/jobs/stats`),
+  getJobLocationStats: () => fetchJson(`${JOBS_API_BASE_URL}/jobs/stats/location`),
+  collectJobs: () => fetchJson(`${JOBS_API_BASE_URL}/jobs/collect`, { method: 'POST' }),
 
   // Dashboard
   getDashboardStats: () => fetchJson(`${API_BASE_URL}/dashboard/stats`),
@@ -35,6 +58,9 @@ export const api = {
     return fetchJson(`${API_BASE_URL}/skills${query ? `?${query}` : ''}`);
   },
   addSkill: (data) => fetchJson(`${API_BASE_URL}/skills`, { method: 'POST', body: JSON.stringify(data) }),
+  getSkillDemand: () => fetchJson(`${API_BASE_URL}/skills/demand`),
+  getJobSkills: (id) => fetchJson(`${JOBS_API_BASE_URL}/jobs/${id}/skills`),
+  processExistingSkills: () => fetchJson(`${API_BASE_URL}/skills/process-existing`, { method: 'POST' }),
 
   // Job Roles
   getJobRoles: (params = {}) => {

@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { ShieldCheck, GraduationCap, Building2, User, ChevronDown, Check } from 'lucide-react';
 
@@ -8,10 +8,13 @@ export const RoleSwitcher = () => {
 
   const roleIcons = {
     admin: <ShieldCheck className="w-4 h-4 text-purple-600" />,
+    trainer: <GraduationCap className="w-4 h-4 text-blue-600" />,
     institution: <GraduationCap className="w-4 h-4 text-blue-600" />,
     employer: <Building2 className="w-4 h-4 text-emerald-600" />,
     student: <User className="w-4 h-4 text-amber-600" />
   };
+
+  const visibleRoles = ['admin', 'trainer', 'employer', 'student'];
 
   return (
     <div className="relative inline-block text-left">
@@ -21,7 +24,7 @@ export const RoleSwitcher = () => {
         title="Quick Role Switcher for Evaluation"
       >
         <span className="flex items-center gap-1.5">
-          {roleIcons[currentUser.role]}
+          {roleIcons[currentUser.role] || <User className="w-4 h-4 text-slate-600" />}
           <span className="hidden sm:inline font-bold">Role:</span>
           <span>{currentUser.roleTitle || currentUser.role}</span>
         </span>
@@ -37,9 +40,10 @@ export const RoleSwitcher = () => {
               <p className="text-xs text-slate-500">Test role-specific permissions and dashboards</p>
             </div>
             <div className="py-1 space-y-1">
-              {Object.keys(demoProfiles).map(key => {
+              {visibleRoles.map(key => {
                 const p = demoProfiles[key];
-                const isActive = currentUser.role === key;
+                if (!p) return null;
+                const isActive = currentUser.role === key || (key === 'trainer' && currentUser.role === 'institution');
                 return (
                   <button
                     key={key}

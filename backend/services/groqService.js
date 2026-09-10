@@ -46,7 +46,7 @@ class GroqService {
     const apiKey = process.env.GROQ_API_KEY;
     if (apiKey && apiKey.trim() !== '' && apiKey !== 'your_groq_api_key_here') {
       try {
-        this.client = new Groq({ apiKey });
+        this.client = new Groq({ apiKey, timeout: 8000 });
       } catch (err) {
         console.warn('[GroqService] Initialization error:', err.message);
         this.client = null;

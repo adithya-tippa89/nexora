@@ -18,6 +18,8 @@ import {
 export const AdminSettingsPage = () => {
   const { showToast } = useAuth();
   const [diagnostics, setDiagnostics] = useState(null);
+  const [jobStats, setJobStats] = useState(null);
+  const [isCollectingJobs, setIsCollectingJobs] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const [thresholds, setThresholds] = useState({
     obsoletePlacementCutoff: 30,
@@ -38,6 +40,8 @@ export const AdminSettingsPage = () => {
     api.getAiStatus().then(res => {
       setAiStatus(res);
     }).catch(err => console.error(err));
+
+    api.getJobStats().then(res => setJobStats(res)).catch(err => console.error(err));
   };
 
   useEffect(() => {
@@ -75,6 +79,20 @@ export const AdminSettingsPage = () => {
       showToast(err.message, 'error');
       setIsResetting(false);
     });
+  };
+
+  const handleCollectJobs = async () => {
+    setIsCollectingJobs(true);
+    try {
+      const result = await api.collectJobs();
+      showToast(`Collected ${result.jobs_fetched} jobs: ${result.jobs_inserted} inserted, ${result.jobs_updated} updated.`, 'success');
+      const refreshedStats = await api.getJobStats();
+      setJobStats(refreshedStats);
+    } catch (err) {
+      showToast(err.message, 'error');
+    } finally {
+      setIsCollectingJobs(false);
+    }
   };
 
   const handleSaveThresholds = (e) => {
@@ -136,6 +154,28 @@ export const AdminSettingsPage = () => {
             Covering Western MH, Vidarbha, Marathwada & Konkan
           </p>
         </div>
+      </div>
+
+      <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase">
+            <Database className="w-4 h-4 text-emerald-600" /> Real Job Data Collection
+          </div>
+          <p className="text-sm font-bold text-slate-900 mt-2">
+            {jobStats ? `${jobStats.active_jobs.toLocaleString()} active postings` : 'No collection statistics loaded'}
+          </p>
+          <p className="text-xs text-slate-500 mt-1">
+            Latest run: {jobStats?.latest_collection_at ? new Date(jobStats.latest_collection_at).toLocaleString() : 'Not collected yet'}
+          </p>
+        </div>
+        <button
+          onClick={handleCollectJobs}
+          disabled={isCollectingJobs}
+          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition flex items-center gap-2 disabled:opacity-50"
+        >
+          <RefreshCw className={`w-4 h-4 ${isCollectingJobs ? 'animate-spin' : ''}`} />
+          {isCollectingJobs ? 'Collecting...' : 'Run job collection'}
+        </button>
       </div>
 
       {/* Groq LLaMA 3 AI Engine & Model Diagnostics */}

@@ -6,3 +6,10 @@ dist/
 !.env.example
 backend/data/*.db
 backend/data/*.sqlite
+*.db
+*.sqlite
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/

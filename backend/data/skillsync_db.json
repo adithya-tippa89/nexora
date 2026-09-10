@@ -590,7 +590,7 @@
         "Cloud Computing (AWS/Azure)"
       ],
       "missing_skills": [],
-      "recommendation": "Curriculum updated on 9/9/2026. Added: Power BI, Cloud Computing (AWS/Azure)."
+      "recommendation": "Curriculum updated on 10/9/2026. Added: Power BI, Cloud Computing (AWS/Azure)."
     },
     {
       "id": "course-fullstack-cloud",
@@ -948,10 +948,8 @@
         "Dual 4K monitors for BI dashboards",
         "Gigabit private network fabric"
       ],
-      "status": "Rejected",
-      "impact_estimate": "Enables hands-on practical training for 600 students annually.",
-      "approved_at": "2026-09-09T10:48:46.513Z",
-      "remarks": "Actioned by Rohan Shinde"
+      "status": "Pending Review",
+      "impact_estimate": "Enables hands-on practical training for 600 students annually."
     },
     {
       "id": "rec-5",
@@ -1215,27 +1213,6 @@
     }
   ],
   "district_training_plans": [
-    {
-      "id": "dtp-thane",
-      "district_name": "Thane",
-      "financial_year": "2026-2027",
-      "priority_sectors": [
-        "Information Technology",
-        "Chemicals & Petrochemicals",
-        "Logistics"
-      ],
-      "recommended_courses": [
-        "Diploma in Applied Information Technology Systems",
-        "Industrial Automation & Digital Controls",
-        "Python & Cloud Computing for Enterprise"
-      ],
-      "required_trainers": 20,
-      "required_infra_labs": 6,
-      "expected_employment": 12070,
-      "budget_allocation_cr": 7.2,
-      "status": "State Approved",
-      "generated_date": "2026-09-09"
-    },
     {
       "id": "dtp-pune",
       "district_name": "Pune",
