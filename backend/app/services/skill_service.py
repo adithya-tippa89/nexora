@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 from app.models.job import Job
 from app.models.skill import JobSkill, Skill
+from app.services.job_role_service import process_job_role
 
 logger = logging.getLogger(__name__)
 
@@ -90,13 +91,19 @@ def process_job_skills(db: Session, job: Job) -> int:
 
 
 def process_unprocessed_jobs(db: Session) -> dict:
-    jobs = db.query(Job).filter(Job.skills_processed_at.is_(None)).all()
-    processed = extracted = 0
-    for job in jobs:
+    skill_jobs = db.query(Job).filter(Job.skills_processed_at.is_(None)).all()
+    role_jobs = db.query(Job).filter(Job.role_processed_at.is_(None)).all()
+    processed = extracted = roles_classified = 0
+    for job in skill_jobs:
         try:
             extracted += process_job_skills(db, job)
             processed += 1
         except Exception:
             logger.exception("Skill processing failed for job %s", job.id)
+    for job in role_jobs:
+        try:
+            roles_classified += int(process_job_role(db, job))
+        except Exception:
+            logger.exception("Role processing failed for job %s", job.id)
     db.commit()
-    return {"jobs_processed": processed, "skills_extracted": extracted}
+    return {"jobs_processed": max(processed, len(role_jobs)), "skills_extracted": extracted, "roles_classified": roles_classified}

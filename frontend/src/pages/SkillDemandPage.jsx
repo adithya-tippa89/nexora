@@ -30,10 +30,22 @@ export const SkillDemandPage = () => {
 
   const loadSkills = () => {
     setLoading(true);
-    api.getSkills({ category: selectedCategory, status: selectedStatus, search: searchTerm })
-      .then(res => {
-        setSkills(res.skills || []);
-        if (res.categories) setCategories(res.categories);
+    api.getSkillDemand()
+      .then(rows => {
+        const filtered = rows
+          .filter(skill => selectedCategory === 'All' || skill.category === selectedCategory)
+          .filter(skill => !searchTerm || skill.skill.toLowerCase().includes(searchTerm.toLowerCase()))
+          .map(skill => ({
+            id: skill.skill,
+            skill_name: skill.skill,
+            category: skill.category,
+            demand_score: skill.demand_percentage,
+            growth_rate: 0,
+            velocity_status: 'Observed',
+            description: `${skill.job_count} collected jobs require this skill.`
+          }));
+        setSkills(filtered);
+        setCategories(Array.from(new Set(rows.map(skill => skill.category))).sort());
         setLoading(false);
       })
       .catch(err => {

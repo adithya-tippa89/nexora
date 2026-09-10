@@ -1,7 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../services/api';
-import { Briefcase, TrendingUp, Users, Target, ArrowRight, CheckCircle2, Search, Filter } from 'lucide-react';
+import { Briefcase, TrendingUp, MapPin, Target, CheckCircle2, Search, Filter } from 'lucide-react';
 
 export const JobRoleAnalysisPage = () => {
   const [jobRoles, setJobRoles] = useState([]);
@@ -77,9 +77,9 @@ export const JobRoleAnalysisPage = () => {
                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-50 text-blue-700">
                   {role.sector}
                 </span>
-                <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                <span className={`text-xs font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${role.trend === 'declining' ? 'text-rose-600 bg-rose-50' : 'text-emerald-600 bg-emerald-50'}`}>
                   <TrendingUp className="w-3 h-3" />
-                  +{role.growth_rate}% YoY
+                  {role.trend} {role.growth_rate > 0 ? `+${role.growth_rate}%` : `${role.growth_rate}%`}
                 </span>
               </div>
 
@@ -100,6 +100,12 @@ export const JobRoleAnalysisPage = () => {
                   <span className="text-[10px] font-bold text-slate-400 block uppercase">Skill Gap</span>
                   <span className="text-sm font-black text-rose-600">{role.skill_gap_percentage}%</span>
                 </div>
+              </div>
+
+              <div className="flex items-center gap-1.5 text-[11px] text-slate-500 mb-4">
+                <MapPin className="w-3.5 h-3.5 text-blue-600" />
+                <span>{role.locations?.slice(0, 2).map(location => location.district || location.state).filter(Boolean).join(', ') || 'Location data pending'}</span>
+                <span className="ml-auto font-semibold text-slate-700">{role.demand_percentage}% of jobs</span>
               </div>
 
               {/* Required Skills with Proficiency Levels */}

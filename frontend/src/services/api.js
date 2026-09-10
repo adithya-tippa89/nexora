@@ -65,9 +65,9 @@ export const api = {
   // Job Roles
   getJobRoles: (params = {}) => {
     const query = new URLSearchParams(params).toString();
-    return fetchJson(`${API_BASE_URL}/job-roles${query ? `?${query}` : ''}`);
+    return fetchJson(`${AUTH_API_BASE_URL}/api/job-roles${query ? `?${query}` : ''}`);
   },
-  getJobRoleById: (id) => fetchJson(`${API_BASE_URL}/job-roles/${id}`),
+  getJobRoleById: (id) => fetchJson(`${AUTH_API_BASE_URL}/api/job-roles/${id}`),
 
   // Courses
   getCourses: (params = {}) => {

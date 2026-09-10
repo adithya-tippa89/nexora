@@ -6,6 +6,7 @@ from app.job_sources.adapters.arbeitnow import ArbeitnowAdapter
 from app.models.job import Job, JobCollectionRun
 from app.services.job_cleaner import clean_job
 from app.services.skill_service import process_job_skills
+from app.services.job_role_service import process_job_role
 
 logger = logging.getLogger(__name__)
 ADAPTERS = {"arbeitnow": ArbeitnowAdapter}
@@ -35,6 +36,8 @@ def collect_jobs(db: Session, source_name: str | None = None) -> dict:
                     setattr(existing, key, value)
                 if changed:
                     existing.skills_processed_at = None
+                    existing.role_processed_at = None
+                    existing.job_role_id = None
                 existing.last_seen_at = now
                 existing.is_active = True
                 result["jobs_updated"] += int(changed)
@@ -45,6 +48,8 @@ def collect_jobs(db: Session, source_name: str | None = None) -> dict:
         db.flush()
         for job in db.query(Job).filter(Job.skills_processed_at.is_(None)).all():
             process_job_skills(db, job)
+        for job in db.query(Job).filter(Job.role_processed_at.is_(None)).all():
+            process_job_role(db, job)
         run.status = "success"
     except Exception as exc:
         logger.exception("Job collection failed for source %s", source_name)

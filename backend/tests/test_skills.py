@@ -5,7 +5,9 @@ from sqlalchemy.pool import StaticPool
 from app.database import Base
 from app.models.job import Job
 from app.models.skill import JobSkill, Skill
+from app.models.job_role import JobRole, RoleSkill
 from app.services.skill_service import extract_skills, process_job_skills
+from app.services.job_role_service import process_job_role
 
 skill_engine = create_engine("sqlite:///:memory:", connect_args={"check_same_thread": False}, poolclass=StaticPool)
 SkillSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=skill_engine)
@@ -37,4 +39,19 @@ def test_job_skill_relationship_is_idempotent():
     db.commit()
     assert db.query(Skill).count() == 1
     assert db.query(JobSkill).count() == 1
+    db.close()
+
+
+def test_job_role_classification_links_normalized_skills_once():
+    db = SkillSessionLocal()
+    job = Job(title="Cloud Engineer", source="test", source_url="https://example.test/role", dedupe_key="role", description="AWS, Docker and Python")
+    db.add(job)
+    db.commit()
+    process_job_skills(db, job)
+    process_job_role(db, job)
+    db.commit()
+    process_job_role(db, job)
+    db.commit()
+    assert db.query(JobRole).one().name == "Cloud Engineer"
+    assert db.query(RoleSkill).count() == 3
     db.close()
