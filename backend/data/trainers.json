@@ -1,0 +1,54 @@
+﻿[
+  {
+    "id": "tr-1",
+    "trainer_name": "Prof. Anil Jadhav",
+    "institution": "Government Polytechnic Pune",
+    "district": "Pune",
+    "sector": "Information Technology",
+    "current_skills": ["C++", "Core Java", "Cloud Basics (EC2)"],
+    "target_course": "Advanced Full Stack & Cloud Engineering",
+    "required_skills": ["Cloud Computing (AWS/Azure)", "Docker & Containerization", "Kubernetes", "Microservices"],
+    "trainer_skill_gap": 60.0,
+    "upskilling_status": "Enrolled in FDP",
+    "assigned_fdp": "AWS Certified Solutions Architect + Docker Bootcamp (State Cohort 4)"
+  },
+  {
+    "id": "tr-2",
+    "trainer_name": "Prof. Neha Sawant",
+    "institution": "VJTI Vocational Annex",
+    "district": "Mumbai Suburban",
+    "sector": "Information Technology",
+    "current_skills": ["Python Basics", "Statistics", "SQL"],
+    "target_course": "Applied AI & Machine Learning",
+    "required_skills": ["Artificial Intelligence & ML", "Generative AI & Prompt Engineering", "Deep Learning", "PyTorch"],
+    "trainer_skill_gap": 55.0,
+    "upskilling_status": "Identified",
+    "assigned_fdp": "NASSCOM - State AI Master Trainer Certification"
+  },
+  {
+    "id": "tr-3",
+    "trainer_name": "Er. Ramesh Thorat",
+    "institution": "Nashik Skill Development Academy",
+    "district": "Nashik",
+    "sector": "Automotive & EV",
+    "current_skills": ["IC Engines", "Auto Electricals 12V"],
+    "target_course": "EV Powertrain & Battery Diagnostics",
+    "required_skills": ["EV Battery & Powertrain Systems", "BMS Diagnostic Telematics", "High Voltage Safety"],
+    "trainer_skill_gap": 65.0,
+    "upskilling_status": "Certified",
+    "assigned_fdp": "ARAI Certified Electric Vehicle Systems Trainer"
+  },
+  {
+    "id": "tr-4",
+    "trainer_name": "Er. Vijay Deshmukh",
+    "institution": "Chhatrapati Sambhajinagar Technical Hub",
+    "district": "Chhatrapati Sambhajinagar",
+    "sector": "Manufacturing & Automation",
+    "current_skills": ["Manual Machining", "Basic Relays"],
+    "target_course": "Robotics & Smart Factory Automation",
+    "required_skills": ["Industrial Robotics Programming", "PLC & SCADA Automation", "Machine Vision"],
+    "trainer_skill_gap": 70.0,
+    "upskilling_status": "Enrolled in FDP",
+    "assigned_fdp": "Siemens Industry 4.0 Mechatronics Faculty Certification"
+  }
+]

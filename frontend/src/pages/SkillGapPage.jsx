@@ -1,0 +1,440 @@
+﻿import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { api } from '../services/api';
+import { useAuth } from '../context/AuthContext';
+import { 
+  Target, 
+  Sparkles, 
+  AlertTriangle, 
+  CheckCircle2, 
+  XCircle, 
+  ArrowRight, 
+  BookOpen, 
+  MapPin, 
+  Layers, 
+  Download,
+  RefreshCw,
+  Cpu,
+  GraduationCap
+} from 'lucide-react';
+
+export const SkillGapPage = () => {
+  const location = useLocation();
+  const { showToast } = useAuth();
+
+  // Selector Options
+  const [districts, setDistricts] = useState([]);
+  const [jobRoles, setJobRoles] = useState([]);
+  const [courses, setCourses] = useState([]);
+
+  // Selected State
+  const [selectedDistrict, setSelectedDistrict] = useState('Pune');
+  const [selectedSector, setSelectedSector] = useState('Information Technology');
+  const [selectedJobRoleId, setSelectedJobRoleId] = useState('role-data-analyst');
+  const [selectedCourseId, setSelectedCourseId] = useState('course-data-analytics');
+
+  // Analysis Result
+  const [analysis, setAnalysis] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [updatingCurriculum, setUpdatingCurriculum] = useState(false);
+
+  // Initial load
+  useEffect(() => {
+    Promise.all([
+      api.getDistricts(),
+      api.getJobRoles(),
+      api.getCourses()
+    ]).then(([distRes, roleRes, courseRes]) => {
+      setDistricts(distRes.districts || []);
+      setJobRoles(roleRes.job_roles || []);
+      setCourses(courseRes.courses || []);
+
+      // Check URL search params for deep linking
+      const params = new URLSearchParams(location.search);
+      const paramRole = params.get('role');
+      const paramSector = params.get('sector');
+      if (paramRole) setSelectedJobRoleId(paramRole);
+      if (paramSector) setSelectedSector(paramSector);
+    }).catch(err => console.error(err));
+  }, [location.search]);
+
+  // Run Gap Engine
+  const runAnalysis = () => {
+    setLoading(true);
+    api.analyzeSkillGap({
+      district: selectedDistrict,
+      sector: selectedSector,
+      job_role_id: selectedJobRoleId,
+      course_id: selectedCourseId
+    }).then(res => {
+      setAnalysis(res.analysis);
+      setLoading(false);
+    }).catch(err => {
+      showToast(err.message, 'error');
+      setLoading(false);
+    });
+  };
+
+  // Trigger analysis when selections change
+  useEffect(() => {
+    if (districts.length > 0 && jobRoles.length > 0 && courses.length > 0) {
+      runAnalysis();
+    }
+  }, [selectedDistrict, selectedSector, selectedJobRoleId, selectedCourseId, districts, jobRoles, courses]);
+
+  // One-click AI curriculum update implementation
+  const handleApplyCurriculumUpdate = () => {
+    if (!analysis || !analysis.missing_skills || analysis.missing_skills.length === 0) {
+      showToast("No missing skills to add. Curriculum is already fully aligned!", 'info');
+      return;
+    }
+
+    setUpdatingCurriculum(true);
+    api.updateCourseCurriculum(analysis.course_id, {
+      added_skills: analysis.missing_skills
+    }).then(res => {
+      showToast(`Successfully added ${analysis.missing_skills.join(', ')} to course curriculum!`, 'success');
+      setUpdatingCurriculum(false);
+      // Refresh course list and re-run analysis
+      api.getCourses().then(cRes => setCourses(cRes.courses || []));
+      runAnalysis();
+    }).catch(err => {
+      showToast(err.message, 'error');
+      setUpdatingCurriculum(false);
+    });
+  };
+
+  const filteredCourses = courses.filter(c => 
+    selectedSector === 'All' || c.sector.toLowerCase() === selectedSector.toLowerCase()
+  );
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 text-blue-200 text-xs font-bold mb-2">
+            <Target className="w-3.5 h-3.5 text-blue-400" />
+            <span>Core Mathematical Gap Engine</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
+            Skill Gap Analysis Engine
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
+            Compares live industry required competencies with institutional training curriculums. Computes exact gap percentages and triggers automated AI modernization interventions.
+          </p>
+        </div>
+      </div>
+
+      {/* Selectors Configuration Panel */}
+      <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+          Step 1: Configure Comparison Scope
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* 1. District */}
+          <div>
+            <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
+              <MapPin className="w-3.5 h-3.5 text-blue-600" />
+              1. District
+            </label>
+            <select
+              value={selectedDistrict}
+              onChange={(e) => setSelectedDistrict(e.target.value)}
+              className="w-full text-xs font-semibold border border-slate-300 rounded-xl px-3 py-2 bg-slate-50 text-slate-900 focus:ring-2 focus:ring-blue-500"
+            >
+              {districts.map(d => (
+                <option key={d.id} value={d.district_name}>{d.district_name}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* 2. Sector */}
+          <div>
+            <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
+              <Layers className="w-3.5 h-3.5 text-indigo-600" />
+              2. Industry Sector
+            </label>
+            <select
+              value={selectedSector}
+              onChange={(e) => {
+                setSelectedSector(e.target.value);
+                const firstRole = jobRoles.find(r => r.sector === e.target.value);
+                if (firstRole) setSelectedJobRoleId(firstRole.id);
+              }}
+              className="w-full text-xs font-semibold border border-slate-300 rounded-xl px-3 py-2 bg-slate-50 text-slate-900 focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="Information Technology">Information Technology</option>
+              <option value="Automotive & EV">Automotive & EV</option>
+              <option value="Manufacturing & Automation">Manufacturing & Automation</option>
+            </select>
+          </div>
+
+          {/* 3. Job Role */}
+          <div>
+            <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
+              <Target className="w-3.5 h-3.5 text-emerald-600" />
+              3. Target Job Role
+            </label>
+            <select
+              value={selectedJobRoleId}
+              onChange={(e) => setSelectedJobRoleId(e.target.value)}
+              className="w-full text-xs font-semibold border border-slate-300 rounded-xl px-3 py-2 bg-slate-50 text-slate-900 focus:ring-2 focus:ring-blue-500"
+            >
+              {jobRoles
+                .filter(r => r.sector === selectedSector)
+                .map(r => (
+                  <option key={r.id} value={r.id}>{r.role_name}</option>
+                ))}
+            </select>
+          </div>
+
+          {/* 4. Course */}
+          <div>
+            <label className="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
+              <BookOpen className="w-3.5 h-3.5 text-amber-600" />
+              4. Existing Course Curriculum
+            </label>
+            <select
+              value={selectedCourseId}
+              onChange={(e) => setSelectedCourseId(e.target.value)}
+              className="w-full text-xs font-semibold border border-slate-300 rounded-xl px-3 py-2 bg-slate-50 text-slate-900 focus:ring-2 focus:ring-blue-500"
+            >
+              {filteredCourses.map(c => (
+                <option key={c.id} value={c.id}>{c.course_name} ({c.district})</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {/* Analysis Results Display */}
+      {analysis && (
+        <div className="space-y-6">
+          {/* Top Score Cards Banner */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Overall Match Card */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Overall Skill Match</span>
+              <div className="my-3 flex items-baseline gap-2">
+                <span className={`text-5xl font-black ${
+                  analysis.skill_match_percentage >= 80 ? 'text-emerald-600' :
+                  analysis.skill_match_percentage >= 50 ? 'text-amber-500' : 'text-rose-600'
+                }`}>
+                  {analysis.skill_match_percentage}%
+                </span>
+                <span className="text-sm font-bold text-slate-400 uppercase">MATCH</span>
+              </div>
+              <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                <div 
+                  className={`h-full rounded-full transition-all duration-500 ${
+                    analysis.skill_match_percentage >= 80 ? 'bg-emerald-500' :
+                    analysis.skill_match_percentage >= 50 ? 'bg-amber-500' : 'bg-rose-500'
+                  }`}
+                  style={{ width: `${analysis.skill_match_percentage}%` }}
+                ></div>
+              </div>
+              <p className="text-[11px] text-slate-500 mt-2">
+                {analysis.matching_skills_count} of {analysis.total_required_skills} industry required competencies covered.
+              </p>
+            </div>
+
+            {/* Overall Skill Gap Card */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Identified Skill Gap</span>
+              <div className="my-3 flex items-baseline gap-2">
+                <span className={`text-5xl font-black ${analysis.skill_gap_percentage > 30 ? 'text-rose-600' : 'text-emerald-600'}`}>
+                  {analysis.skill_gap_percentage}%
+                </span>
+                <span className="text-sm font-bold text-slate-400 uppercase">DEFICIT</span>
+              </div>
+              <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-rose-500 rounded-full transition-all duration-500"
+                  style={{ width: `${analysis.skill_gap_percentage}%` }}
+                ></div>
+              </div>
+              <p className="text-[11px] text-slate-500 mt-2">
+                {analysis.missing_skills_count} critical skills currently omitted from course syllabus.
+              </p>
+            </div>
+
+            {/* Missing Skills Warning Card */}
+            <div className="bg-rose-50/80 p-6 rounded-2xl border border-rose-200 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-1.5 text-rose-800 font-bold text-xs uppercase tracking-wider mb-2">
+                  <AlertTriangle className="w-4 h-4 text-rose-600" />
+                  <span>Missing Skills Warning</span>
+                </div>
+                {analysis.missing_skills.length > 0 ? (
+                  <div className="space-y-1.5 mt-2">
+                    {analysis.missing_skills.map((s, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-xs font-bold text-rose-900 bg-white/80 px-2.5 py-1.5 rounded-lg border border-rose-200">
+                        <XCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                        <span>{s}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-2 rounded-lg mt-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <span>Zero skill gaps! Full curriculum alignment.</span>
+                  </div>
+                )}
+              </div>
+              <p className="text-[11px] text-rose-700 mt-3">
+                Industry hiring managers expect these skills for job readiness.
+              </p>
+            </div>
+          </div>
+
+          {/* Comparison Matrix Table - Section 6 Example */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+            <div className="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+              <div>
+                <h3 className="font-bold text-xs text-slate-900 uppercase tracking-wider">
+                  Detailed Competency Matrix
+                </h3>
+                <p className="text-[11px] text-slate-500">
+                  {analysis.course_name} vs Industry Requirements for {analysis.job_role}
+                </p>
+              </div>
+              <span className="text-xs font-semibold px-2.5 py-1 bg-white rounded border text-slate-600">
+                Formula: Gap % = (Missing / Total) × 100
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs text-slate-700">
+                <thead className="bg-slate-100/60 text-slate-500 font-bold uppercase tracking-wider text-[10px] border-b border-slate-200">
+                  <tr>
+                    <th className="px-5 py-3.5">Skill</th>
+                    <th className="px-4 py-3.5">Industry Demand</th>
+                    <th className="px-4 py-3.5">Required Proficiency</th>
+                    <th className="px-4 py-3.5">Course Coverage</th>
+                    <th className="px-4 py-3.5">Gap %</th>
+                    <th className="px-4 py-3.5">Alignment Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {analysis.matrix.map((row, idx) => (
+                    <tr key={idx} className={row.course_coverage === 'No' ? 'bg-rose-50/40' : 'hover:bg-slate-50'}>
+                      <td className="px-5 py-3 font-bold text-slate-900">
+                        {row.skill_name}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">
+                          {row.industry_demand}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 font-semibold text-slate-700">
+                        {row.proficiency_required}
+                      </td>
+                      <td className="px-4 py-3">
+                        {row.course_coverage === 'Yes' ? (
+                          <span className="inline-flex items-center gap-1 text-emerald-700 font-bold">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                            Yes
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-rose-700 font-bold">
+                            <XCircle className="w-3.5 h-3.5 text-rose-600" />
+                            No
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 font-mono font-bold">
+                        <span className={row.gap_percentage === 0 ? 'text-emerald-600' : 'text-rose-600'}>
+                          {row.gap_percentage}%
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        {row.gap_percentage === 0 ? (
+                          <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                            Aligned
+                          </span>
+                        ) : (
+                          <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800">
+                            Missing Deficit
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* AI-Powered Recommendation Box */}
+          <div className="bg-gradient-to-br from-indigo-900 to-blue-900 text-white p-6 rounded-2xl shadow-md border border-indigo-700/50 space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-300">
+                  <Sparkles className="w-5 h-5 text-sky-300 animate-pulse" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-base tracking-tight text-white">
+                    AI-Powered Curriculum Recommendation
+                  </h3>
+                  <p className="text-[11px] text-slate-300">Automated intervention synthesized from labour market analytics</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10 text-sm leading-relaxed text-slate-100">
+              <p className="font-medium italic">
+                “{analysis.ai_recommendation}”
+              </p>
+            </div>
+
+            {/* Interventions Hub */}
+            {analysis.interventions && analysis.interventions.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                {analysis.interventions.map((item, idx) => (
+                  <div key={idx} className="bg-slate-900/40 p-3 rounded-lg border border-white/10 flex items-start gap-2.5 text-xs">
+                    <div className="mt-0.5 text-sky-400">
+                      {item.type.includes('Trainer') ? <GraduationCap className="w-4 h-4" /> : <Cpu className="w-4 h-4" />}
+                    </div>
+                    <div>
+                      <span className="font-bold text-sky-300 block">{item.type}</span>
+                      <span className="text-slate-300">{item.action}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-white/10">
+              <div className="text-xs text-slate-300">
+                Action will update course state across DVET and polytechnic portal.
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => window.print()}
+                  className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition flex items-center gap-1.5"
+                >
+                  <Download className="w-4 h-4" />
+                  Print / Export Gap Report
+                </button>
+
+                {analysis.missing_skills.length > 0 && (
+                  <button
+                    onClick={handleApplyCurriculumUpdate}
+                    disabled={updatingCurriculum}
+                    className="px-5 py-2 rounded-xl bg-blue-500 hover:bg-blue-400 text-white font-bold text-xs shadow-lg transition flex items-center gap-1.5"
+                  >
+                    <RefreshCw className={`w-4 h-4 ${updatingCurriculum ? 'animate-spin' : ''}`} />
+                    {updatingCurriculum ? "Applying Update..." : "Apply AI Curriculum Update"}
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

@@ -1,0 +1,127 @@
+﻿[
+  {
+    "id": "role-data-analyst",
+    "role_name": "Data Analyst",
+    "sector": "Information Technology",
+    "demand_score": 94.0,
+    "growth_rate": 28.5,
+    "avg_salary_lpa": 6.8,
+    "open_vacancies": 6800,
+    "available_candidates": 3200,
+    "skill_gap_percentage": 42.0,
+    "description": "Extracts, cleans, models, and visualizes enterprise data to empower business decisions.",
+    "skills": [
+      { "skill_id": "sk-python", "skill_name": "Python", "proficiency_level": "Advanced", "importance_score": 95.0 },
+      { "skill_id": "sk-sql", "skill_name": "SQL", "proficiency_level": "Advanced", "importance_score": 98.0 },
+      { "skill_id": "sk-powerbi", "skill_name": "Power BI", "proficiency_level": "Advanced", "importance_score": 92.0 },
+      { "skill_id": "sk-cloud", "skill_name": "Cloud Computing (AWS/Azure)", "proficiency_level": "Intermediate", "importance_score": 82.0 },
+      { "skill_id": "sk-excel-adv", "skill_name": "Advanced Excel & Financial Modeling", "proficiency_level": "Advanced", "importance_score": 88.0 }
+    ]
+  },
+  {
+    "id": "role-cloud-engineer",
+    "role_name": "Cloud Engineer",
+    "sector": "Information Technology",
+    "demand_score": 95.2,
+    "growth_rate": 33.0,
+    "avg_salary_lpa": 9.2,
+    "open_vacancies": 5400,
+    "available_candidates": 2100,
+    "skill_gap_percentage": 48.0,
+    "description": "Architects and maintains scalable, secure multi-cloud architectures across AWS and Azure.",
+    "skills": [
+      { "skill_id": "sk-cloud", "skill_name": "Cloud Computing (AWS/Azure)", "proficiency_level": "Expert", "importance_score": 98.0 },
+      { "skill_id": "sk-docker", "skill_name": "Docker & Containerization", "proficiency_level": "Advanced", "importance_score": 92.0 },
+      { "skill_id": "sk-python", "skill_name": "Python", "proficiency_level": "Intermediate", "importance_score": 84.0 },
+      { "skill_id": "sk-cybersecurity", "skill_name": "Cybersecurity & Threat Defense", "proficiency_level": "Intermediate", "importance_score": 86.0 }
+    ]
+  },
+  {
+    "id": "role-ai-engineer",
+    "role_name": "AI & Machine Learning Engineer",
+    "sector": "Information Technology",
+    "demand_score": 98.0,
+    "growth_rate": 45.0,
+    "avg_salary_lpa": 12.5,
+    "open_vacancies": 4200,
+    "available_candidates": 1350,
+    "skill_gap_percentage": 58.0,
+    "description": "Builds intelligent computer vision, natural language, and generative predictive models.",
+    "skills": [
+      { "skill_id": "sk-python", "skill_name": "Python", "proficiency_level": "Expert", "importance_score": 99.0 },
+      { "skill_id": "sk-ai-ml", "skill_name": "Artificial Intelligence & ML", "proficiency_level": "Expert", "importance_score": 98.0 },
+      { "skill_id": "sk-genai", "skill_name": "Generative AI & Prompt Engineering", "proficiency_level": "Advanced", "importance_score": 95.0 },
+      { "skill_id": "sk-cloud", "skill_name": "Cloud Computing (AWS/Azure)", "proficiency_level": "Intermediate", "importance_score": 85.0 },
+      { "skill_id": "sk-docker", "skill_name": "Docker & Containerization", "proficiency_level": "Intermediate", "importance_score": 80.0 }
+    ]
+  },
+  {
+    "id": "role-fullstack-dev",
+    "role_name": "Full Stack Developer",
+    "sector": "Information Technology",
+    "demand_score": 92.0,
+    "growth_rate": 24.0,
+    "avg_salary_lpa": 8.0,
+    "open_vacancies": 8200,
+    "available_candidates": 4900,
+    "skill_gap_percentage": 35.0,
+    "description": "Builds complete client-side and server-side web platforms with modern frameworks and databases.",
+    "skills": [
+      { "skill_id": "sk-react", "skill_name": "React & Modern Web", "proficiency_level": "Advanced", "importance_score": 96.0 },
+      { "skill_id": "sk-sql", "skill_name": "SQL", "proficiency_level": "Advanced", "importance_score": 90.0 },
+      { "skill_id": "sk-docker", "skill_name": "Docker & Containerization", "proficiency_level": "Intermediate", "importance_score": 82.0 },
+      { "skill_id": "sk-cloud", "skill_name": "Cloud Computing (AWS/Azure)", "proficiency_level": "Intermediate", "importance_score": 84.0 }
+    ]
+  },
+  {
+    "id": "role-cyber-analyst",
+    "role_name": "Cybersecurity Analyst",
+    "sector": "Information Technology",
+    "demand_score": 89.5,
+    "growth_rate": 29.0,
+    "avg_salary_lpa": 8.5,
+    "open_vacancies": 3800,
+    "available_candidates": 1400,
+    "skill_gap_percentage": 52.0,
+    "description": "Monitors security events, conducts vulnerability assessments, and defends critical infrastructure.",
+    "skills": [
+      { "skill_id": "sk-cybersecurity", "skill_name": "Cybersecurity & Threat Defense", "proficiency_level": "Advanced", "importance_score": 96.0 },
+      { "skill_id": "sk-cloud", "skill_name": "Cloud Computing (AWS/Azure)", "proficiency_level": "Intermediate", "importance_score": 88.0 },
+      { "skill_id": "sk-python", "skill_name": "Python", "proficiency_level": "Intermediate", "importance_score": 82.0 }
+    ]
+  },
+  {
+    "id": "role-ev-tech",
+    "role_name": "EV Diagnostics & Battery Engineer",
+    "sector": "Automotive & EV",
+    "demand_score": 91.0,
+    "growth_rate": 46.0,
+    "avg_salary_lpa": 7.2,
+    "open_vacancies": 4600,
+    "available_candidates": 1600,
+    "skill_gap_percentage": 54.0,
+    "description": "Diagnoses electric vehicle powertrains, BMS software, charging networks, and motor systems.",
+    "skills": [
+      { "skill_id": "sk-ev-powertrain", "skill_name": "EV Battery & Powertrain Systems", "proficiency_level": "Expert", "importance_score": 98.0 },
+      { "skill_id": "sk-plc-scada", "skill_name": "PLC & SCADA Automation", "proficiency_level": "Intermediate", "importance_score": 82.0 },
+      { "skill_id": "sk-python", "skill_name": "Python", "proficiency_level": "Beginner", "importance_score": 65.0 }
+    ]
+  },
+  {
+    "id": "role-robotics-eng",
+    "role_name": "Industrial Robotics Specialist",
+    "sector": "Manufacturing & Automation",
+    "demand_score": 86.0,
+    "growth_rate": 25.0,
+    "avg_salary_lpa": 6.5,
+    "open_vacancies": 3100,
+    "available_candidates": 1200,
+    "skill_gap_percentage": 45.0,
+    "description": "Integrates robotic arms, safety interlocks, PLC controls, and vision inspection on shop floors.",
+    "skills": [
+      { "skill_id": "sk-robotics", "skill_name": "Industrial Robotics Programming", "proficiency_level": "Expert", "importance_score": 96.0 },
+      { "skill_id": "sk-plc-scada", "skill_name": "PLC & SCADA Automation", "proficiency_level": "Advanced", "importance_score": 92.0 },
+      { "skill_id": "sk-python", "skill_name": "Python", "proficiency_level": "Intermediate", "importance_score": 75.0 }
+    ]
+  }
+]

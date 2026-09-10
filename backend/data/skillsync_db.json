@@ -1,0 +1,1349 @@
+{
+  "users": [
+    {
+      "id": "usr-admin-1",
+      "name": "Dr. Rajeshwar Patil",
+      "email": "admin@maharashtra.gov.in",
+      "password": "password123",
+      "role": "admin",
+      "roleTitle": "Government / State Admin",
+      "district": "Mumbai Suburban",
+      "organization": "Directorate of Vocational Education and Training (DVET)"
+    },
+    {
+      "id": "usr-inst-1",
+      "name": "Prof. Sunita Deshmukh",
+      "email": "institute@coep.ac.in",
+      "password": "password123",
+      "role": "institution",
+      "roleTitle": "Training Institution",
+      "district": "Pune",
+      "organization": "Government Polytechnic Pune & Skill Hub"
+    },
+    {
+      "id": "usr-emp-1",
+      "name": "Anand Kulkarni",
+      "email": "recruitment@tatamotors.com",
+      "password": "password123",
+      "role": "employer",
+      "roleTitle": "Employer / Industry Partner",
+      "district": "Pune",
+      "organization": "Tata Motors Innovation Labs"
+    },
+    {
+      "id": "usr-std-1",
+      "name": "Rohan Shinde",
+      "email": "rohan.shinde@student.ac.in",
+      "password": "password123",
+      "role": "student",
+      "roleTitle": "Candidate / Student",
+      "district": "Pune",
+      "organization": "B.Tech Computer Science (Final Year)"
+    }
+  ],
+  "districts": [
+    {
+      "id": "dist-pune",
+      "district_name": "Pune",
+      "division": "Pune",
+      "state": "Maharashtra",
+      "industrial_zone": "Hinjawadi IT Park, Chakan Automotive Hub, Talwade Software Hub",
+      "top_sectors": [
+        "Information Technology",
+        "Automotive & EV",
+        "Manufacturing & Automation"
+      ],
+      "active_institutes": 142,
+      "job_openings": 24500,
+      "training_capacity": 45000,
+      "placement_rate": 76.5
+    },
+    {
+      "id": "dist-mumbai",
+      "district_name": "Mumbai Suburban",
+      "division": "Konkan",
+      "state": "Maharashtra",
+      "industrial_zone": "BKC Financial District, Seepz IT Zone, Andheri Commercial Hub",
+      "top_sectors": [
+        "Banking & Financial Services (BFSI)",
+        "Information Technology",
+        "Media & Entertainment"
+      ],
+      "active_institutes": 185,
+      "job_openings": 31200,
+      "training_capacity": 58000,
+      "placement_rate": 81.2
+    },
+    {
+      "id": "dist-nagpur",
+      "district_name": "Nagpur",
+      "division": "Nagpur",
+      "state": "Maharashtra",
+      "industrial_zone": "MIHAN SEZ, Butibori Industrial Estate",
+      "top_sectors": [
+        "Logistics & Supply Chain",
+        "Information Technology",
+        "Heavy Manufacturing"
+      ],
+      "active_institutes": 89,
+      "job_openings": 11400,
+      "training_capacity": 22000,
+      "placement_rate": 68.4
+    },
+    {
+      "id": "dist-nashik",
+      "district_name": "Nashik",
+      "division": "Nashik",
+      "state": "Maharashtra",
+      "industrial_zone": "Ambad & Satpur MIDC, Dindori Agro Processing Corridor",
+      "top_sectors": [
+        "Automotive & Ancillaries",
+        "Agriculture & Agritech",
+        "Electrical Engineering"
+      ],
+      "active_institutes": 74,
+      "job_openings": 8900,
+      "training_capacity": 18500,
+      "placement_rate": 65.8
+    },
+    {
+      "id": "dist-csambhajinagar",
+      "district_name": "Chhatrapati Sambhajinagar",
+      "division": "Marathwada",
+      "state": "Maharashtra",
+      "industrial_zone": "AURIC Smart City (DMIC), Waluj & Chikalthana MIDC",
+      "top_sectors": [
+        "Automotive Components",
+        "Pharmaceuticals",
+        "Renewable Energy"
+      ],
+      "active_institutes": 65,
+      "job_openings": 7800,
+      "training_capacity": 15000,
+      "placement_rate": 62
+    },
+    {
+      "id": "dist-thane",
+      "district_name": "Thane",
+      "division": "Konkan",
+      "state": "Maharashtra",
+      "industrial_zone": "Wagle Estate, Trans-Thane Creek (TTC) Industrial Area",
+      "top_sectors": [
+        "Information Technology",
+        "Chemicals & Petrochemicals",
+        "Logistics"
+      ],
+      "active_institutes": 98,
+      "job_openings": 14200,
+      "training_capacity": 26000,
+      "placement_rate": 72.1
+    },
+    {
+      "id": "dist-kolhapur",
+      "district_name": "Kolhapur",
+      "division": "Pune",
+      "state": "Maharashtra",
+      "industrial_zone": "Shiroli & Gokul Shirgaon MIDC, Foundry Cluster",
+      "top_sectors": [
+        "Textile Machinery & Foundries",
+        "Agritech & Food Processing",
+        "Automotive Casting"
+      ],
+      "active_institutes": 54,
+      "job_openings": 5600,
+      "training_capacity": 12000,
+      "placement_rate": 60.5
+    },
+    {
+      "id": "dist-solapur",
+      "district_name": "Solapur",
+      "division": "Pune",
+      "state": "Maharashtra",
+      "industrial_zone": "Chincholi MIDC, Textile Parks",
+      "top_sectors": [
+        "Textiles & Garmenting",
+        "Renewable Solar Energy",
+        "Food Processing"
+      ],
+      "active_institutes": 48,
+      "job_openings": 4300,
+      "training_capacity": 9800,
+      "placement_rate": 55.4
+    }
+  ],
+  "skills": [
+    {
+      "id": "sk-python",
+      "skill_name": "Python",
+      "category": "Programming & Data",
+      "demand_score": 96.5,
+      "growth_rate": 28.4,
+      "velocity_status": "High-Velocity",
+      "description": "Core programming language for data analysis, machine learning backend and automation."
+    },
+    {
+      "id": "sk-sql",
+      "skill_name": "SQL",
+      "category": "Database & Storage",
+      "demand_score": 94,
+      "growth_rate": 19.2,
+      "velocity_status": "High-Velocity",
+      "description": "Relational database querying, schema design, and advanced data extraction."
+    },
+    {
+      "id": "sk-powerbi",
+      "skill_name": "Power BI",
+      "category": "Business Intelligence",
+      "demand_score": 91.2,
+      "growth_rate": 34.5,
+      "velocity_status": "Rising",
+      "description": "Interactive business analytics dashboarding, DAX expressions, and data modeling."
+    },
+    {
+      "id": "sk-cloud",
+      "skill_name": "Cloud Computing (AWS/Azure)",
+      "category": "Cloud & Infrastructure",
+      "demand_score": 93.8,
+      "growth_rate": 31,
+      "velocity_status": "High-Velocity",
+      "description": "Deploying, scaling, and managing cloud workloads across AWS and Microsoft Azure."
+    },
+    {
+      "id": "sk-ai-ml",
+      "skill_name": "Artificial Intelligence & ML",
+      "category": "AI & Modern Tech",
+      "demand_score": 97.4,
+      "growth_rate": 42,
+      "velocity_status": "High-Velocity",
+      "description": "Supervised and unsupervised learning, LLM fine-tuning, and neural networks."
+    },
+    {
+      "id": "sk-cybersecurity",
+      "skill_name": "Cybersecurity & Threat Defense",
+      "category": "Security & Networking",
+      "demand_score": 89,
+      "growth_rate": 27.5,
+      "velocity_status": "Rising",
+      "description": "Network security, vulnerability scanning, ethical hacking, and SIEM monitoring."
+    },
+    {
+      "id": "sk-react",
+      "skill_name": "React & Modern Web",
+      "category": "Software Development",
+      "demand_score": 92.5,
+      "growth_rate": 22,
+      "velocity_status": "High-Velocity",
+      "description": "Component-based web application development with responsive state architecture."
+    },
+    {
+      "id": "sk-docker",
+      "skill_name": "Docker & Containerization",
+      "category": "DevOps & Cloud",
+      "demand_score": 88,
+      "growth_rate": 29.8,
+      "velocity_status": "Rising",
+      "description": "Microservice containerization, dockerfile scripting, and container clustering."
+    },
+    {
+      "id": "sk-ev-powertrain",
+      "skill_name": "EV Battery & Powertrain Systems",
+      "category": "Automotive & Clean Tech",
+      "demand_score": 87.5,
+      "growth_rate": 48,
+      "velocity_status": "High-Velocity",
+      "description": "Lithium-ion BMS diagnostics, thermal management, and electric motor controllers."
+    },
+    {
+      "id": "sk-plc-scada",
+      "skill_name": "PLC & SCADA Automation",
+      "category": "Industrial Automation",
+      "demand_score": 84,
+      "growth_rate": 18.5,
+      "velocity_status": "Stable",
+      "description": "Programmable logic controllers, HMI interfaces, and industrial sensor loops."
+    },
+    {
+      "id": "sk-excel-adv",
+      "skill_name": "Advanced Excel & Financial Modeling",
+      "category": "Analytics & Finance",
+      "demand_score": 86,
+      "growth_rate": 12,
+      "velocity_status": "Stable",
+      "description": "VLOOKUP, XLOOKUP, pivot analysis, macro scripting, and financial sensitivity tables."
+    },
+    {
+      "id": "sk-genai",
+      "skill_name": "Generative AI & Prompt Engineering",
+      "category": "AI & Modern Tech",
+      "demand_score": 95,
+      "growth_rate": 65,
+      "velocity_status": "High-Velocity",
+      "description": "Transformer architectures, RAG systems, multimodal LLMs, and prompt design."
+    },
+    {
+      "id": "sk-robotics",
+      "skill_name": "Industrial Robotics Programming",
+      "category": "Industrial Automation",
+      "demand_score": 82.5,
+      "growth_rate": 26,
+      "velocity_status": "Rising",
+      "description": "Robotic arm kinematics, end-effector calibration, and cobot cell safety."
+    },
+    {
+      "id": "sk-legacy-html",
+      "skill_name": "Legacy HTML 4 / FrontPage",
+      "category": "Outdated Tech",
+      "demand_score": 12,
+      "growth_rate": -42,
+      "velocity_status": "Declining",
+      "description": "Obsolete static web authoring without responsive design or modern JavaScript."
+    },
+    {
+      "id": "sk-dos-entry",
+      "skill_name": "DOS-based Data Entry",
+      "category": "Outdated Tech",
+      "demand_score": 8.5,
+      "growth_rate": -58,
+      "velocity_status": "Declining",
+      "description": "Legacy command-line data entry replaced by automated OCR and ERP suites."
+    }
+  ],
+  "job_roles": [
+    {
+      "id": "role-data-analyst",
+      "role_name": "Data Analyst",
+      "sector": "Information Technology",
+      "demand_score": 94,
+      "growth_rate": 28.5,
+      "avg_salary_lpa": 6.8,
+      "open_vacancies": 6800,
+      "available_candidates": 3200,
+      "skill_gap_percentage": 42,
+      "description": "Extracts, cleans, models, and visualizes enterprise data to empower business decisions.",
+      "skills": [
+        {
+          "skill_id": "sk-python",
+          "skill_name": "Python",
+          "proficiency_level": "Advanced",
+          "importance_score": 95
+        },
+        {
+          "skill_id": "sk-sql",
+          "skill_name": "SQL",
+          "proficiency_level": "Advanced",
+          "importance_score": 98
+        },
+        {
+          "skill_id": "sk-powerbi",
+          "skill_name": "Power BI",
+          "proficiency_level": "Advanced",
+          "importance_score": 92
+        },
+        {
+          "skill_id": "sk-cloud",
+          "skill_name": "Cloud Computing (AWS/Azure)",
+          "proficiency_level": "Intermediate",
+          "importance_score": 82
+        },
+        {
+          "skill_id": "sk-excel-adv",
+          "skill_name": "Advanced Excel & Financial Modeling",
+          "proficiency_level": "Advanced",
+          "importance_score": 88
+        }
+      ]
+    },
+    {
+      "id": "role-cloud-engineer",
+      "role_name": "Cloud Engineer",
+      "sector": "Information Technology",
+      "demand_score": 95.2,
+      "growth_rate": 33,
+      "avg_salary_lpa": 9.2,
+      "open_vacancies": 5400,
+      "available_candidates": 2100,
+      "skill_gap_percentage": 48,
+      "description": "Architects and maintains scalable, secure multi-cloud architectures across AWS and Azure.",
+      "skills": [
+        {
+          "skill_id": "sk-cloud",
+          "skill_name": "Cloud Computing (AWS/Azure)",
+          "proficiency_level": "Expert",
+          "importance_score": 98
+        },
+        {
+          "skill_id": "sk-docker",
+          "skill_name": "Docker & Containerization",
+          "proficiency_level": "Advanced",
+          "importance_score": 92
+        },
+        {
+          "skill_id": "sk-python",
+          "skill_name": "Python",
+          "proficiency_level": "Intermediate",
+          "importance_score": 84
+        },
+        {
+          "skill_id": "sk-cybersecurity",
+          "skill_name": "Cybersecurity & Threat Defense",
+          "proficiency_level": "Intermediate",
+          "importance_score": 86
+        }
+      ]
+    },
+    {
+      "id": "role-ai-engineer",
+      "role_name": "AI & Machine Learning Engineer",
+      "sector": "Information Technology",
+      "demand_score": 98,
+      "growth_rate": 45,
+      "avg_salary_lpa": 12.5,
+      "open_vacancies": 4200,
+      "available_candidates": 1350,
+      "skill_gap_percentage": 58,
+      "description": "Builds intelligent computer vision, natural language, and generative predictive models.",
+      "skills": [
+        {
+          "skill_id": "sk-python",
+          "skill_name": "Python",
+          "proficiency_level": "Expert",
+          "importance_score": 99
+        },
+        {
+          "skill_id": "sk-ai-ml",
+          "skill_name": "Artificial Intelligence & ML",
+          "proficiency_level": "Expert",
+          "importance_score": 98
+        },
+        {
+          "skill_id": "sk-genai",
+          "skill_name": "Generative AI & Prompt Engineering",
+          "proficiency_level": "Advanced",
+          "importance_score": 95
+        },
+        {
+          "skill_id": "sk-cloud",
+          "skill_name": "Cloud Computing (AWS/Azure)",
+          "proficiency_level": "Intermediate",
+          "importance_score": 85
+        },
+        {
+          "skill_id": "sk-docker",
+          "skill_name": "Docker & Containerization",
+          "proficiency_level": "Intermediate",
+          "importance_score": 80
+        }
+      ]
+    },
+    {
+      "id": "role-fullstack-dev",
+      "role_name": "Full Stack Developer",
+      "sector": "Information Technology",
+      "demand_score": 92,
+      "growth_rate": 24,
+      "avg_salary_lpa": 8,
+      "open_vacancies": 8200,
+      "available_candidates": 4900,
+      "skill_gap_percentage": 35,
+      "description": "Builds complete client-side and server-side web platforms with modern frameworks and databases.",
+      "skills": [
+        {
+          "skill_id": "sk-react",
+          "skill_name": "React & Modern Web",
+          "proficiency_level": "Advanced",
+          "importance_score": 96
+        },
+        {
+          "skill_id": "sk-sql",
+          "skill_name": "SQL",
+          "proficiency_level": "Advanced",
+          "importance_score": 90
+        },
+        {
+          "skill_id": "sk-docker",
+          "skill_name": "Docker & Containerization",
+          "proficiency_level": "Intermediate",
+          "importance_score": 82
+        },
+        {
+          "skill_id": "sk-cloud",
+          "skill_name": "Cloud Computing (AWS/Azure)",
+          "proficiency_level": "Intermediate",
+          "importance_score": 84
+        }
+      ]
+    },
+    {
+      "id": "role-cyber-analyst",
+      "role_name": "Cybersecurity Analyst",
+      "sector": "Information Technology",
+      "demand_score": 89.5,
+      "growth_rate": 29,
+      "avg_salary_lpa": 8.5,
+      "open_vacancies": 3800,
+      "available_candidates": 1400,
+      "skill_gap_percentage": 52,
+      "description": "Monitors security events, conducts vulnerability assessments, and defends critical infrastructure.",
+      "skills": [
+        {
+          "skill_id": "sk-cybersecurity",
+          "skill_name": "Cybersecurity & Threat Defense",
+          "proficiency_level": "Advanced",
+          "importance_score": 96
+        },
+        {
+          "skill_id": "sk-cloud",
+          "skill_name": "Cloud Computing (AWS/Azure)",
+          "proficiency_level": "Intermediate",
+          "importance_score": 88
+        },
+        {
+          "skill_id": "sk-python",
+          "skill_name": "Python",
+          "proficiency_level": "Intermediate",
+          "importance_score": 82
+        }
+      ]
+    },
+    {
+      "id": "role-ev-tech",
+      "role_name": "EV Diagnostics & Battery Engineer",
+      "sector": "Automotive & EV",
+      "demand_score": 91,
+      "growth_rate": 46,
+      "avg_salary_lpa": 7.2,
+      "open_vacancies": 4600,
+      "available_candidates": 1600,
+      "skill_gap_percentage": 54,
+      "description": "Diagnoses electric vehicle powertrains, BMS software, charging networks, and motor systems.",
+      "skills": [
+        {
+          "skill_id": "sk-ev-powertrain",
+          "skill_name": "EV Battery & Powertrain Systems",
+          "proficiency_level": "Expert",
+          "importance_score": 98
+        },
+        {
+          "skill_id": "sk-plc-scada",
+          "skill_name": "PLC & SCADA Automation",
+          "proficiency_level": "Intermediate",
+          "importance_score": 82
+        },
+        {
+          "skill_id": "sk-python",
+          "skill_name": "Python",
+          "proficiency_level": "Beginner",
+          "importance_score": 65
+        }
+      ]
+    },
+    {
+      "id": "role-robotics-eng",
+      "role_name": "Industrial Robotics Specialist",
+      "sector": "Manufacturing & Automation",
+      "demand_score": 86,
+      "growth_rate": 25,
+      "avg_salary_lpa": 6.5,
+      "open_vacancies": 3100,
+      "available_candidates": 1200,
+      "skill_gap_percentage": 45,
+      "description": "Integrates robotic arms, safety interlocks, PLC controls, and vision inspection on shop floors.",
+      "skills": [
+        {
+          "skill_id": "sk-robotics",
+          "skill_name": "Industrial Robotics Programming",
+          "proficiency_level": "Expert",
+          "importance_score": 96
+        },
+        {
+          "skill_id": "sk-plc-scada",
+          "skill_name": "PLC & SCADA Automation",
+          "proficiency_level": "Advanced",
+          "importance_score": 92
+        },
+        {
+          "skill_id": "sk-python",
+          "skill_name": "Python",
+          "proficiency_level": "Intermediate",
+          "importance_score": 75
+        }
+      ]
+    }
+  ],
+  "courses": [
+    {
+      "id": "course-data-analytics",
+      "course_name": "Diploma in Data Analytics",
+      "institution_name": "Maharashtra State Skill Institute (MSSI)",
+      "sector": "Information Technology",
+      "district": "Pune",
+      "duration": "6 Months",
+      "placement_rate": 68,
+      "enrollment_count": 1450,
+      "industry_match_score": 90,
+      "status": "High Demand",
+      "skills_covered": [
+        "Python",
+        "SQL",
+        "Advanced Excel & Financial Modeling",
+        "Power BI",
+        "Cloud Computing (AWS/Azure)"
+      ],
+      "missing_skills": [],
+      "recommendation": "Curriculum updated on 9/9/2026. Added: Power BI, Cloud Computing (AWS/Azure)."
+    },
+    {
+      "id": "course-fullstack-cloud",
+      "course_name": "Advanced Full Stack & Cloud Engineering",
+      "institution_name": "Government Polytechnic Pune",
+      "sector": "Information Technology",
+      "district": "Pune",
+      "duration": "8 Months",
+      "placement_rate": 89.5,
+      "enrollment_count": 1100,
+      "industry_match_score": 92,
+      "status": "High Demand",
+      "skills_covered": [
+        "React & Modern Web",
+        "SQL",
+        "Docker & Containerization",
+        "Cloud Computing (AWS/Azure)"
+      ],
+      "missing_skills": [],
+      "recommendation": "Excellent industry alignment. Expand student intake by 35% to meet Pune IT demand."
+    },
+    {
+      "id": "course-legacy-web",
+      "course_name": "Basic Legacy Web Technology",
+      "institution_name": "Vidarbha Technical Training Center",
+      "sector": "Information Technology",
+      "district": "Nagpur",
+      "duration": "6 Months",
+      "placement_rate": 18,
+      "enrollment_count": 1850,
+      "industry_match_score": 15,
+      "status": "Low Demand / Obsolete",
+      "skills_covered": [
+        "Legacy HTML 4 / FrontPage"
+      ],
+      "missing_skills": [
+        "React & Modern Web",
+        "Cloud Computing (AWS/Azure)",
+        "SQL",
+        "Docker & Containerization"
+      ],
+      "recommendation": "CRITICAL ALERT: Sunset this legacy course. Transition students & faculty to Modern Full Stack Development."
+    },
+    {
+      "id": "course-dtp-legacy",
+      "course_name": "Desktop Publishing & DOS Accounting 90s Edition",
+      "institution_name": "Marathwada Community Vocational Hub",
+      "sector": "Information Technology",
+      "district": "Chhatrapati Sambhajinagar",
+      "duration": "3 Months",
+      "placement_rate": 22,
+      "enrollment_count": 950,
+      "industry_match_score": 12,
+      "status": "Low Demand / Obsolete",
+      "skills_covered": [
+        "DOS-based Data Entry"
+      ],
+      "missing_skills": [
+        "Advanced Excel & Financial Modeling",
+        "Power BI",
+        "SQL"
+      ],
+      "recommendation": "Obsolete course. Retrain trainers on ERP Financial Modeling and Power BI."
+    },
+    {
+      "id": "course-ev-powertrain",
+      "course_name": "Advanced EV Powertrain & Battery Diagnostics",
+      "institution_name": "Automotive Research & Training Center",
+      "sector": "Automotive & EV",
+      "district": "Nashik",
+      "duration": "6 Months",
+      "placement_rate": 86.4,
+      "enrollment_count": 620,
+      "industry_match_score": 88,
+      "status": "High Demand",
+      "skills_covered": [
+        "EV Battery & Powertrain Systems",
+        "PLC & SCADA Automation"
+      ],
+      "missing_skills": [
+        "Python"
+      ],
+      "recommendation": "High employer satisfaction. Introduce Python vehicle CAN bus telemetry module."
+    },
+    {
+      "id": "course-ai-foundations",
+      "course_name": "Applied Artificial Intelligence & Machine Learning",
+      "institution_name": "Veermata Jijabai Technological Institute (VJTI Hub)",
+      "sector": "Information Technology",
+      "district": "Mumbai Suburban",
+      "duration": "9 Months",
+      "placement_rate": 93,
+      "enrollment_count": 850,
+      "industry_match_score": 95,
+      "status": "High Demand",
+      "skills_covered": [
+        "Python",
+        "Artificial Intelligence & ML",
+        "Generative AI & Prompt Engineering",
+        "Cloud Computing (AWS/Azure)"
+      ],
+      "missing_skills": [],
+      "recommendation": "Top performing curriculum across state. Partner with Mumbai BFSI firms for capstone projects."
+    },
+    {
+      "id": "course-industrial-robotics",
+      "course_name": "Robotics & Smart Factory Automation",
+      "institution_name": "Chhatrapati Sambhajinagar Industrial Center",
+      "sector": "Manufacturing & Automation",
+      "district": "Chhatrapati Sambhajinagar",
+      "duration": "6 Months",
+      "placement_rate": 74,
+      "enrollment_count": 580,
+      "industry_match_score": 75,
+      "status": "Needs Update",
+      "skills_covered": [
+        "PLC & SCADA Automation",
+        "Industrial Robotics Programming"
+      ],
+      "missing_skills": [
+        "Python",
+        "Docker & Containerization"
+      ],
+      "recommendation": "Incorporate industrial edge IoT and Python motion trajectory scripts."
+    }
+  ],
+  "employers": [
+    {
+      "id": "emp-tata",
+      "company_name": "Tata Motors Innovation Labs",
+      "sector": "Automotive & EV",
+      "district": "Pune",
+      "contact_person": "Anand Kulkarni, VP Engineering",
+      "contact_email": "recruitment@tatamotors.com",
+      "active_hiring_count": 450
+    },
+    {
+      "id": "emp-persistent",
+      "company_name": "Persistent Systems Ltd",
+      "sector": "Information Technology",
+      "district": "Pune",
+      "contact_person": "Pooja Joshi, Talent Lead",
+      "contact_email": "hiring@persistent.com",
+      "active_hiring_count": 620
+    },
+    {
+      "id": "emp-tcs",
+      "company_name": "Tata Consultancy Services (TCS)",
+      "sector": "Information Technology",
+      "district": "Mumbai Suburban",
+      "contact_person": "Sameer Mehta, Workforce Planning",
+      "contact_email": "workforce@tcs.com",
+      "active_hiring_count": 1200
+    },
+    {
+      "id": "emp-bajaj",
+      "company_name": "Bajaj Auto Auto-Tech Hub",
+      "sector": "Automotive & EV",
+      "district": "Chhatrapati Sambhajinagar",
+      "contact_person": "Vikas Deshpande, Operations HR",
+      "contact_email": "careers@bajajauto.co.in",
+      "active_hiring_count": 280
+    },
+    {
+      "id": "emp-mahindra",
+      "company_name": "Mahindra Heavy Vehicle Division",
+      "sector": "Automotive & EV",
+      "district": "Nashik",
+      "contact_person": "Sanjay Shinde, Chief Engineer",
+      "contact_email": "plant.recruitment@mahindra.com",
+      "active_hiring_count": 310
+    }
+  ],
+  "employer_validations": [
+    {
+      "id": "val-1",
+      "job_role_id": "role-data-analyst",
+      "role_name": "Data Analyst",
+      "skills": [
+        {
+          "skill_id": "sk-sql",
+          "skill_name": "SQL",
+          "validation_score": 98,
+          "approved_count": 84,
+          "not_required_count": 2,
+          "status": "Approved"
+        },
+        {
+          "skill_id": "sk-python",
+          "skill_name": "Python",
+          "validation_score": 95,
+          "approved_count": 81,
+          "not_required_count": 4,
+          "status": "Approved"
+        },
+        {
+          "skill_id": "sk-powerbi",
+          "skill_name": "Power BI",
+          "validation_score": 92,
+          "approved_count": 79,
+          "not_required_count": 7,
+          "status": "Approved"
+        },
+        {
+          "skill_id": "sk-excel-adv",
+          "skill_name": "Advanced Excel & Financial Modeling",
+          "validation_score": 89,
+          "approved_count": 76,
+          "not_required_count": 9,
+          "status": "Approved"
+        },
+        {
+          "skill_id": "sk-cloud",
+          "skill_name": "Cloud Computing (AWS/Azure)",
+          "validation_score": 86,
+          "approved_count": 73,
+          "not_required_count": 12,
+          "status": "Approved"
+        }
+      ],
+      "overall_validation_score": 92,
+      "total_employer_responses": 86,
+      "added_missing_skills": [
+        {
+          "skill_name": "Snowflake Cloud Data Warehouse",
+          "suggested_by": "Persistent Systems",
+          "votes": 48
+        },
+        {
+          "skill_name": "Tableau Visualization",
+          "suggested_by": "TCS",
+          "votes": 39
+        }
+      ]
+    },
+    {
+      "id": "val-2",
+      "job_role_id": "role-cloud-engineer",
+      "role_name": "Cloud Engineer",
+      "skills": [
+        {
+          "skill_id": "sk-cloud",
+          "skill_name": "Cloud Computing (AWS/Azure)",
+          "validation_score": 99,
+          "approved_count": 91,
+          "not_required_count": 1,
+          "status": "Approved"
+        },
+        {
+          "skill_id": "sk-docker",
+          "skill_name": "Docker & Containerization",
+          "validation_score": 96,
+          "approved_count": 88,
+          "not_required_count": 4,
+          "status": "Approved"
+        },
+        {
+          "skill_id": "sk-cybersecurity",
+          "skill_name": "Cybersecurity & Threat Defense",
+          "validation_score": 91,
+          "approved_count": 83,
+          "not_required_count": 8,
+          "status": "Approved"
+        },
+        {
+          "skill_id": "sk-python",
+          "skill_name": "Python",
+          "validation_score": 88,
+          "approved_count": 81,
+          "not_required_count": 11,
+          "status": "Approved"
+        }
+      ],
+      "overall_validation_score": 93.5,
+      "total_employer_responses": 92,
+      "added_missing_skills": [
+        {
+          "skill_name": "Terraform / Infrastructure as Code",
+          "suggested_by": "Infosys Cloud Practice",
+          "votes": 55
+        },
+        {
+          "skill_name": "Kubernetes Cluster Management",
+          "suggested_by": "L&T Infotech",
+          "votes": 52
+        }
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "rec-1",
+      "recommendation_type": "Curriculum Update",
+      "target_type": "Course",
+      "target_name": "Diploma in Data Analytics",
+      "priority": "Critical",
+      "district": "Pune",
+      "sector": "Information Technology",
+      "description": "Integrate Power BI and AWS Cloud Data Engineering modules into current curriculum to address 40% industry mismatch.",
+      "rationale": "Analysis of 6,800 active job postings in Pune shows 92% demand for Power BI and 82% demand for AWS Cloud pipelines, neither of which are covered in the current syllabus.",
+      "suggested_modules": [
+        "Module 4: Enterprise Power BI & DAX Modeling (40 Hours)",
+        "Module 5: AWS S3 & Athena Cloud Querying (30 Hours)"
+      ],
+      "status": "Pending Review",
+      "impact_estimate": "Expected placement jump from 68% to 88% (+20%)."
+    },
+    {
+      "id": "rec-2",
+      "recommendation_type": "New Training Program",
+      "target_type": "District",
+      "target_name": "Nashik & Pune Corridor",
+      "priority": "Critical",
+      "district": "Nashik",
+      "sector": "Automotive & EV",
+      "description": "Establish state-certified Electric Mobility & Battery Management specialized diploma programs.",
+      "rationale": "4,600 EV vacancies open with only 1,600 qualified candidates available in Maharashtra. Growth rate +46% YoY.",
+      "suggested_modules": [
+        "Lithium BMS Telemetry",
+        "EV Motor Drives & Inverters",
+        "High-Voltage Safety Standards"
+      ],
+      "status": "Approved",
+      "impact_estimate": "Trained cohort of 1,200 technicians within 12 months."
+    },
+    {
+      "id": "rec-3",
+      "recommendation_type": "Trainer Upskilling",
+      "target_type": "Institution",
+      "target_name": "State Technical Faculty Consortium",
+      "priority": "High",
+      "district": "Pune",
+      "sector": "Information Technology",
+      "description": "Conduct an intensive 4-week Faculty Development Program (FDP) in AWS Cloud and Docker containerization.",
+      "rationale": "Trainer audit indicates 60% skill deficit between legacy server administration and modern containerized microservices.",
+      "suggested_modules": [
+        "AWS Solutions Architect Certification Track",
+        "Docker & Kubernetes Lab Administration"
+      ],
+      "status": "Approved",
+      "impact_estimate": "120 Master trainers certified across 32 state polytechnics."
+    },
+    {
+      "id": "rec-4",
+      "recommendation_type": "Equipment Upgrade",
+      "target_type": "Institution",
+      "target_name": "AI & Data Analytics State Lab",
+      "priority": "High",
+      "district": "Pune",
+      "sector": "Information Technology",
+      "description": "Upgrade computer lab: deploy 30 High-Performance Workstations with NVIDIA RTX GPUs and Python/Docker environments.",
+      "rationale": "Current lab machines lack CUDA compute capability required for modern deep learning and large-scale data visualization.",
+      "suggested_modules": [
+        "GPU-enabled compute nodes",
+        "Dual 4K monitors for BI dashboards",
+        "Gigabit private network fabric"
+      ],
+      "status": "Rejected",
+      "impact_estimate": "Enables hands-on practical training for 600 students annually.",
+      "approved_at": "2026-09-09T10:48:46.513Z",
+      "remarks": "Actioned by Rohan Shinde"
+    },
+    {
+      "id": "rec-5",
+      "recommendation_type": "Intake Reduction",
+      "target_type": "Course",
+      "target_name": "Basic Legacy Web Technology",
+      "priority": "Critical",
+      "district": "Nagpur",
+      "sector": "Information Technology",
+      "description": "Decommission intake by 80% immediately and reallocate laboratory resources to Modern Full Stack Development.",
+      "rationale": "Placement rate collapsed to 18%; industry demand fell by -42% while student enrollment remained unsustainably high.",
+      "suggested_modules": [
+        "Phased sunset plan over 2 quarters",
+        "Faculty redeployment to React/Node.js tracks"
+      ],
+      "status": "Approved",
+      "impact_estimate": "Prevents qualification obsolescence for 1,800+ students."
+    }
+  ],
+  "trainer_profiles": [
+    {
+      "id": "tr-1",
+      "trainer_name": "Prof. Anil Jadhav",
+      "institution": "Government Polytechnic Pune",
+      "district": "Pune",
+      "sector": "Information Technology",
+      "current_skills": [
+        "C++",
+        "Core Java",
+        "Cloud Basics (EC2)"
+      ],
+      "target_course": "Advanced Full Stack & Cloud Engineering",
+      "required_skills": [
+        "Cloud Computing (AWS/Azure)",
+        "Docker & Containerization",
+        "Kubernetes",
+        "Microservices"
+      ],
+      "trainer_skill_gap": 60,
+      "upskilling_status": "Enrolled in FDP",
+      "assigned_fdp": "AWS Certified Solutions Architect + Docker Bootcamp (State Cohort 4)"
+    },
+    {
+      "id": "tr-2",
+      "trainer_name": "Prof. Neha Sawant",
+      "institution": "VJTI Vocational Annex",
+      "district": "Mumbai Suburban",
+      "sector": "Information Technology",
+      "current_skills": [
+        "Python Basics",
+        "Statistics",
+        "SQL"
+      ],
+      "target_course": "Applied AI & Machine Learning",
+      "required_skills": [
+        "Artificial Intelligence & ML",
+        "Generative AI & Prompt Engineering",
+        "Deep Learning",
+        "PyTorch"
+      ],
+      "trainer_skill_gap": 55,
+      "upskilling_status": "Identified",
+      "assigned_fdp": "NASSCOM - State AI Master Trainer Certification"
+    },
+    {
+      "id": "tr-3",
+      "trainer_name": "Er. Ramesh Thorat",
+      "institution": "Nashik Skill Development Academy",
+      "district": "Nashik",
+      "sector": "Automotive & EV",
+      "current_skills": [
+        "IC Engines",
+        "Auto Electricals 12V"
+      ],
+      "target_course": "EV Powertrain & Battery Diagnostics",
+      "required_skills": [
+        "EV Battery & Powertrain Systems",
+        "BMS Diagnostic Telematics",
+        "High Voltage Safety"
+      ],
+      "trainer_skill_gap": 65,
+      "upskilling_status": "Certified",
+      "assigned_fdp": "ARAI Certified Electric Vehicle Systems Trainer"
+    },
+    {
+      "id": "tr-4",
+      "trainer_name": "Er. Vijay Deshmukh",
+      "institution": "Chhatrapati Sambhajinagar Technical Hub",
+      "district": "Chhatrapati Sambhajinagar",
+      "sector": "Manufacturing & Automation",
+      "current_skills": [
+        "Manual Machining",
+        "Basic Relays"
+      ],
+      "target_course": "Robotics & Smart Factory Automation",
+      "required_skills": [
+        "Industrial Robotics Programming",
+        "PLC & SCADA Automation",
+        "Machine Vision"
+      ],
+      "trainer_skill_gap": 70,
+      "upskilling_status": "Enrolled in FDP",
+      "assigned_fdp": "Siemens Industry 4.0 Mechatronics Faculty Certification"
+    }
+  ],
+  "equipment_planning": [
+    {
+      "id": "eq-1",
+      "lab_name": "Advanced AI & Data Analytics Laboratory",
+      "institution": "Government Polytechnic Pune",
+      "district": "Pune",
+      "sector": "Information Technology",
+      "required_equipment": [
+        "30x High-Performance Workstations (Intel i9 / 32GB RAM / NVIDIA RTX 4080 16GB)",
+        "2x Rackmount Inference Servers (Dual GPU)",
+        "Enterprise Power BI / Tableau Desktop Licenses",
+        "Dual 4K Projection Displays for Analytics Immersion"
+      ],
+      "available_equipment": [
+        "25x Basic Core i3 Desktops (4GB RAM, Integrated Graphics)",
+        "Single 1080p Projector",
+        "Legacy Open-Source Spreadsheet Suite"
+      ],
+      "readiness_score": 35,
+      "estimated_budget_inr": 4500000,
+      "status": "Action Required",
+      "action_plan": "Procure GPU compute cluster and dual-display analytics workstations via DVET modernization budget."
+    },
+    {
+      "id": "eq-2",
+      "lab_name": "Electric Vehicle Powertrain & Battery Diagnostic Bay",
+      "institution": "Nashik Automotive Centre of Excellence",
+      "district": "Nashik",
+      "sector": "Automotive & EV",
+      "required_equipment": [
+        "4x Cut-section EV Chassis with Lithium Iron Phosphate Battery Packs",
+        "CAN-Bus Diagnostic Analyzers & Oscilloscopes",
+        "Automotive High-Voltage Insulated Safety Toolkits",
+        "1x 25kW DC Fast Charging Test Bench"
+      ],
+      "available_equipment": [
+        "2x Conventional Petrol Carburetor Engine Test Stands",
+        "Standard Multimeters",
+        "12V Lead-Acid Battery Chargers"
+      ],
+      "readiness_score": 28,
+      "estimated_budget_inr": 6800000,
+      "status": "Budget Approved",
+      "action_plan": "Tender released for DC fast charge testbench and battery management diagnostic rigs."
+    },
+    {
+      "id": "eq-3",
+      "lab_name": "Smart Robotics & Industry 4.0 Testbed",
+      "institution": "Chhatrapati Sambhajinagar Skill Hub",
+      "district": "Chhatrapati Sambhajinagar",
+      "sector": "Manufacturing & Automation",
+      "required_equipment": [
+        "2x 6-Axis Industrial Articulated Robotic Arms (Payload 5kg)",
+        "Siemens S7-1500 PLC Training Stations",
+        "Machine Vision Cognex Inspection Cameras",
+        "Pneumatic & Sensor Sorting Conveyor"
+      ],
+      "available_equipment": [
+        "Legacy Relay Logic Relay Panels",
+        "Manual Lathe and Milling Machines"
+      ],
+      "readiness_score": 42,
+      "estimated_budget_inr": 5200000,
+      "status": "Procurement Ongoing",
+      "action_plan": "Cobot arms delivered; technician commissioning scheduled for Q3."
+    }
+  ],
+  "emerging_tech": [
+    {
+      "id": "em-genai",
+      "tech_name": "Generative AI & LLM Systems",
+      "category": "Artificial Intelligence",
+      "growth_rate": 65,
+      "adoption_rate": 78,
+      "maharashtra_job_volume": 8500,
+      "required_skills": [
+        "Python",
+        "Generative AI & Prompt Engineering",
+        "Artificial Intelligence & ML",
+        "Cloud Computing (AWS/Azure)"
+      ],
+      "recommended_courses": [
+        "Applied Artificial Intelligence & Machine Learning",
+        "Advanced Full Stack & Cloud Engineering"
+      ],
+      "summary": "Massive industry transition across Pune and Mumbai IT hubs adopting enterprise copilots, RAG document search, and automated code generation."
+    },
+    {
+      "id": "em-ev",
+      "tech_name": "Electric Mobility & Smart Charging",
+      "category": "Clean Transportation",
+      "growth_rate": 48,
+      "adoption_rate": 62,
+      "maharashtra_job_volume": 7200,
+      "required_skills": [
+        "EV Battery & Powertrain Systems",
+        "PLC & SCADA Automation",
+        "Power Electronics"
+      ],
+      "recommended_courses": [
+        "Advanced EV Powertrain & Battery Diagnostics"
+      ],
+      "summary": "Maharashtra Electric Vehicle Policy has spurred massive plant expansions in Chakan (Pune) and Nashik, driving surging technician requirements."
+    },
+    {
+      "id": "em-cloud",
+      "tech_name": "Cloud-Native Microservices & DevOps",
+      "category": "Cloud Infrastructure",
+      "growth_rate": 34,
+      "adoption_rate": 88,
+      "maharashtra_job_volume": 14200,
+      "required_skills": [
+        "Cloud Computing (AWS/Azure)",
+        "Docker & Containerization",
+        "Kubernetes",
+        "React & Modern Web"
+      ],
+      "recommended_courses": [
+        "Advanced Full Stack & Cloud Engineering"
+      ],
+      "summary": "Enterprises are sunsetting on-premise servers in favor of serverless, microservices, and automated multi-zone cloud infrastructure."
+    },
+    {
+      "id": "em-robotics",
+      "tech_name": "Collaborative Robotics (Cobots) & Smart Factory",
+      "category": "Industry 4.0",
+      "growth_rate": 29,
+      "adoption_rate": 54,
+      "maharashtra_job_volume": 4900,
+      "required_skills": [
+        "Industrial Robotics Programming",
+        "PLC & SCADA Automation"
+      ],
+      "recommended_courses": [
+        "Robotics & Smart Factory Automation"
+      ],
+      "summary": "Automotive casting in Kolhapur and assembly in Chhatrapati Sambhajinagar are standardizing automated material handling."
+    },
+    {
+      "id": "em-cyber",
+      "tech_name": "Zero Trust Cybersecurity & Cloud Defense",
+      "category": "Information Security",
+      "growth_rate": 31,
+      "adoption_rate": 72,
+      "maharashtra_job_volume": 6100,
+      "required_skills": [
+        "Cybersecurity & Threat Defense",
+        "Cloud Computing (AWS/Azure)",
+        "Python"
+      ],
+      "recommended_courses": [
+        "Applied Artificial Intelligence & Machine Learning",
+        "Advanced Full Stack & Cloud Engineering"
+      ],
+      "summary": "Stricter RBI compliance mandates for Mumbai financial services are driving urgent demand for SOC analysts and penetration testers."
+    }
+  ],
+  "district_training_plans": [
+    {
+      "id": "dtp-thane",
+      "district_name": "Thane",
+      "financial_year": "2026-2027",
+      "priority_sectors": [
+        "Information Technology",
+        "Chemicals & Petrochemicals",
+        "Logistics"
+      ],
+      "recommended_courses": [
+        "Diploma in Applied Information Technology Systems",
+        "Industrial Automation & Digital Controls",
+        "Python & Cloud Computing for Enterprise"
+      ],
+      "required_trainers": 20,
+      "required_infra_labs": 6,
+      "expected_employment": 12070,
+      "budget_allocation_cr": 7.2,
+      "status": "State Approved",
+      "generated_date": "2026-09-09"
+    },
+    {
+      "id": "dtp-pune",
+      "district_name": "Pune",
+      "financial_year": "2026-2027",
+      "priority_sectors": [
+        "Information Technology",
+        "Artificial Intelligence",
+        "Automotive & EV",
+        "Manufacturing Automation"
+      ],
+      "recommended_courses": [
+        "Advanced Data Analytics & Business Intelligence",
+        "Full Stack & Cloud Architecture",
+        "Applied Artificial Intelligence & Machine Learning",
+        "Advanced EV Powertrain & Battery Diagnostics"
+      ],
+      "required_trainers": 45,
+      "required_infra_labs": 12,
+      "expected_employment": 18500,
+      "budget_allocation_cr": 16.5,
+      "status": "State Approved",
+      "generated_date": "2026-08-15"
+    },
+    {
+      "id": "dtp-mumbai",
+      "district_name": "Mumbai Suburban",
+      "financial_year": "2026-2027",
+      "priority_sectors": [
+        "BFSI & FinTech",
+        "Information Technology",
+        "Cybersecurity",
+        "Digital Media"
+      ],
+      "recommended_courses": [
+        "FinTech Analytics & Financial Modeling",
+        "Applied AI & Generative Systems",
+        "Enterprise Cybersecurity & SOC Analyst",
+        "Full Stack Web & Mobile App Development"
+      ],
+      "required_trainers": 55,
+      "required_infra_labs": 15,
+      "expected_employment": 22000,
+      "budget_allocation_cr": 21,
+      "status": "State Approved",
+      "generated_date": "2026-08-18"
+    },
+    {
+      "id": "dtp-nagpur",
+      "district_name": "Nagpur",
+      "financial_year": "2026-2027",
+      "priority_sectors": [
+        "Logistics & Warehousing Automation",
+        "Information Technology",
+        "Aviation Maintenance (MIHAN)"
+      ],
+      "recommended_courses": [
+        "Smart Supply Chain & Automated Warehouse Systems",
+        "Cloud Infrastructure & Networking",
+        "Python & Enterprise Data Analytics"
+      ],
+      "required_trainers": 28,
+      "required_infra_labs": 8,
+      "expected_employment": 9400,
+      "budget_allocation_cr": 9.8,
+      "status": "State Approved",
+      "generated_date": "2026-08-20"
+    },
+    {
+      "id": "dtp-nashik",
+      "district_name": "Nashik",
+      "financial_year": "2026-2027",
+      "priority_sectors": [
+        "Automotive & EV Components",
+        "Agritech & Cold Chain",
+        "Electrical Machine Manufacturing"
+      ],
+      "recommended_courses": [
+        "Advanced EV Powertrain & Battery Diagnostics",
+        "Industrial Automation & PLC/SCADA",
+        "Agritech Sensors & Smart Irrigation Telemetry"
+      ],
+      "required_trainers": 24,
+      "required_infra_labs": 7,
+      "expected_employment": 7800,
+      "budget_allocation_cr": 8.2,
+      "status": "State Approved",
+      "generated_date": "2026-08-22"
+    },
+    {
+      "id": "dtp-csambhajinagar",
+      "district_name": "Chhatrapati Sambhajinagar",
+      "financial_year": "2026-2027",
+      "priority_sectors": [
+        "Smart Manufacturing & AURIC",
+        "Pharma Process Automation",
+        "Renewable Energy"
+      ],
+      "recommended_courses": [
+        "Robotics & Smart Factory Automation",
+        "Pharma Bio-process Automation & Instrumentation",
+        "Solar & Wind Energy Systems Maintenance"
+      ],
+      "required_trainers": 22,
+      "required_infra_labs": 6,
+      "expected_employment": 6900,
+      "budget_allocation_cr": 7.5,
+      "status": "State Approved",
+      "generated_date": "2026-08-25"
+    }
+  ]
+}

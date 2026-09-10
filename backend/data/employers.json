@@ -1,0 +1,47 @@
+﻿[
+  {
+    "id": "emp-tata",
+    "company_name": "Tata Motors Innovation Labs",
+    "sector": "Automotive & EV",
+    "district": "Pune",
+    "contact_person": "Anand Kulkarni, VP Engineering",
+    "contact_email": "recruitment@tatamotors.com",
+    "active_hiring_count": 450
+  },
+  {
+    "id": "emp-persistent",
+    "company_name": "Persistent Systems Ltd",
+    "sector": "Information Technology",
+    "district": "Pune",
+    "contact_person": "Pooja Joshi, Talent Lead",
+    "contact_email": "hiring@persistent.com",
+    "active_hiring_count": 620
+  },
+  {
+    "id": "emp-tcs",
+    "company_name": "Tata Consultancy Services (TCS)",
+    "sector": "Information Technology",
+    "district": "Mumbai Suburban",
+    "contact_person": "Sameer Mehta, Workforce Planning",
+    "contact_email": "workforce@tcs.com",
+    "active_hiring_count": 1200
+  },
+  {
+    "id": "emp-bajaj",
+    "company_name": "Bajaj Auto Auto-Tech Hub",
+    "sector": "Automotive & EV",
+    "district": "Chhatrapati Sambhajinagar",
+    "contact_person": "Vikas Deshpande, Operations HR",
+    "contact_email": "careers@bajajauto.co.in",
+    "active_hiring_count": 280
+  },
+  {
+    "id": "emp-mahindra",
+    "company_name": "Mahindra Heavy Vehicle Division",
+    "sector": "Automotive & EV",
+    "district": "Nashik",
+    "contact_person": "Sanjay Shinde, Chief Engineer",
+    "contact_email": "plant.recruitment@mahindra.com",
+    "active_hiring_count": 310
+  }
+]

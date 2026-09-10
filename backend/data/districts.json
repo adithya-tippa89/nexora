@@ -1,0 +1,98 @@
+﻿[
+  {
+    "id": "dist-pune",
+    "district_name": "Pune",
+    "division": "Pune",
+    "state": "Maharashtra",
+    "industrial_zone": "Hinjawadi IT Park, Chakan Automotive Hub, Talwade Software Hub",
+    "top_sectors": ["Information Technology", "Automotive & EV", "Manufacturing & Automation"],
+    "active_institutes": 142,
+    "job_openings": 24500,
+    "training_capacity": 45000,
+    "placement_rate": 76.5
+  },
+  {
+    "id": "dist-mumbai",
+    "district_name": "Mumbai Suburban",
+    "division": "Konkan",
+    "state": "Maharashtra",
+    "industrial_zone": "BKC Financial District, Seepz IT Zone, Andheri Commercial Hub",
+    "top_sectors": ["Banking & Financial Services (BFSI)", "Information Technology", "Media & Entertainment"],
+    "active_institutes": 185,
+    "job_openings": 31200,
+    "training_capacity": 58000,
+    "placement_rate": 81.2
+  },
+  {
+    "id": "dist-nagpur",
+    "district_name": "Nagpur",
+    "division": "Nagpur",
+    "state": "Maharashtra",
+    "industrial_zone": "MIHAN SEZ, Butibori Industrial Estate",
+    "top_sectors": ["Logistics & Supply Chain", "Information Technology", "Heavy Manufacturing"],
+    "active_institutes": 89,
+    "job_openings": 11400,
+    "training_capacity": 22000,
+    "placement_rate": 68.4
+  },
+  {
+    "id": "dist-nashik",
+    "district_name": "Nashik",
+    "division": "Nashik",
+    "state": "Maharashtra",
+    "industrial_zone": "Ambad & Satpur MIDC, Dindori Agro Processing Corridor",
+    "top_sectors": ["Automotive & Ancillaries", "Agriculture & Agritech", "Electrical Engineering"],
+    "active_institutes": 74,
+    "job_openings": 8900,
+    "training_capacity": 18500,
+    "placement_rate": 65.8
+  },
+  {
+    "id": "dist-csambhajinagar",
+    "district_name": "Chhatrapati Sambhajinagar",
+    "division": "Marathwada",
+    "state": "Maharashtra",
+    "industrial_zone": "AURIC Smart City (DMIC), Waluj & Chikalthana MIDC",
+    "top_sectors": ["Automotive Components", "Pharmaceuticals", "Renewable Energy"],
+    "active_institutes": 65,
+    "job_openings": 7800,
+    "training_capacity": 15000,
+    "placement_rate": 62.0
+  },
+  {
+    "id": "dist-thane",
+    "district_name": "Thane",
+    "division": "Konkan",
+    "state": "Maharashtra",
+    "industrial_zone": "Wagle Estate, Trans-Thane Creek (TTC) Industrial Area",
+    "top_sectors": ["Information Technology", "Chemicals & Petrochemicals", "Logistics"],
+    "active_institutes": 98,
+    "job_openings": 14200,
+    "training_capacity": 26000,
+    "placement_rate": 72.1
+  },
+  {
+    "id": "dist-kolhapur",
+    "district_name": "Kolhapur",
+    "division": "Pune",
+    "state": "Maharashtra",
+    "industrial_zone": "Shiroli & Gokul Shirgaon MIDC, Foundry Cluster",
+    "top_sectors": ["Textile Machinery & Foundries", "Agritech & Food Processing", "Automotive Casting"],
+    "active_institutes": 54,
+    "job_openings": 5600,
+    "training_capacity": 12000,
+    "placement_rate": 60.5
+  },
+  {
+    "id": "dist-solapur",
+    "district_name": "Solapur",
+    "division": "Pune",
+    "state": "Maharashtra",
+    "industrial_zone": "Chincholi MIDC, Textile Parks",
+    "top_sectors": ["Textiles & Garmenting", "Renewable Solar Energy", "Food Processing"],
+    "active_institutes": 48,
+    "job_openings": 4300,
+    "training_capacity": 9800,
+    "placement_rate": 55.4
+  }
+]

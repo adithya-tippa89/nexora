@@ -1,0 +1,67 @@
+﻿[
+  {
+    "id": "eq-1",
+    "lab_name": "Advanced AI & Data Analytics Laboratory",
+    "institution": "Government Polytechnic Pune",
+    "district": "Pune",
+    "sector": "Information Technology",
+    "required_equipment": [
+      "30x High-Performance Workstations (Intel i9 / 32GB RAM / NVIDIA RTX 4080 16GB)",
+      "2x Rackmount Inference Servers (Dual GPU)",
+      "Enterprise Power BI / Tableau Desktop Licenses",
+      "Dual 4K Projection Displays for Analytics Immersion"
+    ],
+    "available_equipment": [
+      "25x Basic Core i3 Desktops (4GB RAM, Integrated Graphics)",
+      "Single 1080p Projector",
+      "Legacy Open-Source Spreadsheet Suite"
+    ],
+    "readiness_score": 35.0,
+    "estimated_budget_inr": 4500000,
+    "status": "Action Required",
+    "action_plan": "Procure GPU compute cluster and dual-display analytics workstations via DVET modernization budget."
+  },
+  {
+    "id": "eq-2",
+    "lab_name": "Electric Vehicle Powertrain & Battery Diagnostic Bay",
+    "institution": "Nashik Automotive Centre of Excellence",
+    "district": "Nashik",
+    "sector": "Automotive & EV",
+    "required_equipment": [
+      "4x Cut-section EV Chassis with Lithium Iron Phosphate Battery Packs",
+      "CAN-Bus Diagnostic Analyzers & Oscilloscopes",
+      "Automotive High-Voltage Insulated Safety Toolkits",
+      "1x 25kW DC Fast Charging Test Bench"
+    ],
+    "available_equipment": [
+      "2x Conventional Petrol Carburetor Engine Test Stands",
+      "Standard Multimeters",
+      "12V Lead-Acid Battery Chargers"
+    ],
+    "readiness_score": 28.0,
+    "estimated_budget_inr": 6800000,
+    "status": "Budget Approved",
+    "action_plan": "Tender released for DC fast charge testbench and battery management diagnostic rigs."
+  },
+  {
+    "id": "eq-3",
+    "lab_name": "Smart Robotics & Industry 4.0 Testbed",
+    "institution": "Chhatrapati Sambhajinagar Skill Hub",
+    "district": "Chhatrapati Sambhajinagar",
+    "sector": "Manufacturing & Automation",
+    "required_equipment": [
+      "2x 6-Axis Industrial Articulated Robotic Arms (Payload 5kg)",
+      "Siemens S7-1500 PLC Training Stations",
+      "Machine Vision Cognex Inspection Cameras",
+      "Pneumatic & Sensor Sorting Conveyor"
+    ],
+    "available_equipment": [
+      "Legacy Relay Logic Relay Panels",
+      "Manual Lathe and Milling Machines"
+    ],
+    "readiness_score": 42.0,
+    "estimated_budget_inr": 5200000,
+    "status": "Procurement Ongoing",
+    "action_plan": "Cobot arms delivered; technician commissioning scheduled for Q3."
+  }
+]

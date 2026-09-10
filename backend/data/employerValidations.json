@@ -1,0 +1,37 @@
+﻿[
+  {
+    "id": "val-1",
+    "job_role_id": "role-data-analyst",
+    "role_name": "Data Analyst",
+    "skills": [
+      { "skill_id": "sk-sql", "skill_name": "SQL", "validation_score": 98, "approved_count": 84, "not_required_count": 2, "status": "Approved" },
+      { "skill_id": "sk-python", "skill_name": "Python", "validation_score": 95, "approved_count": 81, "not_required_count": 4, "status": "Approved" },
+      { "skill_id": "sk-powerbi", "skill_name": "Power BI", "validation_score": 92, "approved_count": 79, "not_required_count": 7, "status": "Approved" },
+      { "skill_id": "sk-excel-adv", "skill_name": "Advanced Excel & Financial Modeling", "validation_score": 89, "approved_count": 76, "not_required_count": 9, "status": "Approved" },
+      { "skill_id": "sk-cloud", "skill_name": "Cloud Computing (AWS/Azure)", "validation_score": 86, "approved_count": 73, "not_required_count": 12, "status": "Approved" }
+    ],
+    "overall_validation_score": 92.0,
+    "total_employer_responses": 86,
+    "added_missing_skills": [
+      { "skill_name": "Snowflake Cloud Data Warehouse", "suggested_by": "Persistent Systems", "votes": 48 },
+      { "skill_name": "Tableau Visualization", "suggested_by": "TCS", "votes": 39 }
+    ]
+  },
+  {
+    "id": "val-2",
+    "job_role_id": "role-cloud-engineer",
+    "role_name": "Cloud Engineer",
+    "skills": [
+      { "skill_id": "sk-cloud", "skill_name": "Cloud Computing (AWS/Azure)", "validation_score": 99, "approved_count": 91, "not_required_count": 1, "status": "Approved" },
+      { "skill_id": "sk-docker", "skill_name": "Docker & Containerization", "validation_score": 96, "approved_count": 88, "not_required_count": 4, "status": "Approved" },
+      { "skill_id": "sk-cybersecurity", "skill_name": "Cybersecurity & Threat Defense", "validation_score": 91, "approved_count": 83, "not_required_count": 8, "status": "Approved" },
+      { "skill_id": "sk-python", "skill_name": "Python", "validation_score": 88, "approved_count": 81, "not_required_count": 11, "status": "Approved" }
+    ],
+    "overall_validation_score": 93.5,
+    "total_employer_responses": 92,
+    "added_missing_skills": [
+      { "skill_name": "Terraform / Infrastructure as Code", "suggested_by": "Infosys Cloud Practice", "votes": 55 },
+      { "skill_name": "Kubernetes Cluster Management", "suggested_by": "L&T Infotech", "votes": 52 }
+    ]
+  }
+]

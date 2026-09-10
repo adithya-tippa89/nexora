@@ -1,0 +1,89 @@
+﻿[
+  {
+    "id": "dtp-pune",
+    "district_name": "Pune",
+    "financial_year": "2026-2027",
+    "priority_sectors": ["Information Technology", "Artificial Intelligence", "Automotive & EV", "Manufacturing Automation"],
+    "recommended_courses": [
+      "Advanced Data Analytics & Business Intelligence",
+      "Full Stack & Cloud Architecture",
+      "Applied Artificial Intelligence & Machine Learning",
+      "Advanced EV Powertrain & Battery Diagnostics"
+    ],
+    "required_trainers": 45,
+    "required_infra_labs": 12,
+    "expected_employment": 18500,
+    "budget_allocation_cr": 16.5,
+    "status": "State Approved",
+    "generated_date": "2026-08-15"
+  },
+  {
+    "id": "dtp-mumbai",
+    "district_name": "Mumbai Suburban",
+    "financial_year": "2026-2027",
+    "priority_sectors": ["BFSI & FinTech", "Information Technology", "Cybersecurity", "Digital Media"],
+    "recommended_courses": [
+      "FinTech Analytics & Financial Modeling",
+      "Applied AI & Generative Systems",
+      "Enterprise Cybersecurity & SOC Analyst",
+      "Full Stack Web & Mobile App Development"
+    ],
+    "required_trainers": 55,
+    "required_infra_labs": 15,
+    "expected_employment": 22000,
+    "budget_allocation_cr": 21.0,
+    "status": "State Approved",
+    "generated_date": "2026-08-18"
+  },
+  {
+    "id": "dtp-nagpur",
+    "district_name": "Nagpur",
+    "financial_year": "2026-2027",
+    "priority_sectors": ["Logistics & Warehousing Automation", "Information Technology", "Aviation Maintenance (MIHAN)"],
+    "recommended_courses": [
+      "Smart Supply Chain & Automated Warehouse Systems",
+      "Cloud Infrastructure & Networking",
+      "Python & Enterprise Data Analytics"
+    ],
+    "required_trainers": 28,
+    "required_infra_labs": 8,
+    "expected_employment": 9400,
+    "budget_allocation_cr": 9.8,
+    "status": "State Approved",
+    "generated_date": "2026-08-20"
+  },
+  {
+    "id": "dtp-nashik",
+    "district_name": "Nashik",
+    "financial_year": "2026-2027",
+    "priority_sectors": ["Automotive & EV Components", "Agritech & Cold Chain", "Electrical Machine Manufacturing"],
+    "recommended_courses": [
+      "Advanced EV Powertrain & Battery Diagnostics",
+      "Industrial Automation & PLC/SCADA",
+      "Agritech Sensors & Smart Irrigation Telemetry"
+    ],
+    "required_trainers": 24,
+    "required_infra_labs": 7,
+    "expected_employment": 7800,
+    "budget_allocation_cr": 8.2,
+    "status": "State Approved",
+    "generated_date": "2026-08-22"
+  },
+  {
+    "id": "dtp-csambhajinagar",
+    "district_name": "Chhatrapati Sambhajinagar",
+    "financial_year": "2026-2027",
+    "priority_sectors": ["Smart Manufacturing & AURIC", "Pharma Process Automation", "Renewable Energy"],
+    "recommended_courses": [
+      "Robotics & Smart Factory Automation",
+      "Pharma Bio-process Automation & Instrumentation",
+      "Solar & Wind Energy Systems Maintenance"
+    ],
+    "required_trainers": 22,
+    "required_infra_labs": 6,
+    "expected_employment": 6900,
+    "budget_allocation_cr": 7.5,
+    "status": "State Approved",
+    "generated_date": "2026-08-25"
+  }
+]

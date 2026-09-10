@@ -1,0 +1,72 @@
+﻿[
+  {
+    "id": "rec-1",
+    "recommendation_type": "Curriculum Update",
+    "target_type": "Course",
+    "target_name": "Diploma in Data Analytics",
+    "priority": "Critical",
+    "district": "Pune",
+    "sector": "Information Technology",
+    "description": "Integrate Power BI and AWS Cloud Data Engineering modules into current curriculum to address 40% industry mismatch.",
+    "rationale": "Analysis of 6,800 active job postings in Pune shows 92% demand for Power BI and 82% demand for AWS Cloud pipelines, neither of which are covered in the current syllabus.",
+    "suggested_modules": ["Module 4: Enterprise Power BI & DAX Modeling (40 Hours)", "Module 5: AWS S3 & Athena Cloud Querying (30 Hours)"],
+    "status": "Pending Review",
+    "impact_estimate": "Expected placement jump from 68% to 88% (+20%)."
+  },
+  {
+    "id": "rec-2",
+    "recommendation_type": "New Training Program",
+    "target_type": "District",
+    "target_name": "Nashik & Pune Corridor",
+    "priority": "Critical",
+    "district": "Nashik",
+    "sector": "Automotive & EV",
+    "description": "Establish state-certified Electric Mobility & Battery Management specialized diploma programs.",
+    "rationale": "4,600 EV vacancies open with only 1,600 qualified candidates available in Maharashtra. Growth rate +46% YoY.",
+    "suggested_modules": ["Lithium BMS Telemetry", "EV Motor Drives & Inverters", "High-Voltage Safety Standards"],
+    "status": "Approved",
+    "impact_estimate": "Trained cohort of 1,200 technicians within 12 months."
+  },
+  {
+    "id": "rec-3",
+    "recommendation_type": "Trainer Upskilling",
+    "target_type": "Institution",
+    "target_name": "State Technical Faculty Consortium",
+    "priority": "High",
+    "district": "Pune",
+    "sector": "Information Technology",
+    "description": "Conduct an intensive 4-week Faculty Development Program (FDP) in AWS Cloud and Docker containerization.",
+    "rationale": "Trainer audit indicates 60% skill deficit between legacy server administration and modern containerized microservices.",
+    "suggested_modules": ["AWS Solutions Architect Certification Track", "Docker & Kubernetes Lab Administration"],
+    "status": "Approved",
+    "impact_estimate": "120 Master trainers certified across 32 state polytechnics."
+  },
+  {
+    "id": "rec-4",
+    "recommendation_type": "Equipment Upgrade",
+    "target_type": "Institution",
+    "target_name": "AI & Data Analytics State Lab",
+    "priority": "High",
+    "district": "Pune",
+    "sector": "Information Technology",
+    "description": "Upgrade computer lab: deploy 30 High-Performance Workstations with NVIDIA RTX GPUs and Python/Docker environments.",
+    "rationale": "Current lab machines lack CUDA compute capability required for modern deep learning and large-scale data visualization.",
+    "suggested_modules": ["GPU-enabled compute nodes", "Dual 4K monitors for BI dashboards", "Gigabit private network fabric"],
+    "status": "Pending Review",
+    "impact_estimate": "Enables hands-on practical training for 600 students annually."
+  },
+  {
+    "id": "rec-5",
+    "recommendation_type": "Intake Reduction",
+    "target_type": "Course",
+    "target_name": "Basic Legacy Web Technology",
+    "priority": "Critical",
+    "district": "Nagpur",
+    "sector": "Information Technology",
+    "description": "Decommission intake by 80% immediately and reallocate laboratory resources to Modern Full Stack Development.",
+    "rationale": "Placement rate collapsed to 18%; industry demand fell by -42% while student enrollment remained unsustainably high.",
+    "suggested_modules": ["Phased sunset plan over 2 quarters", "Faculty redeployment to React/Node.js tracks"],
+    "status": "Approved",
+    "impact_estimate": "Prevents qualification obsolescence for 1,800+ students."
+  }
+]

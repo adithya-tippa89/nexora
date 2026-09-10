@@ -1,0 +1,57 @@
+﻿[
+  {
+    "id": "em-genai",
+    "tech_name": "Generative AI & LLM Systems",
+    "category": "Artificial Intelligence",
+    "growth_rate": 65.0,
+    "adoption_rate": 78.0,
+    "maharashtra_job_volume": 8500,
+    "required_skills": ["Python", "Generative AI & Prompt Engineering", "Artificial Intelligence & ML", "Cloud Computing (AWS/Azure)"],
+    "recommended_courses": ["Applied Artificial Intelligence & Machine Learning", "Advanced Full Stack & Cloud Engineering"],
+    "summary": "Massive industry transition across Pune and Mumbai IT hubs adopting enterprise copilots, RAG document search, and automated code generation."
+  },
+  {
+    "id": "em-ev",
+    "tech_name": "Electric Mobility & Smart Charging",
+    "category": "Clean Transportation",
+    "growth_rate": 48.0,
+    "adoption_rate": 62.0,
+    "maharashtra_job_volume": 7200,
+    "required_skills": ["EV Battery & Powertrain Systems", "PLC & SCADA Automation", "Power Electronics"],
+    "recommended_courses": ["Advanced EV Powertrain & Battery Diagnostics"],
+    "summary": "Maharashtra Electric Vehicle Policy has spurred massive plant expansions in Chakan (Pune) and Nashik, driving surging technician requirements."
+  },
+  {
+    "id": "em-cloud",
+    "tech_name": "Cloud-Native Microservices & DevOps",
+    "category": "Cloud Infrastructure",
+    "growth_rate": 34.0,
+    "adoption_rate": 88.0,
+    "maharashtra_job_volume": 14200,
+    "required_skills": ["Cloud Computing (AWS/Azure)", "Docker & Containerization", "Kubernetes", "React & Modern Web"],
+    "recommended_courses": ["Advanced Full Stack & Cloud Engineering"],
+    "summary": "Enterprises are sunsetting on-premise servers in favor of serverless, microservices, and automated multi-zone cloud infrastructure."
+  },
+  {
+    "id": "em-robotics",
+    "tech_name": "Collaborative Robotics (Cobots) & Smart Factory",
+    "category": "Industry 4.0",
+    "growth_rate": 29.0,
+    "adoption_rate": 54.0,
+    "maharashtra_job_volume": 4900,
+    "required_skills": ["Industrial Robotics Programming", "PLC & SCADA Automation"],
+    "recommended_courses": ["Robotics & Smart Factory Automation"],
+    "summary": "Automotive casting in Kolhapur and assembly in Chhatrapati Sambhajinagar are standardizing automated material handling."
+  },
+  {
+    "id": "em-cyber",
+    "tech_name": "Zero Trust Cybersecurity & Cloud Defense",
+    "category": "Information Security",
+    "growth_rate": 31.0,
+    "adoption_rate": 72.0,
+    "maharashtra_job_volume": 6100,
+    "required_skills": ["Cybersecurity & Threat Defense", "Cloud Computing (AWS/Azure)", "Python"],
+    "recommended_courses": ["Applied Artificial Intelligence & Machine Learning", "Advanced Full Stack & Cloud Engineering"],
+    "summary": "Stricter RBI compliance mandates for Mumbai financial services are driving urgent demand for SOC analysts and penetration testers."
+  }
+]
