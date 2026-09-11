@@ -572,6 +572,27 @@
   ],
   "courses": [
     {
+      "id": "course-1789102474020",
+      "course_name": "Prompt Engineering",
+      "institution_name": "Nashik Instute of technology",
+      "sector": "Information Technology",
+      "district": "Nashik",
+      "duration": "6 Months",
+      "placement_rate": 75,
+      "enrollment_count": 120,
+      "industry_match_score": 80,
+      "status": "High Demand",
+      "skills_covered": [
+        "RAG",
+        "MCP",
+        "LLM",
+        "NLP",
+        "Chain"
+      ],
+      "missing_skills": [],
+      "recommendation": "Course created with aligned syllabus."
+    },
+    {
       "id": "course-1789079570896",
       "course_name": "power BI",
       "institution_name": "powerbi institution",
@@ -840,6 +861,11 @@
           "skill_name": "Tableau Visualization",
           "suggested_by": "TCS",
           "votes": 39
+        },
+        {
+          "skill_name": "Machine Learning",
+          "suggested_by": "Tata Motors Innovation Labs",
+          "votes": 1
         }
       ]
     },

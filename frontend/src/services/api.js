@@ -185,8 +185,8 @@ export const api = {
             'Authorization': `Bearer ${key.trim()}`
           },
           body: JSON.stringify({
-            model: 'llama-3.3-70b-versatile',
-            messages: [{ role: 'user', content: 'Ping. Confirm Groq LLaMA 3 status.' }],
+            model: 'openai/gpt-oss-120b',
+            messages: [{ role: 'user', content: 'Ping. Confirm Groq status.' }],
             max_tokens: 25
           })
         });
@@ -195,9 +195,9 @@ export const api = {
           return {
             configured: true,
             status: 'CONNECTED',
-            activeModel: 'llama-3.3-70b-versatile',
+            activeModel: 'openai/gpt-oss-120b',
             latencyMs,
-            message: `Groq LLaMA 3.3 (70B) is active and responding in ${latencyMs}ms!`
+            message: `Groq AI (openai/gpt-oss-120b) is active and responding in ${latencyMs}ms!`
           };
         } else {
           const errData = await res.json().catch(() => ({}));
@@ -229,11 +229,11 @@ export const api = {
             'Authorization': `Bearer ${cleanKey}`
           },
           body: JSON.stringify({
-            model: 'llama-3.3-70b-versatile',
+            model: 'openai/gpt-oss-120b',
             messages: [
               {
                 role: 'system',
-                content: 'You are the "SkillSync Maharashtra AI Advisor", an expert vocational education and labour market analyst powered by Meta LLaMA 3 on Groq Cloud. Provide structured, accurate, localized advice about technical skills, ITIs, polytechnics, and industrial sectors (Pune Auto/EV, Mumbai BFSI/IT, Nagpur Logistics/Drone, Nashik, etc.) in Maharashtra.'
+                content: 'You are the "SkillSync Maharashtra AI Advisor", an expert vocational education and labour market analyst powered by Groq Cloud. Provide structured, accurate, localized advice about technical skills, ITIs, polytechnics, and industrial sectors (Pune Auto/EV, Mumbai BFSI/IT, Nagpur Logistics/Drone, Nashik, etc.) in Maharashtra.'
               },
               ...(data.history || []).slice(-6).map(h => ({
                 role: h.role === 'user' ? 'user' : 'assistant',
@@ -250,12 +250,12 @@ export const api = {
           const json = await groqRes.json();
           return {
             reply: json.choices[0]?.message?.content || 'Operational',
-            source: 'groq:live-llama-3.3',
-            model: 'llama-3.3-70b-versatile',
+            source: 'groq:live-gpt-oss-120b',
+            model: 'openai/gpt-oss-120b',
             speedMs: Date.now() - startTime
           };
         } else {
-          // Fallback to high-speed 8B model on Groq
+          // Fallback to high-speed 20B model on Groq
           const fallbackRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -263,9 +263,9 @@ export const api = {
               'Authorization': `Bearer ${cleanKey}`
             },
             body: JSON.stringify({
-              model: 'llama-3.1-8b-instant',
+              model: 'openai/gpt-oss-20b',
               messages: [
-                { role: 'system', content: 'You are the SkillSync Maharashtra AI Advisor powered by Groq LLaMA 3.' },
+                { role: 'system', content: 'You are the SkillSync Maharashtra AI Advisor.' },
                 { role: 'user', content: data.message }
               ],
               max_tokens: 600
@@ -275,8 +275,8 @@ export const api = {
             const fbJson = await fallbackRes.json();
             return {
               reply: fbJson.choices[0]?.message?.content || 'Operational',
-              source: 'groq:live-llama-3.1',
-              model: 'llama-3.1-8b-instant',
+              source: 'groq:live-gpt-oss-20b',
+              model: 'openai/gpt-oss-20b',
               speedMs: Date.now() - startTime
             };
           }

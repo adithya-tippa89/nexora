@@ -17,47 +17,39 @@ function safeJsonParse(content) {
   }
 }
 
-// Available LLaMA 3 models supported on Groq
+// Active models supported on Groq Cloud
 const SUPPORTED_MODELS = [
   {
-    id: 'llama-3.3-70b-versatile',
-    name: 'LLaMA 3.3 70B Versatile',
-    provider: 'Meta / Groq',
+    id: 'openai/gpt-oss-120b',
+    name: 'GPT OSS 120B (Groq Flagship)',
+    provider: 'Groq Cloud',
     contextWindow: 131072,
     recommended: true,
-    description: 'Flagship Meta LLaMA 3.3 model on Groq. Exceptional reasoning, curriculum design, and market analysis.'
+    description: 'Flagship 120B reasoning model on Groq. Exceptional reasoning, curriculum design, and market analysis.'
   },
   {
-    id: 'llama-3.1-8b-instant',
-    name: 'LLaMA 3.1 8B Instant',
-    provider: 'Meta / Groq',
+    id: 'openai/gpt-oss-20b',
+    name: 'GPT OSS 20B (High Speed)',
+    provider: 'Groq Cloud',
     contextWindow: 131072,
     recommended: false,
-    description: 'Ultra-fast low-latency LLaMA 3.1 model. Ideal for instant chat and quick recommendations.'
+    description: 'Ultra-fast low-latency model on Groq. Ideal for instant chat and quick recommendations.'
   },
   {
-    id: 'llama-3.2-3b-preview',
-    name: 'LLaMA 3.2 3B Preview',
-    provider: 'Meta / Groq',
-    contextWindow: 131072,
-    recommended: false,
-    description: 'Lightweight edge-optimized model for rapid summarization.'
-  },
-  {
-    id: 'llama-3.2-1b-preview',
-    name: 'LLaMA 3.2 1B Preview',
-    provider: 'Meta / Groq',
-    contextWindow: 131072,
-    recommended: false,
-    description: 'Extremely compact model with ultra-low latency.'
-  },
-  {
-    id: 'mixtral-8x7b-32768',
-    name: 'Mixtral 8x7B 32k',
-    provider: 'Mistral / Groq',
+    id: 'qwen/qwen3.8-27b',
+    name: 'Qwen 3.8 27B',
+    provider: 'Alibaba / Groq',
     contextWindow: 32768,
     recommended: false,
-    description: 'High performance Mixture-of-Experts architecture with 32k context.'
+    description: 'Advanced technical reasoning model on Groq hardware.'
+  },
+  {
+    id: 'groq/compound',
+    name: 'Groq Compound',
+    provider: 'Groq Cloud',
+    contextWindow: 32768,
+    recommended: false,
+    description: 'Compound reasoning engine optimized for rapid inference.'
   }
 ];
 
@@ -114,7 +106,7 @@ class GroqService {
   }
 
   getActiveModel() {
-    return process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+    return process.env.GROQ_MODEL || 'openai/gpt-oss-120b';
   }
 
   getAvailableModels() {
@@ -125,9 +117,9 @@ class GroqService {
     const primary = preferredModel || this.getActiveModel();
     const list = [
       primary,
-      'llama-3.3-70b-versatile',
-      'llama-3.1-8b-instant',
-      'mixtral-8x7b-32768'
+      'openai/gpt-oss-120b',
+      'openai/gpt-oss-20b',
+      'qwen/qwen3.8-27b'
     ];
     return [...new Set(list)];
   }
