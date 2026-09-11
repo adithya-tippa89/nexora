@@ -812,7 +812,7 @@
           "skill_id": "sk-sql",
           "skill_name": "SQL",
           "validation_score": 98,
-          "approved_count": 84,
+          "approved_count": 85,
           "not_required_count": 2,
           "status": "Approved"
         },
@@ -850,7 +850,7 @@
         }
       ],
       "overall_validation_score": 92,
-      "total_employer_responses": 86,
+      "total_employer_responses": 87,
       "added_missing_skills": [
         {
           "skill_name": "Snowflake Cloud Data Warehouse",
@@ -1256,6 +1256,27 @@
     }
   ],
   "district_training_plans": [
+    {
+      "id": "dtp-thane",
+      "district_name": "Thane",
+      "financial_year": "2026-2027",
+      "priority_sectors": [
+        "Information Technology",
+        "Chemicals & Petrochemicals",
+        "Logistics"
+      ],
+      "recommended_courses": [
+        "Diploma in Applied Information Technology Systems",
+        "Industrial Automation & Digital Controls",
+        "Python & Cloud Computing for Enterprise"
+      ],
+      "required_trainers": 20,
+      "required_infra_labs": 6,
+      "expected_employment": 12070,
+      "budget_allocation_cr": 7.2,
+      "status": "State Approved",
+      "generated_date": "2026-09-11"
+    },
     {
       "id": "dtp-pune",
       "district_name": "Pune",
