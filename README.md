@@ -9,11 +9,11 @@
 
 [![Vite](https://img.shields.io/badge/Vite-8.2.2-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![React](https://img.shields.io/badge/React-19.2.8-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Groq AI](https://img.shields.io/badge/Groq_Cloud_AI-120B_Open_Weights-F05A28?style=for-the-badge&logo=fastapi&logoColor=white)](https://groq.com/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Express.js](https://img.shields.io/badge/Express-4.21.2-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.3-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![MySQL Compatible](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Oxlint Passed](https://img.shields.io/badge/Oxlint-Clean-success?style=for-the-badge&logo=oxlint)](https://oxc-project.github.io/)
+[![Netlify](https://img.shields.io/badge/Netlify-Deployment_Ready-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://www.netlify.com/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 ---
@@ -21,26 +21,78 @@
 ## 📑 Table of Contents
 
 1. [Executive Summary](#-executive-summary)
-2. [The Maharashtra Context & Problem Statement](#-the-maharashtra-context--problem-statement)
-3. [System Architecture](#-system-architecture)
+2. [2026 Flagship Innovations & Recent Upgrades](#-2026-flagship-innovations--recent-upgrades)
+   - [Groq Cloud AI Integration (Flagship 120B Model & GFM Assistant)](#1-groq-cloud-ai-engine--interactive-assistant)
+   - [Executive Professional PDF Dossier Export Engine](#2-executive-professional-pdf-dossier-export-engine)
+   - [Student Skill Demand & Placement Intelligence Hub](#3-student-skill-demand--placement-intelligence-hub)
+   - [Netlify Cloud Deployment & SPA Configuration](#4-netlify-cloud-deployment--spa-configuration)
+3. [The Maharashtra Context & Problem Statement](#-the-maharashtra-context--problem-statement)
+4. [System Architecture](#-system-architecture)
    - [High-Level Architectural Diagram](#1-high-level-multi-tier-architecture)
    - [Frontend Component Hierarchy](#2-frontend-component-architecture)
    - [Relational Database Schema (ERD)](#3-relational-database-schema--erd)
-4. [Core End-to-End System Flows](#-core-end-to-end-system-flows)
+5. [Core End-to-End System Flows](#-core-end-to-end-system-flows)
    - [Closed-Loop Labour Market Intelligence Flow](#1-closed-loop-labour-market-intelligence-flow)
    - [Skill Gap Analysis Engine & Mathematical Model](#2-skill-gap-analysis-engine--mathematical-model)
    - [Student Career Guidance & Roadmap Flow](#3-student-career-guidance--roadmap-flow)
    - [Employer Consensus Validation Flow](#4-employer-consensus-validation-flow)
    - [Obsolete Course Detection & Sunset Engine Flow](#5-obsolete-course-detection--sunset-engine-flow)
    - [District Skill Development Plan (DSDP) Pipeline](#6-district-skill-development-plan-dsdp-pipeline)
-5. [Exhaustive 18-Module Functional Breakdown](#-exhaustive-18-module-functional-breakdown)
-6. [Multi-Stakeholder Personas & Instant Demo Switcher](#-multi-stakeholder-personas--instant-demo-switcher)
-7. [Complete REST API Specification](#-complete-rest-api-specification)
-8. [Data Architecture & Dual-Mode Database Engine](#-data-architecture--dual-mode-database-engine)
-9. [Installation & Local Setup Guide](#-installation--local-setup-guide)
-10. [Repository Directory Structure](#-repository-directory-structure)
-11. [Verification, Testing & Performance Benchmarks](#-verification-testing--performance-benchmarks)
-12. [Future Roadmap & State Rollout Strategy](#-future-roadmap--state-rollout-strategy)
+6. [Exhaustive 18-Module Functional Breakdown](#-exhaustive-18-module-functional-breakdown)
+7. [Multi-Stakeholder Personas & Instant Demo Switcher](#-multi-stakeholder-personas--instant-demo-switcher)
+8. [Complete REST API Specification](#-complete-rest-api-specification)
+9. [Data Architecture & Dual-Mode Database Engine](#-data-architecture--dual-mode-database-engine)
+10. [Installation & Local Setup Guide](#-installation--local-setup-guide)
+11. [Repository Directory Structure](#-repository-directory-structure)
+12. [Verification, Testing & Performance Benchmarks](#-verification-testing--performance-benchmarks)
+13. [Future Roadmap & State Rollout Strategy](#-future-roadmap--state-rollout-strategy)
+
+---
+
+## 🚀 2026 Flagship Innovations & Recent Upgrades
+
+### 1. Groq Cloud AI Engine & Interactive Assistant
+SkillSync Maharashtra features state-of-the-art Generative AI capabilities powered by **Groq Cloud's ultra-low-latency LPU infrastructure**:
+- **Flagship 120B Open-Weights Model (`openai/gpt-oss-120b`)**: Provides superior analytical reasoning for deep curricular gap diagnosis and step-by-step career path counseling in under 700ms.
+- **Dual-Tier Resilient AI Pipeline**:
+  - *Tier 1:* Server-side Groq service (`/api/ai/chat`, `/api/ai/skill-recommendations`) with automatic model failover and JSON schema enforcement.
+  - *Tier 2:* Direct client-side HTTPS fallback to Groq Cloud for static/Netlify deployments, supporting inline API key input and encrypted local storage.
+- **Ultra-Premium Floating AI Copilot (`GroqAiAssistant.jsx`)**:
+  - GitHub Flavored Markdown (GFM) rich rendering with styled comparison tables (dark gradient headers, alternating zebra stripes, horizontal scroll).
+  - Widescreen expand mode for detailed multi-column syllabus inspection.
+  - 1-Click snippet copy with dynamic checkmark feedback.
+  - Glowing luminous floating launcher with responsive mobile optimization.
+
+### 2. Executive Professional PDF Dossier Export Engine
+Re-engineered the client-side document export subsystem into an **Official Government of Maharashtra Curriculum Dossier**:
+- **Engine Upgrade**: Switched from legacy window printing to `html2canvas-pro` + `jspdf`, cleanly bypassing Tailwind CSS v4 `oklch()` color parsing issues without canvas rendering exceptions.
+- **Official Directorate Layout**:
+  - Deep navy (`#0b2545`) and gold executive header with Government of Maharashtra and DVET / MSSDS emblems.
+  - Security tracking metadata: Unique Document ID (`MAH-SS-CR-...`), Issue Date, Candidate Tracking Code, and `SHA256-VERIFIED` seal.
+- **Deep Pedagogical Explanations**:
+  - Replaced raw, cramped tables with step-by-step stage cards.
+  - Detailed pedagogical objectives explaining industrial relevance for Pune, Mumbai, and regional MIDC belts.
+  - Hands-on practical lab projects, applied tooling badges (`Python 3.12`, `PyTorch 2.4`, `Docker`, `CAN-Bus`), and measurable career competencies.
+  - Full 5-unit curriculum deep dive for all affiliated ITI/Polytechnic programs.
+  - 100% direct `.pdf` file download without intrusive browser print dialogs.
+
+### 3. Student Skill Demand & Placement Intelligence Hub
+The student dashboard (`DashboardPage.jsx`) features an interactive, high-contrast **Placement Intelligence Hub**:
+- **Multi-Dimensional Controls**:
+  - Live search filter across technical competencies and hiring employers.
+  - Regional corridor selector: `Pune (Tech & Auto)`, `Mumbai (FinTech & IT)`, `Nagpur (Logistics)`, `Nashik`, `Aurangabad`.
+  - Domain pills with live count badges: `AI & Software`, `EV & Automotive`, `Cloud & DevOps`, `Industrial Automation`, `Data & Analytics`, `Smart Logistics`.
+- **Triple View Switcher**:
+  - **📋 Directory Cards View**: Rank badges (Gold Crown `#1`, Silver `#2`, Bronze `#3`), animated demand progress meter, 3-metric statistics grid (Vacancies, Salary LPA, Corridor), top hiring corporates, key syllabus focus, and direct `🚀 Plan Learning Roadmap` button linking to `/career-guidance`.
+  - **📊 Demand & Jobs Chart**: Recharts bar visualization comparing demand urgency against verified vacancies.
+  - **💰 Salary LPA Benchmarks**: Recharts bar chart contrasting Junior Entry CTC vs 3-Year Experienced CTC.
+- **Student Placement Accelerator Banner**: Direct action prompts linking market demand to the AI Career Wizard and job matching portal.
+
+### 4. Netlify Cloud Deployment & SPA Configuration
+- **Continuous Deployment Setup**: Included `netlify.toml` configuring Node.js 18+ runtime, `npm run build` command, and `dist` publish target.
+- **SPA 200 Rewrite**: Configured `frontend/public/_redirects` (`/*  /index.html  200`) ensuring seamless client-side routing on Netlify with zero 404s on deep links.
+
+---
 
 ## Module 5 — Dynamic Skill Gap Analysis
 
@@ -873,12 +925,16 @@ node generateSeedSql.js
 ```text
 skillsync-maharashtra/
 ├── README.md                           # Master Platform Documentation
+├── netlify.toml                        # Netlify deployment configuration & headers
 ├── .gitignore                          # Workspace gitignore rules
 │
 ├── backend/                            # Node.js Express REST API Backend
 │   ├── package.json                    # Backend dependencies (express, cors, dotenv)
 │   ├── server.js                       # Express application bootstrap & route mounting
 │   ├── generateSeedSql.js              # Script compiling JSON data into MySQL seed.sql
+│   │
+│   ├── services/                       # Core Integration Services
+│   │   └── groqService.js              # Groq Cloud LLaMA 3 / GPT-OSS AI service (120B model)
 │   │
 │   ├── data/                           # Master datasets & active persistent DB
 │   │   ├── courses.json                # Polytechnic & ITI courses catalog
@@ -923,6 +979,9 @@ skillsync-maharashtra/
     ├── vite.config.js                  # Vite compiler configuration
     ├── postcss.config.js               # PostCSS plugins
     │
+    ├── public/
+    │   └── _redirects                  # Netlify SPA 200 rewrite rules
+    │
     ├── src/
     │   ├── main.jsx                    # Application entry point
     │   ├── App.jsx                     # Route definitions & layout wrappers
@@ -930,6 +989,7 @@ skillsync-maharashtra/
     │   ├── App.css                     # Global utility animations & print styles
     │   │
     │   ├── components/                 # Reusable UI Component Library
+    │   │   ├── GroqAiAssistant.jsx     # Floating LLaMA 3 / GPT-OSS AI Copilot with GFM tables
     │   │   ├── Footer.jsx              # Official Maharashtra Government footer
     │   │   ├── Navbar.jsx              # Top bar with instant role switcher
     │   │   ├── RoleSwitcher.jsx        # Demo persona selector modal
@@ -943,6 +1003,9 @@ skillsync-maharashtra/
     │   │
     │   ├── services/
     │   │   └── api.js                  # Centralized client API service wrapper
+    │   │
+    │   ├── utils/
+    │   │   └── exportPdf.js            # html2canvas-pro + jsPDF Executive Dossier Export Engine
     │   │
     │   └── pages/                      # 18 Application Views & Pages
     │       ├── AdminSettingsPage.jsx       # System diagnostics & baseline reset
