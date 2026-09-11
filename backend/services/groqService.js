@@ -1,5 +1,22 @@
 const Groq = require('groq-sdk');
 
+function safeJsonParse(content) {
+  if (!content) return {};
+  if (typeof content === 'object') return content;
+  const clean = content.replace(/```(?:json)?\s*([\s\S]*?)\s*```/i, '$1').trim();
+  try {
+    return JSON.parse(clean);
+  } catch (e) {
+    const match = clean.match(/\{[\s\S]*\}/);
+    if (match) {
+      try {
+        return JSON.parse(match[0]);
+      } catch (innerErr) {}
+    }
+    throw e;
+  }
+}
+
 // Available LLaMA 3 models supported on Groq
 const SUPPORTED_MODELS = [
   {
@@ -57,7 +74,7 @@ class GroqService {
     }
     if (apiKey && apiKey !== '' && apiKey !== 'your_groq_api_key_here') {
       try {
-        this.client = new Groq({ apiKey, timeout: 8000 });
+        this.client = new Groq({ apiKey, timeout: 30000 });
       } catch (err) {
         console.warn('[GroqService] Initialization error:', err.message);
         this.client = null;
@@ -106,8 +123,13 @@ class GroqService {
 
   getModelsToTry(preferredModel = null) {
     const primary = preferredModel || this.getActiveModel();
-    const fallback = 'llama-3.1-8b-instant';
-    return primary === fallback ? [fallback] : [primary, fallback];
+    const list = [
+      primary,
+      'llama-3.3-70b-versatile',
+      'llama-3.1-8b-instant',
+      'mixtral-8x7b-32768'
+    ];
+    return [...new Set(list)];
   }
 
   /**
@@ -294,7 +316,7 @@ Provide an actionable, authoritative curriculum upgrade plan.`;
             response_format: { type: 'json_object' }
           });
 
-          const parsed = JSON.parse(res.choices[0].message.content);
+          const parsed = safeJsonParse(res.choices[0].message.content);
           return {
             ...parsed,
             source: model === this.getActiveModel() ? 'groq:llama-3' : 'groq:live',
@@ -369,7 +391,7 @@ Generate tailored guidance directly addressing their selected course path.`;
             response_format: { type: 'json_object' }
           });
 
-          const parsed = JSON.parse(res.choices[0].message.content);
+          const parsed = safeJsonParse(res.choices[0].message.content);
           return {
             ...parsed,
             source: model === this.getActiveModel() ? 'groq:llama-3' : 'groq:live',
