@@ -32,6 +32,7 @@ import {
   Flame,
   ArrowRight
 } from 'lucide-react';
+import { downloadElementAsPdf } from '../utils/exportPdf';
 
 export const CareerGuidancePage = () => {
   const { currentUser, showToast } = useAuth();
@@ -66,6 +67,8 @@ export const CareerGuidancePage = () => {
   // Result Assessment
   const [assessment, setAssessment] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -164,12 +167,21 @@ export const CareerGuidancePage = () => {
     setExpandedSteps({});
   };
 
-  // Trigger Print to PDF
-  const handleDownloadPdf = () => {
-    showToast("Opening Official Maharashtra PDF Roadmap & Syllabus Print Dialog...", "info");
-    setTimeout(() => {
-      window.print();
-    }, 200);
+  // Direct High-Resolution PDF Download (No print dialogs, no toast popups)
+  const handleDownloadPdf = async () => {
+    if (isGeneratingPdf) return;
+    setIsGeneratingPdf(true);
+    try {
+      const sanitizedName = (candidateName || 'Candidate').replace(/\s+/g, '_');
+      const filename = `Maharashtra_Curriculum_Roadmap_${sanitizedName}.pdf`;
+      await downloadElementAsPdf('official-pdf-dossier', filename);
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 3500);
+    } catch (err) {
+      console.error('PDF export error:', err);
+    } finally {
+      setIsGeneratingPdf(false);
+    }
   };
 
   const candidateName = currentUser?.name || 'Rohan Shinde';
@@ -560,11 +572,26 @@ export const CareerGuidancePage = () => {
                   {/* PDF Download Button */}
                   <button
                     onClick={handleDownloadPdf}
-                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 flex items-center gap-2 transition cursor-pointer"
+                    disabled={isGeneratingPdf}
+                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 flex items-center gap-2 transition cursor-pointer disabled:opacity-75"
                     title="Download official formatted roadmap and course syllabi as PDF"
                   >
-                    <Download className="w-4 h-4" />
-                    <span>Download Official PDF Dossier</span>
+                    {isGeneratingPdf ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>Generating PDF...</span>
+                      </>
+                    ) : downloadSuccess ? (
+                      <>
+                        <CheckCircle2 className="w-4 h-4 text-emerald-300" />
+                        <span>PDF Downloaded!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-4 h-4" />
+                        <span>Download Official PDF Dossier</span>
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
@@ -998,7 +1025,7 @@ export const CareerGuidancePage = () => {
       {/* EXECUTIVE PROFESSIONAL PRINTABLE / DOWNLOADABLE PDF ROADMAP & SYLLABUS */}
       {/* ========================================================================= */}
       {assessment && (
-        <div className="print-only bg-white text-slate-900 p-8 font-sans leading-normal">
+        <div id="official-pdf-dossier" className="print-only bg-white text-slate-900 p-8 font-sans leading-normal">
           {/* Executive Directorate Letterhead */}
           <div className="border-b-4 border-[#0b2545] pb-4 mb-6">
             <div className="flex items-center justify-between gap-4 pb-3 border-b border-slate-200">

@@ -108,6 +108,10 @@ export const AuthProvider = ({ children }) => {
     }, 4000);
   };
 
+  const clearToast = () => {
+    setToastMessage(null);
+  };
+
   // On mount, verify existing JWT session with FastAPI /users/me
   useEffect(() => {
     const verifySession = async () => {
@@ -214,6 +218,7 @@ export const AuthProvider = ({ children }) => {
       registerUser,
       logoutUser,
       showToast,
+      clearToast,
       toastMessage,
       demoProfiles
     }}>
